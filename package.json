@@ -1,0 +1,23 @@
+{
+    "name": "maxmind",
+    "version": "0.0.1",
+    "homepage": "https://github.com/runk/maxmind",
+    "description": "IP lookup module using Maxmind databases",
+    "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode"],
+    "author": "Shirokov Dmitry <deadrunk@gmail.com>",
+    "dependencies": {},
+    "repository": {
+        "type":"git",
+        "url":"git@github.com:runk/maxmind.git"
+    },
+    "bugs": {
+      "mail":"deadrunk@gmail.com",
+      "url":"http://github.com/runk/maxmind/issues"
+    },
+    "main": "index.js",
+    "engine": { "node": ">=0.8.0", "npm": "1" },
+    "licences": [{
+        "type":"LGPL2.1",
+        "url": "http://www.gnu.org/licenses/lgpl-2.1.txt"
+    }]
+}
