@@ -1,8 +1,8 @@
 {
     "name": "maxmind",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "homepage": "https://github.com/runk/maxmind",
-    "description": "IP lookup module using Maxmind databases",
+    "description": "IP lookup using Maxmind databases",
     "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode"],
     "author": "Shirokov Dmitry <deadrunk@gmail.com>",
     "dependencies": {},

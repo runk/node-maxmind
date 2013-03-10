@@ -39,14 +39,14 @@ describe('lib/lookup_service', function() {
         });
     });
 
-    describe('#getDatabaseInfo', function() {
+    describe('.databaseInfo', function() {
 
         it('inited prop should be true', function() {
             assert.equal(ls.inited, true);
         });
 
         it('should return proper DatabaseInfo', function() {
-            var info = ls.getDatabaseInfo();
+            var info = ls.databaseInfo;
             assert.ok(info instanceof DatabaseInfo);
             assert.equal(info.getType(), 428);
             assert.equal(info.isPremium(), true);

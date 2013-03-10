@@ -2,7 +2,7 @@
 node-maxmind
 ========
 
-IP lookup using Maxmind databases, written in pure javascript
+IP geo lookup using Maxmind databases, written in pure javascript, with no dependencies.
 
 ## GEO databases
 
@@ -39,7 +39,7 @@ Country Lookup
 
 ## Disclaimer
 
-Module is quite fresh and some sirius bugs are possible. Feel free to
+Module is quite young and some serious bugs are possible. Feel free to
 send pull request / bug reports.
 
 Module currently work only in `MEMORY_CACHE` mode.
