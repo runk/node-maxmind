@@ -1,18 +1,18 @@
 {
     "name": "maxmind",
-    "version": "0.0.3",
-    "homepage": "https://github.com/runk/maxmind",
+    "version": "0.0.4",
+    "homepage": "https://github.com/runk/node-maxmind",
     "description": "IP lookup using Maxmind databases",
     "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode"],
     "author": "Shirokov Dmitry <deadrunk@gmail.com>",
     "dependencies": {},
     "repository": {
         "type":"git",
-        "url":"git@github.com:runk/maxmind.git"
+        "url":"git@github.com:runk/node-maxmind.git"
     },
     "bugs": {
       "mail":"deadrunk@gmail.com",
-      "url":"http://github.com/runk/maxmind/issues"
+      "url":"http://github.com/runk/node-maxmind/issues"
     },
     "main": "index.js",
     "engine": { "node": ">=0.8.0", "npm": "1" },
