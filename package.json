@@ -5,7 +5,9 @@
     "description": "IP lookup using Maxmind databases",
     "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone"],
     "author": "Shirokov Dmitry <deadrunk@gmail.com>",
-    "dependencies": {},
+    "dependencies": {
+        "bignum": "0.5.4"
+    },
     "repository": {
         "type":"git",
         "url":"git@github.com:runk/node-maxmind.git"

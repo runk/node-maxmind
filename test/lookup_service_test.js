@@ -7,6 +7,7 @@ var assert = require('assert'),
 
 
 const GEO_CITY    = __dirname + '/dbs/GeoLiteCity.dat';
+const GEO_CITY_FULL = __dirname + '/dbs/GeoIPCity_FULL.dat';
 const GEO_COUNTRY = __dirname + '/dbs/GeoIP.dat';
 
 describe('lib/lookup_service', function() {
@@ -36,6 +37,10 @@ describe('lib/lookup_service', function() {
         it("should conver IP to the long format", function() {
             var result = ls.ip2Long("87.229.134.24");
             assert.equal(result, 1474659864);
+
+            var result = ls.ip2Long("195.68.137.18");
+            assert.equal(result, 3276048658);
+
         });
     });
 
@@ -65,6 +70,10 @@ describe('lib/lookup_service', function() {
             var c = ls.getCountry('109.60.171.33');
             assert.equal(c.getName(), 'Russian Federation');
             assert.equal(c.getCode(), 'RU');
+
+            var c = ls.getCountry('210.250.100.200');
+            assert.equal(c.getName(), 'Japan');
+            assert.equal(c.getCode(), 'JP');
         });
 
         it('should return unknown country by unknown ip', function() {
@@ -74,9 +83,20 @@ describe('lib/lookup_service', function() {
         });
     });
 
+    describe("#seekCountry", function() {
+        it("should perform binary search", function() {
+            assert.equal(ls.init(GEO_CITY_FULL), true);
+            var iplong = ls.ip2Long('195.68.137.18');
+            assert.equal(ls.seekCountry(iplong), 9150727);
+
+            iplong = ls.ip2Long('210.250.100.200');
+            assert.equal(ls.seekCountry(iplong), 8067695);
+        });
+    });
+
     describe('#getLocation', function() {
         it('should init with country db', function() {
-            assert.equal(ls.init(GEO_CITY), true);
+            assert.equal(ls.init(GEO_CITY_FULL), true);
             assert.equal(ls.inited, true);
         });
 
@@ -85,14 +105,30 @@ describe('lib/lookup_service', function() {
 
             assert.equal(l.countryCode, 'RU');
             assert.equal(l.countryName, 'Russian Federation');
-            assert.equal(l.region, '48');
-            assert.equal(l.city, 'Moscow');
-            assert.equal(l.latitude, 55.75219999999999);
-            assert.equal(l.longitude, 37.6156);
+            assert.equal(l.region, '21');
+            assert.equal(l.city, 'Ivanovo');
+            assert.equal(l.latitude, 56.99719999999999);
+            assert.equal(l.longitude, 40.97139999999999);
             assert.equal(l.metro_code, 0);
             assert.equal(l.dma_code, 0);
             assert.equal(l.area_code, 0);
         });
+
+        it('should return location by ip (2)', function() {
+            var l = ls.getLocation('195.68.137.18');
+            assert.equal(l.countryCode, 'RU');
+            assert.equal(l.countryName, 'Russian Federation');
+            assert.equal(l.region, '47');
+            assert.equal(l.city, 'Marfino');
+            assert.equal(l.latitude, 55.70269999999999);
+            assert.equal(l.longitude, 37.38319999999999);
+            assert.equal(l.metro_code, 0);
+            assert.equal(l.dma_code, 0);
+            assert.equal(l.area_code, 0);
+        });
+
+
+        // #<struct GeoIP::City request="195.68.137.18", ip="195.68.137.18", country_code2="RU", country_code3="RUS", country_name="Russian Federation", continent_code="AS", region_name="47", city_name="Marfino", postal_code="", latitude=55.70269999999999, longitude=37.38319999999999, dma_code=nil, area_code=nil, timezone="Europe/Moscow">
     });
 
 });

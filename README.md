@@ -2,7 +2,7 @@
 node-maxmind
 ========
 
-IP geo lookup using Maxmind databases, written in pure javascript, with no dependencies.
+IP geo lookup using Maxmind databases, written in pure javascript.
 
 ## GEO databases
 
