@@ -2,7 +2,7 @@
 node-maxmind
 ========
 
-IP geo lookup using Maxmind databases, written in pure javascript.
+IP geo lookup using Maxmind databases, written in pure javascript with no dependencies.
 
 ## GEO databases
 
@@ -60,8 +60,8 @@ Caching could significantly increase performance, refer to this camparison which
 laptop:
 
 - default: 18,000 lookups / second
-- `indexCache`: 60,000 lookups / second
-- `memodyCache`: 100,000 lookups / second
+- `indexCache`: 80,000 lookups / second
+- `memodyCache`: 130,000 lookups / second
 
 ## Tests
 

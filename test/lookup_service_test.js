@@ -74,6 +74,10 @@ describe('lib/lookup_service', function() {
             var c = ls.getCountry('210.250.100.200');
             assert.equal(c.getName(), 'Japan');
             assert.equal(c.getCode(), 'JP');
+
+            var c = ls.getCountry('1.2.1.1');
+            assert.equal(c.getName(), 'China');
+            assert.equal(c.getCode(), 'CN');
         });
 
         it('should return unknown country by unknown ip', function() {
@@ -127,8 +131,18 @@ describe('lib/lookup_service', function() {
             assert.equal(l.area_code, 0);
         });
 
-
-        // #<struct GeoIP::City request="195.68.137.18", ip="195.68.137.18", country_code2="RU", country_code3="RUS", country_name="Russian Federation", continent_code="AS", region_name="47", city_name="Marfino", postal_code="", latitude=55.70269999999999, longitude=37.38319999999999, dma_code=nil, area_code=nil, timezone="Europe/Moscow">
+        it('should return location by ip (3)', function() {
+            var l = ls.getLocation('2.2.3.29');
+            assert.equal(l.countryCode, 'FR');
+            assert.equal(l.countryName, 'France');
+            assert.equal(l.region, 'A2');
+            assert.equal(l.city, 'Rennes');
+            assert.equal(l.latitude, 48.111999999999995);
+            assert.equal(l.longitude, -1.6742999999999881);
+            assert.equal(l.metro_code, 0);
+            assert.equal(l.dma_code, 0);
+            assert.equal(l.area_code, 0);
+        });
     });
 
 });

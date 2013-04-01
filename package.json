@@ -1,12 +1,12 @@
 {
     "name": "maxmind",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "homepage": "https://github.com/runk/node-maxmind",
     "description": "IP lookup using Maxmind databases",
     "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone"],
     "author": "Shirokov Dmitry <deadrunk@gmail.com>",
     "dependencies": {
-        "bignum": "0.5.4"
+
     },
     "repository": {
         "type":"git",
