@@ -6,9 +6,10 @@ var assert = require('assert'),
     Location = require('../lib/Location');
 
 
-const GEO_CITY    = __dirname + '/dbs/GeoLiteCity.dat';
+const GEO_CITY      = __dirname + '/dbs/GeoLiteCity.dat';
 const GEO_CITY_FULL = __dirname + '/dbs/GeoIPCity_FULL.dat';
-const GEO_COUNTRY = __dirname + '/dbs/GeoIP.dat';
+const GEO_COUNTRY   = __dirname + '/dbs/GeoIP.dat';
+const GEO_ASN       = __dirname + '/dbs/GeoIPASNum.dat';
 
 describe('lib/lookup_service', function() {
 
@@ -142,6 +143,19 @@ describe('lib/lookup_service', function() {
             assert.equal(l.metro_code, 0);
             assert.equal(l.dma_code, 0);
             assert.equal(l.area_code, 0);
+        });
+    });
+
+    describe('#getOrg', function() {
+        it('should init with country db', function() {
+            assert.equal(ls.init(GEO_ASN), true);
+            assert.equal(ls.inited, true);
+        });
+
+        it('should return ISP by ip', function() {
+            assert.equal(ls.getOrganization('109.60.171.33'), 'AS47241 CJSC "Ivtelecom"')
+            assert.equal(ls.getOrganization('64.4.4.4'), 'AS8075 Microsoft Corp')
+            assert.equal(ls.getOrganization('210.250.100.200'), 'AS2527 So-net Entertainment Corporation')
         });
     });
 

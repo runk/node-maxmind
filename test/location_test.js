@@ -20,5 +20,5 @@ describe('lib/location', function() {
             assert.equal(l2.distance(l1), 1640.543444);
 
         });
-    })
+    });
 });
