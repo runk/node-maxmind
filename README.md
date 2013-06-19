@@ -20,6 +20,7 @@ You can download free geo databases here: http://dev.maxmind.com/geoip/geolite.
  - Country lookup
  - Distance between two IP addresses (locations)
  - Timezone lookup by IP
+ - Autonomous System Numbers (ASN) lookup
 
 ## Usage
 
@@ -39,6 +40,14 @@ Country Lookup
     var maxmind = require('maxmind');
     maxmind.init('/path/to/GeoIP.dat');
     console.log(maxmind.getCountry("66.6.44.4"));
+```
+
+Autonomous System Numbers (ASN) lookup
+
+```js
+    var maxmind = require('maxmind');
+    maxmind.init('/path/to/GeoIPASNum.dat');
+    console.log(maxmind.getOrganization("66.6.44.4"));
 ```
 
 ## Caching
