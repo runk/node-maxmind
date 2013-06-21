@@ -7,7 +7,8 @@
     "author": "Shirokov Dmitry <deadrunk@gmail.com>",
     "dependencies": {},
     "devDependencies": {
-        "mocha": ">= 1.10.0"
+        "mocha": ">= 1.10.0",
+        "jshint": ">= 2.1.3"
     },
     "repository": {
         "type":"git",
@@ -22,5 +23,8 @@
     "licences": [{
         "type":"LGPL2.1",
         "url": "http://www.gnu.org/licenses/lgpl-2.1.txt"
-    }]
+    }],
+    "scripts": {
+        "lint": "jshint ./lib/*.js"
+    }
 }
