@@ -114,9 +114,9 @@ describe('lib/lookup_service', function() {
             assert.equal(l.city, 'Ivanovo');
             assert.equal(l.latitude, 56.99719999999999);
             assert.equal(l.longitude, 40.97139999999999);
-            assert.equal(l.metro_code, 0);
-            assert.equal(l.dma_code, 0);
-            assert.equal(l.area_code, 0);
+            assert.equal(l.metroCode, 0);
+            assert.equal(l.dmaCode, 0);
+            assert.equal(l.areaCode, 0);
         });
 
         it('should return location by ip (2)', function() {
@@ -127,9 +127,9 @@ describe('lib/lookup_service', function() {
             assert.equal(l.city, 'Marfino');
             assert.equal(l.latitude, 55.70269999999999);
             assert.equal(l.longitude, 37.38319999999999);
-            assert.equal(l.metro_code, 0);
-            assert.equal(l.dma_code, 0);
-            assert.equal(l.area_code, 0);
+            assert.equal(l.metroCode, 0);
+            assert.equal(l.dmaCode, 0);
+            assert.equal(l.areaCode, 0);
         });
 
         it('should return location by ip (3)', function() {
@@ -140,9 +140,9 @@ describe('lib/lookup_service', function() {
             assert.equal(l.city, 'Rennes');
             assert.equal(l.latitude, 48.111999999999995);
             assert.equal(l.longitude, -1.6742999999999881);
-            assert.equal(l.metro_code, 0);
-            assert.equal(l.dma_code, 0);
-            assert.equal(l.area_code, 0);
+            assert.equal(l.metroCode, 0);
+            assert.equal(l.dmaCode, 0);
+            assert.equal(l.areaCode, 0);
         });
     });
 
