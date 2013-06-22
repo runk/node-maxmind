@@ -1,6 +1,6 @@
 {
     "name": "maxmind",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "homepage": "https://github.com/runk/node-maxmind",
     "description": "IP lookup using Maxmind databases",
     "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone", "asn"],
@@ -25,6 +25,7 @@
         "url": "http://www.gnu.org/licenses/lgpl-2.1.txt"
     }],
     "scripts": {
-        "lint": "jshint ./lib/*.js"
+        "lint": "jshint ./lib/*.js",
+        "test":  "mocha -R spec --recursive"
     }
 }
