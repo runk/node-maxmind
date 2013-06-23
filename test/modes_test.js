@@ -73,4 +73,3 @@ describe('lib/lookup_service', function() {
     });
 
 });
-
