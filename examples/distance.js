@@ -1,6 +1,6 @@
 
 var maxmind = require('maxmind');
-maxmind.init(__dirname + '/GeoLiteCity.dat')
+maxmind.init(__dirname + '/GeoLiteCity.dat');
 
 var l1 = maxmind.getLocation("66.6.44.4");
 var l2 = maxmind.getLocation("213.180.193.3");

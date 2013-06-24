@@ -1,6 +1,6 @@
 
 var maxmind = require('maxmind');
-maxmind.init(__dirname + '/GeoIP.dat')
+maxmind.init(__dirname + '/GeoIP.dat');
 
 var c = maxmind.getCountry("66.6.44.4");
 

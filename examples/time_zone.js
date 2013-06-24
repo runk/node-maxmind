@@ -2,7 +2,7 @@
 var maxmind = require('maxmind'),
     timeZone = require('maxmind/lib/time_zone');
 
-maxmind.init(__dirname + '/GeoLiteCity.dat')
+maxmind.init(__dirname + '/GeoLiteCity.dat');
 
 var l = maxmind.getLocation("66.6.44.4");
 

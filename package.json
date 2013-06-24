@@ -25,7 +25,7 @@
         "url": "http://www.gnu.org/licenses/lgpl-2.1.txt"
     }],
     "scripts": {
-        "lint": "jshint ./lib/*.js",
+        "lint": "jshint ./lib/*.js ./index.js ./examples/*.js",
         "test":  "mocha -R spec --recursive"
     }
 }
