@@ -119,6 +119,20 @@ describe('lib/lookup_service', function() {
             assert.equal(l.areaCode, 0);
         });
 
+        it('should return proper info for non-latin names', function() {
+            var l = ls.getLocation('194.181.164.72');
+
+            assert.equal(l.countryCode, 'PL');
+            assert.equal(l.countryName, 'Poland');
+            assert.equal(l.region, '77');
+            assert.equal(l.city, 'Kraków');
+            assert.equal(l.latitude, 50.08330000000001);
+            assert.equal(l.longitude, 19.91669999999999);
+            assert.equal(l.metroCode, 0);
+            assert.equal(l.dmaCode, 0);
+            assert.equal(l.areaCode, 0);
+        });
+
         it('should return location by ip (2)', function() {
             var l = ls.getLocation('195.68.137.18');
             assert.equal(l.countryCode, 'RU');
