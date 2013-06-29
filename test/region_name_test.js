@@ -3,7 +3,7 @@ var assert = require('assert'),
     ls = require('../lib/lookup_service'),
     regionName = require('../lib/region_name');
 
-const GEO_CITY = __dirname + '/dbs/GeoLiteCity.dat';
+const GEO_CITY = __dirname + '/dbs/GeoIPCity.dat';
 
 describe('lib/region_name', function() {
 

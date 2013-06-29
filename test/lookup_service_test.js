@@ -6,7 +6,7 @@ var assert = require('assert'),
     Location = require('../lib/Location');
 
 
-const GEO_CITY      = __dirname + '/dbs/GeoLiteCity.dat';
+const GEO_CITY      = __dirname + '/dbs/GeoIPCity.dat';
 const GEO_CITY_FULL = __dirname + '/dbs/GeoIPCity_FULL.dat';
 const GEO_COUNTRY   = __dirname + '/dbs/GeoIP.dat';
 const GEO_ASN       = __dirname + '/dbs/GeoIPASNum.dat';

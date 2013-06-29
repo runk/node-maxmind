@@ -3,7 +3,7 @@ var assert = require('assert'),
     ls = require('../lib/lookup_service'),
     timeZone = require('../lib/time_zone');
 
-const GEO_CITY = __dirname + '/dbs/GeoLiteCity.dat';
+const GEO_CITY = __dirname + '/dbs/GeoIPCity.dat';
 
 describe('lib/time_zone', function() {
 
