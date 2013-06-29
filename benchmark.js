@@ -11,7 +11,7 @@ function randip() {
     ].join('.');
 }
 
-ls.init('./test/dbs/GeoLiteCity.dat', { memoryCache: true });
+ls.init('./test/dbs/GeoIPCity.dat', { memoryCache: true });
 var ips = fs.readFileSync('./test/dbs/ips.txt');
 ips = ips.toString().split("\n").map(function(line) {
     return line.trim();

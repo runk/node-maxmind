@@ -54,10 +54,10 @@ describe('lib/lookup_service', function() {
         it('should return proper DatabaseInfo', function() {
             var info = ls.databaseInfo;
             assert.ok(info instanceof DatabaseInfo);
-            assert.equal(info.getType(), 428);
-            assert.equal(info.isPremium(), true);
-            assert.equal(info.getDate().getTime(), 1361232000000);
-            assert.equal(info.toString(), "GEO-533LITE 20130219 Build 1 Copyright (c) 2012 MaxMind Inc All Rights Reserved");
+            assert.equal(info.type, 2);
+            assert.equal(info.isPremium, true);
+            assert.equal(info.date.getTime(), 1361232000000);
+            assert.equal(info.info, "GEO-533LITE 20130219 Build 1 Copyright (c) 2012 MaxMind Inc All Rights Reserved");
         });
     });
 
