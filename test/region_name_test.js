@@ -9,7 +9,6 @@ describe('lib/region_name', function() {
 
     it('should init with city db', function() {
         assert.equal(ls.init(GEO_CITY), true);
-        assert.equal(ls.inited, true);
     });
 
     it('should return region name by ip', function() {

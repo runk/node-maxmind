@@ -9,7 +9,6 @@ describe('lib/time_zone', function() {
 
     it('should init with city db', function() {
         assert.equal(ls.init(GEO_CITY), true);
-        assert.equal(ls.inited, true);
     });
 
     it('should return proper timezone by ip', function() {

@@ -1,10 +1,7 @@
 
 var assert = require('assert'),
     ls = require('../lib/lookup_service'),
-    DatabaseInfo = require('../lib/database_info'),
-    Country = require('../lib/Country'),
-    Location = require('../lib/Location');
-
+    Database = require('../lib/database');
 
 const GEO_CITY      = __dirname + '/dbs/GeoIPCity.dat';
 const GEO_CITY_FULL = __dirname + '/dbs/GeoIPCity_FULL.dat';
@@ -15,22 +12,14 @@ describe('lib/lookup_service', function() {
 
     describe('#init', function() {
 
-        it('inited prop should be false', function() {
-            assert.equal(ls.inited, false);
-        });
-
-        it('should initialize', function() {
+        it('should initialize with single db', function() {
+            ls.uninit();
             assert.equal(ls.init(GEO_CITY), true);
         });
 
-        it('should throw error for invalid path', function() {
-            assert.throws(function() {
-                ls.init(__dirname + '/dbs/blah')
-            });
-        });
-
-        it('inited prop should be true', function() {
-            assert.equal(ls.inited, true);
+        it('should initialize with multiply dbs', function() {
+            ls.uninit();
+            assert.equal(ls.init([GEO_CITY, GEO_ASN]), true);
         });
     });
 
@@ -41,30 +30,12 @@ describe('lib/lookup_service', function() {
 
             var result = ls.ip2Long("195.68.137.18");
             assert.equal(result, 3276048658);
-
-        });
-    });
-
-    describe('.databaseInfo', function() {
-
-        it('inited prop should be true', function() {
-            assert.equal(ls.inited, true);
-        });
-
-        it('should return proper DatabaseInfo', function() {
-            var info = ls.databaseInfo;
-            assert.ok(info instanceof DatabaseInfo);
-            assert.equal(info.type, 2);
-            assert.equal(info.isPremium, true);
-            assert.equal(info.date.getTime(), 1361232000000);
-            assert.equal(info.info, "GEO-533LITE 20130219 Build 1 Copyright (c) 2012 MaxMind Inc All Rights Reserved");
         });
     });
 
     describe('#getCountry', function() {
         it('should init with country db', function() {
             assert.equal(ls.init(GEO_COUNTRY), true);
-            assert.equal(ls.inited, true);
         });
 
         it('should return country by ip', function() {
@@ -90,19 +61,18 @@ describe('lib/lookup_service', function() {
 
     describe("#seekCountry", function() {
         it("should perform binary search", function() {
-            assert.equal(ls.init(GEO_CITY_FULL), true);
+            var db = new Database(GEO_CITY_FULL);
             var iplong = ls.ip2Long('195.68.137.18');
-            assert.equal(ls.seekCountry(iplong), 9150727);
+            assert.equal(ls.seekCountry(db, iplong), 9150727);
 
             iplong = ls.ip2Long('210.250.100.200');
-            assert.equal(ls.seekCountry(iplong), 8067695);
+            assert.equal(ls.seekCountry(db, iplong), 8067695);
         });
     });
 
     describe('#getLocation', function() {
         it('should init with country db', function() {
             assert.equal(ls.init(GEO_CITY_FULL), true);
-            assert.equal(ls.inited, true);
         });
 
         it('should return location by ip', function() {
@@ -163,7 +133,6 @@ describe('lib/lookup_service', function() {
     describe('#getOrg', function() {
         it('should init with country db', function() {
             assert.equal(ls.init(GEO_ASN), true);
-            assert.equal(ls.inited, true);
         });
 
         it('should return ISP by ip', function() {
