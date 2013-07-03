@@ -1,6 +1,6 @@
 {
     "name": "maxmind",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "homepage": "https://github.com/runk/node-maxmind",
     "description": "IP lookup using Maxmind databases",
     "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone", "asn"],

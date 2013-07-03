@@ -50,6 +50,17 @@ Autonomous System Numbers (ASN) lookup
     console.log(maxmind.getOrganization("66.6.44.4"));
 ```
 
+You can initialize module with several databases, and they will be automatically selected for particular queries.
+If any options given they apply for all databases you initialize.
+
+```js
+    var maxmind = require('maxmind');
+    maxmind.init(['/path/to/GeoLiteCity.dat', '/path/to/GeoIPASNum.dat']);
+    // now both org and location lookups will work
+    console.log(maxmind.getOrganization("66.6.44.4"));
+    console.log(maxmind.getLocation("66.6.44.4"));
+
+```
 ## Caching
 
 By default module does not use cache, and works directly with file system. Enabling cache
