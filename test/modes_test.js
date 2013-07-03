@@ -4,8 +4,29 @@ var assert = require('assert'),
 
 const GEO_CITY    = __dirname + '/dbs/GeoIPCity.dat';
 const GEO_COUNTRY = __dirname + '/dbs/GeoIP.dat';
+const GEO_ASN     = __dirname + '/dbs/GeoIPASNum.dat';
 
 describe('lib/lookup_service', function() {
+
+    describe('* multi mode * ', function() {
+        it('should return correct country with default opts', function() {
+            assert.equal(ls.uninit(), true);
+            assert.equal(ls.init([GEO_COUNTRY, GEO_ASN]), true);
+
+            var c = ls.getCountry('109.60.171.33');
+            assert.equal(c.getName(), 'Russian Federation');
+            assert.equal(c.getCode(), 'RU');
+
+            var org = ls.getOrganization('109.60.171.33');
+            assert.equal(org, 'AS47241 CJSC "Ivtelecom"');
+        });
+
+        it('should throw exception for unavailable dbs', function() {
+            assert.throws(function() {
+                ls.getRegion('109.60.171.33');
+            });
+        });
+    });
 
     describe('* modes * ', function() {
 
@@ -35,7 +56,6 @@ describe('lib/lookup_service', function() {
             assert.equal(c.getName(), 'Russian Federation');
             assert.equal(c.getCode(), 'RU');
         });
-
 
         it('should return correct country with default opts', function() {
             assert.equal(ls.uninit(), true);
