@@ -1,4 +1,3 @@
-
 node-maxmind
 ========
 
@@ -64,7 +63,7 @@ If any options given they apply for all databases you initialize.
 ## Caching
 
 By default module does not use cache, and works directly with file system. Enabling cache
-leads to better performance, howerver consumer more memory. Currently module supports two options:
+leads to better performance, however consumes more memory. Currently module supports two options:
 
 - `indexCache` saves in memory only the country index
 - `memoryCache` saves in memory full database file
