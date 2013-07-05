@@ -80,11 +80,11 @@ laptop:
 
 - default: 18,000 lookups / second
 - `indexCache`: 80,000 lookups / second
-- `memodyCache`: 130,000 lookups / second
+- `memoryCache`: 130,000 lookups / second
 
 ## Tests
 
-If you want ot run tests you will need `mocha` installed, then just run it:
+If you want to run tests you will need `mocha` installed, then just run it:
 
     $ mocha
 
