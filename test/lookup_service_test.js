@@ -81,6 +81,7 @@ describe('lib/lookup_service', function() {
             assert.equal(l.countryCode, 'RU');
             assert.equal(l.countryName, 'Russian Federation');
             assert.equal(l.region, '21');
+            assert.equal(l.regionName, 'Ivanovo');
             assert.equal(l.city, 'Ivanovo');
             assert.equal(l.latitude, 56.99719999999999);
             assert.equal(l.longitude, 40.97139999999999);
@@ -95,6 +96,7 @@ describe('lib/lookup_service', function() {
             assert.equal(l.countryCode, 'PL');
             assert.equal(l.countryName, 'Poland');
             assert.equal(l.region, '77');
+            assert.equal(l.regionName, 'Malopolskie');
             assert.equal(l.city, 'Kraków');
             assert.equal(l.latitude, 50.08330000000001);
             assert.equal(l.longitude, 19.91669999999999);
@@ -108,6 +110,7 @@ describe('lib/lookup_service', function() {
             assert.equal(l.countryCode, 'RU');
             assert.equal(l.countryName, 'Russian Federation');
             assert.equal(l.region, '47');
+            assert.equal(l.regionName, 'Moskva');
             assert.equal(l.city, 'Marfino');
             assert.equal(l.latitude, 55.70269999999999);
             assert.equal(l.longitude, 37.38319999999999);
@@ -121,6 +124,7 @@ describe('lib/lookup_service', function() {
             assert.equal(l.countryCode, 'FR');
             assert.equal(l.countryName, 'France');
             assert.equal(l.region, 'A2');
+            assert.equal(l.regionName, 'Bretagne');
             assert.equal(l.city, 'Rennes');
             assert.equal(l.latitude, 48.111999999999995);
             assert.equal(l.longitude, -1.6742999999999881);
