@@ -82,7 +82,7 @@ laptop:
 
 If you want to run tests you will need `mocha` installed, then just run it:
 
-    $ mocha
+    $ npm test
 
 
 ## Disclaimer
