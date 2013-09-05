@@ -1,31 +1,28 @@
 {
-    "name": "maxmind",
-    "version": "0.2.1",
-    "homepage": "https://github.com/runk/node-maxmind",
-    "description": "IP lookup using Maxmind databases",
-    "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone", "asn"],
-    "author": "Shirokov Dmitry <deadrunk@gmail.com>",
-    "dependencies": {},
-    "devDependencies": {
-        "mocha": ">= 1.10.0",
-        "jshint": ">= 2.1.3"
-    },
-    "repository": {
-        "type":"git",
-        "url":"git@github.com:runk/node-maxmind.git"
-    },
-    "bugs": {
-      "mail":"deadrunk@gmail.com",
-      "url":"http://github.com/runk/node-maxmind/issues"
-    },
-    "main": "index.js",
-    "engine": { "node": ">=0.8.0", "npm": "1" },
-    "licences": [{
-        "type":"LGPL2.1",
-        "url": "http://www.gnu.org/licenses/lgpl-2.1.txt"
-    }],
-    "scripts": {
-        "lint": "jshint ./lib/*.js ./index.js ./examples/*.js",
-        "test":  "mocha -R spec --recursive"
-    }
+  "name": "maxmind",
+  "version": "0.2.2",
+  "homepage": "https://github.com/runk/node-maxmind",
+  "description": "IP lookup using Maxmind databases",
+  "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone", "asn"],
+  "author": "Shirokov Dmitry <deadrunk@gmail.com>",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": ">= 1.10.0",
+    "jshint": ">= 2.1.3"
+  },
+  "repository": {
+    "type":"git",
+    "url":"git@github.com:runk/node-maxmind.git"
+  },
+  "bugs": {
+    "mail":"deadrunk@gmail.com",
+    "url":"http://github.com/runk/node-maxmind/issues"
+  },
+  "main": "index.js",
+  "engine": { "node": ">=0.8.0", "npm": "1" },
+  "license": "MIT",
+  "scripts": {
+    "lint": "jshint ./lib/*.js ./index.js ./examples/*.js",
+    "test":  "mocha -R spec --recursive"
+  }
 }

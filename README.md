@@ -1,4 +1,4 @@
-node-maxmind
+node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](https://travis-ci.org/runk/node-maxmind)
 ========
 
 IP geo lookup using Maxmind databases, written in pure javascript with no dependencies.
