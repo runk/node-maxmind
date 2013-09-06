@@ -42,22 +42,22 @@ describe('lib/lookup_service', function() {
 
     it('should return country by ip', function() {
       var c = ls.getCountry('109.60.171.33');
-      assert.equal(c.getName(), 'Russian Federation');
-      assert.equal(c.getCode(), 'RU');
+      assert.equal(c.name, 'Russian Federation');
+      assert.equal(c.code, 'RU');
 
       var c = ls.getCountry('210.250.100.200');
-      assert.equal(c.getName(), 'Japan');
-      assert.equal(c.getCode(), 'JP');
+      assert.equal(c.name, 'Japan');
+      assert.equal(c.code, 'JP');
 
       var c = ls.getCountry('1.2.1.1');
-      assert.equal(c.getName(), 'China');
-      assert.equal(c.getCode(), 'CN');
+      assert.equal(c.name, 'China');
+      assert.equal(c.code, 'CN');
     });
 
     it('should return unknown country by unknown ip', function() {
       var c = ls.getCountry('blahblah');
-      assert.equal(c.getName(), 'N/A');
-      assert.equal(c.getCode(), '--');
+      assert.equal(c.name, 'N/A');
+      assert.equal(c.code, '--');
     });
   });
 

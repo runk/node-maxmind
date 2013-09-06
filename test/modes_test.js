@@ -15,8 +15,8 @@ describe('lib/lookup_service', function() {
       assert.equal(ls.init([GEO_COUNTRY, GEO_ASN]), true);
 
       var c = ls.getCountry('109.60.171.33');
-      assert.equal(c.getName(), 'Russian Federation');
-      assert.equal(c.getCode(), 'RU');
+      assert.equal(c.name, 'Russian Federation');
+      assert.equal(c.code, 'RU');
 
       var org = ls.getOrganization('109.60.171.33');
       assert.equal(org, 'AS47241 CJSC "Ivtelecom"');
@@ -37,8 +37,8 @@ describe('lib/lookup_service', function() {
       assert.equal(ls.init(GEO_COUNTRY), true);
 
       var c = ls.getCountry('109.60.171.33');
-      assert.equal(c.getName(), 'Russian Federation');
-      assert.equal(c.getCode(), 'RU');
+      assert.equal(c.name, 'Russian Federation');
+      assert.equal(c.code, 'RU');
     });
 
     it('should return correct country with "indexCache" opt', function() {
@@ -46,8 +46,8 @@ describe('lib/lookup_service', function() {
       assert.equal(ls.init(GEO_COUNTRY, { indexCache: true }), true);
 
       var c = ls.getCountry('109.60.171.33');
-      assert.equal(c.getName(), 'Russian Federation');
-      assert.equal(c.getCode(), 'RU');
+      assert.equal(c.name, 'Russian Federation');
+      assert.equal(c.code, 'RU');
     });
 
     it('should return correct country with "memoryCache" opt', function() {
@@ -55,8 +55,8 @@ describe('lib/lookup_service', function() {
       assert.equal(ls.init(GEO_COUNTRY, { memoryCache: true }), true);
 
       var c = ls.getCountry('109.60.171.33');
-      assert.equal(c.getName(), 'Russian Federation');
-      assert.equal(c.getCode(), 'RU');
+      assert.equal(c.name, 'Russian Federation');
+      assert.equal(c.code, 'RU');
     });
 
     it('should return correct country with default opts', function() {
