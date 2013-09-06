@@ -4,7 +4,10 @@
   "homepage": "https://github.com/runk/node-maxmind",
   "description": "IP lookup using Maxmind databases",
   "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone", "asn"],
-  "author": "Shirokov Dmitry <deadrunk@gmail.com>",
+  "author": "Dmitry Shirokov <deadrunk@gmail.com>",
+  "contributors": [
+    "Thomas Birke @quafzi <quafzi@netextreme.de>"
+  ],
   "dependencies": {},
   "devDependencies": {
     "mocha": ">= 1.10.0",

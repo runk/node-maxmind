@@ -56,15 +56,16 @@ var org = maxmind.getOrganization('66.6.44.4');
 var location = maxmind.getLocation('66.6.44.4');
 ```
 
-## Caching
+## Options
 
 By default module does not use cache, and works directly with file system. Enabling cache
-leads to better performance though consumes more memory. Currently module supports two options:
+leads to better performance though consumes more memory.
 
 - `indexCache` saves in memory the country index only
 - `memoryCache` saves in memory full database file
+- `checkForUpdates` checks databases for updates (via fs mtime)
 
-If you decided to enable caching you can pass it as a flag in `init` method:
+If you decided to enable some options you can pass it as a flag in `init` method:
 
 ```javascript
 var maxmind = require('maxmind');
