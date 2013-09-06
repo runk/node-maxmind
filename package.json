@@ -22,7 +22,7 @@
   "engine": { "node": ">=0.8.0", "npm": "1" },
   "license": "MIT",
   "scripts": {
-    "lint": "jshint ./lib/*.js ./index.js ./examples/*.js",
+    "lint": "jshint ./lib/*.js ./lib/**/*.js ./index.js ./examples/*.js",
     "test":  "mocha -R spec --recursive"
   }
 }
