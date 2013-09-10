@@ -12,7 +12,7 @@ function randip() {
 }
 
 ls.init('./test/dbs/GeoIPCity.dat', { memoryCache: true });
-var ips = fs.readFileSync('./test/dbs/ips.txt');
+var ips = fs.readFileSync('./test/dbs/full/ips.txt');
 ips = ips.toString().split("\n").map(function(line) {
     return line.trim();
 });
