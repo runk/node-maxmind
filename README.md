@@ -75,9 +75,9 @@ maxmind.init('/path/to/GeoIP.dat', { indexCache: true });
 Caching could significantly increase performance, refer to this camparison which was made on average
 laptop:
 
-- default: 18,000 lookups / second
-- `indexCache`: 80,000 lookups / second
-- `memoryCache`: 130,000 lookups / second
+- default: 20,000 lookups / second
+- `indexCache`: 115,000 lookups / second
+- `memoryCache`: 200,000 lookups / second
 
 ## Tests
 
