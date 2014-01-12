@@ -144,9 +144,13 @@ describe('lib/lookup_service', function() {
     });
 
     it('should return ISP by ip', function() {
-      assert.equal(ls.getOrganization('109.60.171.33'), 'AS47241 CJSC "Ivtelecom"')
-      assert.equal(ls.getOrganization('64.4.4.4'), 'AS8075 Microsoft Corp')
-      assert.equal(ls.getOrganization('210.250.100.200'), 'AS2527 So-net Entertainment Corporation')
+      assert.equal(ls.getOrganization('109.60.171.33'), 'AS47241 CJSC "Ivtelecom"');
+      assert.equal(ls.getOrganization('64.4.4.4'), 'AS8075 Microsoft Corp');
+      assert.equal(ls.getOrganization('210.250.100.200'), 'AS2527 So-net Entertainment Corporation');
+    });
+
+    it('should work fine with utf8', function() {
+      assert.equal(ls.getOrganization('189.63.71.77'), 'AS28573 Serviços de Comunicação S.A.');
     });
   });
 
