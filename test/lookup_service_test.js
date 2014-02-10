@@ -135,6 +135,22 @@ describe('lib/lookup_service', function() {
       assert.equal(l.dmaCode, 0);
       assert.equal(l.areaCode, 0);
     });
+
+    it('should return location by ip (4)', function() {
+      var l = ls.getLocation('180.189.170.18');
+      assert.equal(l.countryCode, 'TL');
+      assert.equal(l.countryName, 'Timor-Leste');
+      assert.equal(l.region, null);
+      assert.equal(l.regionName, null);
+      assert.equal(l.city, null);
+      assert.equal(l.latitude, -8.569999999999993);
+      assert.equal(l.longitude, 125.57);
+      assert.equal(l.metroCode, 0);
+      assert.equal(l.dmaCode, 0);
+      assert.equal(l.areaCode, 0);
+    });
+
+
   });
 
 
