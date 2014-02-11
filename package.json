@@ -11,7 +11,8 @@
   "dependencies": {},
   "devDependencies": {
     "mocha": ">= 1.10.0",
-    "jshint": ">= 2.1.3"
+    "jshint": ">= 2.1.3",
+    "istanbul": "latest"
   },
   "repository": {
     "type":"git",
@@ -26,6 +27,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "jshint ./lib/*.js ./lib/**/*.js ./index.js ./examples/*.js",
-    "test":  "mocha -R spec --recursive"
+    "test":  "mocha -R spec --recursive",
+    "coverage": "istanbul cover _mocha -- -R dot --recursive",
+    "benchmark": "node benchmark"
   }
 }

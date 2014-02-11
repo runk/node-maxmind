@@ -149,8 +149,6 @@ describe('lib/lookup_service', function() {
       assert.equal(l.dmaCode, 0);
       assert.equal(l.areaCode, 0);
     });
-
-
   });
 
 

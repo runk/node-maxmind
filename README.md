@@ -1,7 +1,8 @@
 node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](https://travis-ci.org/runk/node-maxmind)
 ========
 
-IP geo lookup using Maxmind databases, written in pure javascript with no dependencies.
+Native Javascript module for IP GEO lookup using Maxmind databases. Up to 400% faster than other GEO lookip libraries.
+No binary or whatsoever dependencies.
 
 ## GEO databases
 
@@ -10,17 +11,19 @@ Free GEO databases available for download here: http://dev.maxmind.com/geoip/geo
 
 ## Installation
 
-    npm install maxmind
+    npm i maxmind
 
 
 ## Main features
 
- - Location lookup
- - Region Loopup
- - Country lookup
+ - Country/Region/Location lookup by IP
  - Distance between two IP addresses (locations)
  - Timezone lookup by IP
- - Autonomous System Numbers (ASN) lookup
+ - Autonomous System Numbers (ASN) lookup by IP
+
+Module written in pure Javascript with no dependencies. Being able to work with binary Maxmind databases it doesn't
+require any "CSV - {specific lib format}" conversions as other modules do. Maxmind binary databases are highly optimized
+for size and performance so there's no point working with other than that format.
 
 ## Usage
 
@@ -63,31 +66,56 @@ leads to better performance though consumes more memory.
 
 - `indexCache` saves in memory the country index only
 - `memoryCache` saves in memory full database file
-- `checkForUpdates` checks databases for updates (via fs mtime)
+- `checkForUpdates` checks databases for updates (via fs mtime). Basically once you replace the old DB file with
+  the new one module automamtically re-initialises.
 
-If you decided to enable some options you can pass it as a flag in `init` method:
+Options can be passed to `init` method:
 
 ```javascript
 var maxmind = require('maxmind');
-maxmind.init('/path/to/GeoIP.dat', { indexCache: true });
+maxmind.init('/path/to/GeoIP.dat', {indexCache: true, checkForUpdates: true});
 ```
 
-Caching could significantly increase performance, refer to this camparison which was made on average
+
+## Performance / Benchmark
+
+Caching significantly increases performance, refer to this camparison which was made on average
 laptop:
 
 - default: 20,000 lookups / second
 - `indexCache`: 115,000 lookups / second
-- `memoryCache`: 200,000 lookups / second
-
-## Tests
-
-If you want to run tests you will need `mocha` installed, then just run it:
-
-    $ npm test
+- `memoryCache`: 210,000 lookups / second
 
 
-## Disclaimer
+Following benchmark is made for `GeoIPCity` database. Memory caching is enabled where possible. If you believe that
+benchmark is not realistic please post a PR and share your code :)
 
-Module is quite young and serious bugs are possible. Feel free to
-send pull request / bug reports.
+```
+node-maxmind  218,579 op/sec
+geoip-lite    188,040 op/sec  16.24% slower
+geoip         40,363  op/sec  441.53% slower
+```
 
+
+## Contributing
+
+Make sure you run `npm i` command in the project's dir before you begin, it'll install all dev dependencies. Currently
+code coverage is about **85%**, so new tests are essential when you add new functionality. There're several npm tasks
+which you can find useful:
+
+- `npm test` runs tests
+- `npm run lint` runs js linter
+- `npm run coverage` runs code coverage task and generates report
+- `npm run benchmark` runs basic benchmark
+
+One pull request per one feature, nothing unusual.
+
+
+## References
+ - Timezones http://www.maxmind.com/timezone.txt
+ - Region codes http://www.maxmind.com/app/iso3166_2
+
+
+## License
+
+MIT
