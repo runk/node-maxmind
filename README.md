@@ -1,7 +1,8 @@
 node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](https://travis-ci.org/runk/node-maxmind)
 ========
 
-Native Javascript module for IP GEO lookup using Maxmind databases. Up to 400% faster than other GEO lookip libraries.
+Native Javascript module for IP GEO lookup using Maxmind databases.
+Up to [400% faster](https://github.com/runk/node-maxmind#performance--benchmark) than other GEO lookip libraries.
 No binary or whatsoever dependencies.
 
 ## GEO databases

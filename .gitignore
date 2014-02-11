@@ -2,3 +2,4 @@ test/dbs/full
 testing.js
 node_modules
 .DS_Store
+coverage
