@@ -36,7 +36,7 @@ describe('lib/lookup_service', function() {
 
 
   describe('getCountry()', function() {
-    it('should init with country db', function() {
+    before(function() {
       assert.equal(ls.init(GEO_COUNTRY), true);
     });
 
@@ -75,8 +75,8 @@ describe('lib/lookup_service', function() {
 
 
   describe('getLocation()', function() {
-    it('should init with country db', function() {
-        assert.equal(ls.init(GEO_CITY), true);
+    before(function() {
+      assert.equal(ls.init(GEO_CITY), true);
     });
 
     it('should return location by ip', function() {
@@ -153,7 +153,7 @@ describe('lib/lookup_service', function() {
 
 
   describe('getOrg()', function() {
-    it('should init with country db', function() {
+    before(function() {
       assert.equal(ls.init(GEO_ASN), true);
     });
 
