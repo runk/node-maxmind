@@ -2,7 +2,7 @@ node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](http
 ========
 
 Native Javascript module for IP GEO lookup using Maxmind databases.
-Up to [400% faster](https://github.com/runk/node-maxmind#performance--benchmark) than other GEO lookip libraries.
+Up to [500% faster](https://github.com/runk/node-maxmind#performance--benchmark) than other GEO lookip libraries.
 No binary or whatsoever dependencies.
 
 ## GEO databases
@@ -92,9 +92,9 @@ Following benchmark is made for `GeoIPCity` database. Memory caching is enabled 
 benchmark is not realistic please post a PR and share your code :)
 
 ```
-node-maxmind  218,579 op/sec
-geoip-lite    188,040 op/sec  16.24% slower
-geoip         40,363  op/sec  441.53% slower
+node-maxmind  274649 op/sec
+geoip-lite    191681 op/sec 43.28% slower
+geoip         43483 op/sec  531.61% slower
 ```
 
 
