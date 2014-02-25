@@ -85,7 +85,7 @@ laptop:
 
 - default: 20,000 lookups / second
 - `indexCache`: 115,000 lookups / second
-- `memoryCache`: 210,000 lookups / second
+- `memoryCache`: 270,000 lookups / second
 
 
 Following benchmark is made for `GeoIPCity` database. Memory caching is enabled where possible. If you believe that
