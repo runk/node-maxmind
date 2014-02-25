@@ -1,0 +1,4 @@
+test/dbs
+coverage
+testing.js
+.DS_Store
