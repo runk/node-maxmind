@@ -3,6 +3,7 @@ var assert = require('assert'),
   Database = require('../lib/database');
 
 const GEO_CITY      = __dirname + '/dbs/GeoIPCity.dat';
+const GEO_CITY_V6   = __dirname + '/dbs/GeoIPCityv6.dat';
 const GEO_COUNTRY   = __dirname + '/dbs/GeoIP.dat';
 const GEO_ASN       = __dirname + '/dbs/GeoIPASNum.dat';
 
@@ -22,18 +23,6 @@ describe('lib/lookup_service', function() {
       assert.equal(ls.init([GEO_CITY, GEO_ASN]), true);
     });
   });
-
-
-  describe('ip2Long()', function() {
-    it("should conver IP to the long format", function() {
-      var result = ls.ip2Long("87.229.134.24");
-      assert.equal(result, 1474659864);
-
-      var result = ls.ip2Long("195.68.137.18");
-      assert.equal(result, 3276048658);
-    });
-  });
-
 
   describe('getCountry()', function() {
     before(function() {
@@ -62,9 +51,34 @@ describe('lib/lookup_service', function() {
   });
 
 
-  describe("seekCountry()", function() {
-    it("should perform binary search", function() {
+  describe('seekCountry()', function() {
+    it('should perform binary search', function() {
       var db = new Database(GEO_CITY);
+      assert.equal(ls.seekCountry(db, 3276048658), 2854053);
+      assert.equal(ls.seekCountry(db, 3539625160), 2779115);
+    });
+  });
+
+  // LookupService cl = new LookupService(
+  //       "src/test/resources/GeoIP/GeoLiteCityv6.dat",
+  //       LookupService.GEOIP_MEMORY_CACHE);
+  //   Location l1 = cl.getLocationV6("2a02:ff40::");
+  //   Location l2 = cl.getLocationV6("2001:208::");
+
+  //   assertEquals("SG", l2.countryCode);
+  //   assertEquals("Singapore", l2.countryName);
+  //   assertEquals(1.3666992, l2.latitude, DELTA);
+  //   assertEquals(103.79999, l2.longitude, DELTA);
+  //   assertEquals(11074.876894, l2.distance(l1), DELTA);
+  //   assertEquals(11074.876894, l1.distance(l2), DELTA);
+  //   assertEquals(0, l2.metro_code);
+  //   assertEquals("Asia/Singapore",
+  //       timeZone.timeZoneByCountryAndRegion(l2.countryCode, l2.region));
+
+  //   cl.close();
+  describe.skip('seekCountryV6()', function() {
+    it('should return correct index', function() {
+      var db = new Database(GEO_CITY_V6);
       var iplong = ls.ip2Long('195.68.137.18');
       assert.equal(ls.seekCountry(db, iplong), 2854053);
 
