@@ -61,7 +61,7 @@ describe('lib/lookup_service', function() {
   });
 
 
-  describe('seekCountryV6()', function() {
+  describe.skip('seekCountryV6()', function() {
 
     it('should return correct index', function() {
       var db = new Database(GEO_COUNTRY_V6);
