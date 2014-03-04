@@ -5,6 +5,7 @@ var assert = require('assert'),
 const GEO_CITY      = __dirname + '/dbs/GeoIPCity.dat';
 const GEO_CITY_V6   = __dirname + '/dbs/GeoIPCityv6.dat';
 const GEO_COUNTRY   = __dirname + '/dbs/GeoIP.dat';
+const GEO_COUNTRY_V6 = __dirname + '/dbs/GeoIPv6.dat';
 const GEO_ASN       = __dirname + '/dbs/GeoIPASNum.dat';
 
 
@@ -59,31 +60,14 @@ describe('lib/lookup_service', function() {
     });
   });
 
-  // LookupService cl = new LookupService(
-  //       "src/test/resources/GeoIP/GeoLiteCityv6.dat",
-  //       LookupService.GEOIP_MEMORY_CACHE);
-  //   Location l1 = cl.getLocationV6("2a02:ff40::");
-  //   Location l2 = cl.getLocationV6("2001:208::");
 
-  //   assertEquals("SG", l2.countryCode);
-  //   assertEquals("Singapore", l2.countryName);
-  //   assertEquals(1.3666992, l2.latitude, DELTA);
-  //   assertEquals(103.79999, l2.longitude, DELTA);
-  //   assertEquals(11074.876894, l2.distance(l1), DELTA);
-  //   assertEquals(11074.876894, l1.distance(l2), DELTA);
-  //   assertEquals(0, l2.metro_code);
-  //   assertEquals("Asia/Singapore",
-  //       timeZone.timeZoneByCountryAndRegion(l2.countryCode, l2.region));
+  describe('seekCountryV6()', function() {
 
-  //   cl.close();
-  describe.skip('seekCountryV6()', function() {
     it('should return correct index', function() {
-      var db = new Database(GEO_CITY_V6);
-      var iplong = ls.ip2Long('195.68.137.18');
-      assert.equal(ls.seekCountry(db, iplong), 2854053);
+      var db = new Database(GEO_COUNTRY_V6);
 
-      iplong = ls.ip2Long('210.250.100.200');
-      assert.equal(ls.seekCountry(db, iplong), 2779115);
+      assert.equal(ls.seekCountryV6(db, '2001:0db8:85a3:0042:1000:8a2e:0370:7334'), 0xffff00);
+      assert.equal(ls.seekCountryV6(db, '2001:4860:0:1001::68'), 0xffffe1);
     });
   });
 
