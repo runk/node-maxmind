@@ -25,23 +25,23 @@ describe('lib/lookup_service', function() {
     });
   });
 
+  describe('seekCountry()', function() {
+    it('should perform binary search', function() {
+      var db = new Database(GEO_CITY);
+      assert.equal(ls.seekCountry(db, 3276048658), 2854053);
+      assert.equal(ls.seekCountry(db, 3539625160), 2779115);
+    });
+  });
+
   describe('getCountry()', function() {
     before(function() {
       assert.equal(ls.init(GEO_COUNTRY), true);
     });
 
     it('should return country by ip', function() {
-      var c = ls.getCountry('109.60.171.33');
-      assert.equal(c.name, 'Russian Federation');
-      assert.equal(c.code, 'RU');
-
-      var c = ls.getCountry('210.250.100.200');
-      assert.equal(c.name, 'Japan');
-      assert.equal(c.code, 'JP');
-
-      var c = ls.getCountry('1.2.1.1');
-      assert.equal(c.name, 'China');
-      assert.equal(c.code, 'CN');
+      assert.deepEqual(ls.getCountry('109.60.171.33'), {name: 'Russian Federation', code: 'RU'});
+      assert.deepEqual(ls.getCountry('210.250.100.200'), {name: 'Japan', code: 'JP'});
+      assert.deepEqual(ls.getCountry('1.2.1.1'), {name: 'China', code: 'CN'});
     });
 
     it('should return unknown country by unknown ip', function() {
@@ -52,22 +52,32 @@ describe('lib/lookup_service', function() {
   });
 
 
-  describe('seekCountry()', function() {
-    it('should perform binary search', function() {
-      var db = new Database(GEO_CITY);
-      assert.equal(ls.seekCountry(db, 3276048658), 2854053);
-      assert.equal(ls.seekCountry(db, 3539625160), 2779115);
-    });
-  });
-
-
-  describe.skip('seekCountryV6()', function() {
+  describe('seekCountryV6()', function() {
 
     it('should return correct index', function() {
       var db = new Database(GEO_COUNTRY_V6);
 
       assert.equal(ls.seekCountryV6(db, '2001:0db8:85a3:0042:1000:8a2e:0370:7334'), 0xffff00);
-      assert.equal(ls.seekCountryV6(db, '2001:4860:0:1001::68'), 0xffffe1);
+      assert.equal(ls.seekCountryV6(db, '2001:4860:0:1001::68'), 0xffff00);
+      assert.equal(ls.seekCountryV6(db, '::64.17.254.216'), 0xffffe1);
+      assert.equal(ls.seekCountryV6(db, '::ffff:64.17.254.216'), 0xffffe1);
+      assert.equal(ls.seekCountryV6(db, '2001:200::'), 0xffff6f);
+    });
+  });
+
+
+  describe('getCountryV6()', function() {
+    before(function() {
+      assert.equal(ls.init(GEO_COUNTRY_V6), true);
+    });
+
+    it('should return country by ip', function() {
+      assert.deepEqual(ls.getCountryV6('::64.17.254.216'), {code: 'US', name: 'United States'});
+      assert.deepEqual(ls.getCountryV6('2001:200::'), {code: 'JP', name: 'Japan'});
+    });
+
+    it('should return unknown country by unknown ip', function() {
+      assert.deepEqual(ls.getCountryV6('blahblah'), {name: 'N/A', code: '--'});
     });
   });
 
