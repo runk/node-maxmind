@@ -7,6 +7,7 @@ const GEO_CITY_V6   = __dirname + '/dbs/GeoIPCityv6.dat';
 const GEO_COUNTRY   = __dirname + '/dbs/GeoIP.dat';
 const GEO_COUNTRY_V6 = __dirname + '/dbs/GeoIPv6.dat';
 const GEO_ASN       = __dirname + '/dbs/GeoIPASNum.dat';
+const GEO_ASN_V6    = __dirname + '/dbs/GeoIPASNumv6.dat';
 
 
 describe('lib/lookup_service', function() {
@@ -160,7 +161,7 @@ describe('lib/lookup_service', function() {
   });
 
 
-  describe('getOrg()', function() {
+  describe('getOrganization()', function() {
     before(function() {
       assert.equal(ls.init(GEO_ASN), true);
     });
@@ -174,6 +175,22 @@ describe('lib/lookup_service', function() {
     it('should work fine with utf8', function() {
       assert.equal(ls.getOrganization('189.63.71.77'), 'AS28573 Serviços de Comunicação S.A.');
     });
+  });
+
+
+  describe('getOrganizationV6()', function() {
+    before(function() {
+      assert.equal(ls.init(GEO_ASN_V6), true);
+    });
+
+    it('should return ISP by ip', function() {
+      assert.equal(ls.getOrganizationV6('2001:0db8:85a3:0042:1000:8a2e:0370:7334'), null);
+      assert.equal(ls.getOrganizationV6('2001:4860:0:1001::68'), 'AS15169 Google Inc.');
+      assert.equal(ls.getOrganizationV6('::64.17.254.216'), 'AS33224 Towerstream I, Inc.');
+      assert.equal(ls.getOrganizationV6('::ffff:64.17.254.216'), 'AS33224 Towerstream I, Inc.');
+      assert.equal(ls.getOrganizationV6('2001:200::'), 'AS2500 WIDE Project');
+    });
+
   });
 
 });
