@@ -13,6 +13,15 @@ const GEO_ASN_V6    = __dirname + '/dbs/GeoIPASNumv6.dat';
 describe('lib/lookup_service', function() {
 
 
+  var props = function(obj) {
+    var res = {};
+    for (var k in obj)
+      if (typeof obj[k] !== 'function')
+        res[k] = obj[k];
+    return res;
+  };
+
+
   describe('init()', function() {
 
     it('should initialize with single db', function() {
@@ -26,6 +35,7 @@ describe('lib/lookup_service', function() {
     });
   });
 
+
   describe('seekCountry()', function() {
     it('should perform binary search', function() {
       var db = new Database(GEO_CITY);
@@ -33,6 +43,20 @@ describe('lib/lookup_service', function() {
       assert.equal(ls.seekCountry(db, 3539625160), 2779115);
     });
   });
+
+
+  describe('seekCountryV6()', function() {
+    it('should return correct index', function() {
+      var db = new Database(GEO_COUNTRY_V6);
+
+      assert.equal(ls.seekCountryV6(db, '2001:0db8:85a3:0042:1000:8a2e:0370:7334'), 0xffff00);
+      assert.equal(ls.seekCountryV6(db, '2001:4860:0:1001::68'), 0xffff00);
+      assert.equal(ls.seekCountryV6(db, '::64.17.254.216'), 0xffffe1);
+      assert.equal(ls.seekCountryV6(db, '::ffff:64.17.254.216'), 0xffffe1);
+      assert.equal(ls.seekCountryV6(db, '2001:200::'), 0xffff6f);
+    });
+  });
+
 
   describe('getCountry()', function() {
     before(function() {
@@ -49,20 +73,6 @@ describe('lib/lookup_service', function() {
       var c = ls.getCountry('blahblah');
       assert.equal(c.name, 'N/A');
       assert.equal(c.code, '--');
-    });
-  });
-
-
-  describe('seekCountryV6()', function() {
-
-    it('should return correct index', function() {
-      var db = new Database(GEO_COUNTRY_V6);
-
-      assert.equal(ls.seekCountryV6(db, '2001:0db8:85a3:0042:1000:8a2e:0370:7334'), 0xffff00);
-      assert.equal(ls.seekCountryV6(db, '2001:4860:0:1001::68'), 0xffff00);
-      assert.equal(ls.seekCountryV6(db, '::64.17.254.216'), 0xffffe1);
-      assert.equal(ls.seekCountryV6(db, '::ffff:64.17.254.216'), 0xffffe1);
-      assert.equal(ls.seekCountryV6(db, '2001:200::'), 0xffff6f);
     });
   });
 
@@ -89,74 +99,77 @@ describe('lib/lookup_service', function() {
     });
 
     it('should return location by ip', function() {
-      var l = ls.getLocation('109.60.171.33');
-      assert.equal(l.countryCode, 'RU');
-      assert.equal(l.countryName, 'Russian Federation');
-      assert.equal(l.region, '48');
-      assert.equal(l.regionName, 'Moscow City');
-      assert.equal(l.city, 'Moscow');
-      assert.equal(l.latitude, 55.75219999999999);
-      assert.equal(l.longitude, 37.6156);
-      assert.equal(l.metroCode, 0);
-      assert.equal(l.dmaCode, 0);
-      assert.equal(l.areaCode, 0);
+      assert.deepEqual(props(ls.getLocation('109.60.171.33')), {
+        countryCode: 'RU',
+        countryName: 'Russian Federation',
+        region: '48',
+        city: 'Moscow',
+        postalCode: null,
+        latitude: 55.75219999999999,
+        longitude: 37.6156,
+        dmaCode: 0,
+        areaCode: 0,
+        metroCode: 0,
+        regionName: 'Moscow City'
+      });
     });
 
     it('should return proper info for non-latin names', function() {
       var l = ls.getLocation('194.181.164.72');
-
       assert.equal(l.countryCode, 'PL');
       assert.equal(l.countryName, 'Poland');
-      assert.equal(l.region, '77');
-      assert.equal(l.regionName, 'Malopolskie');
       assert.equal(l.city, 'Kraków');
-      assert.equal(l.latitude, 50.08330000000001);
-      assert.equal(l.longitude, 19.91669999999999);
-      assert.equal(l.metroCode, 0);
-      assert.equal(l.dmaCode, 0);
-      assert.equal(l.areaCode, 0);
     });
 
-    it('should return location by ip (2)', function() {
-      var l = ls.getLocation('195.68.137.18');
-      assert.equal(l.countryCode, 'RU');
-      assert.equal(l.countryName, 'Russian Federation');
-      assert.equal(l.region, null);
-      assert.equal(l.regionName, null);
-      assert.equal(l.city, null);
-      assert.equal(l.latitude, 60);
-      assert.equal(l.longitude, 100);
-      assert.equal(l.metroCode, 0);
-      assert.equal(l.dmaCode, 0);
-      assert.equal(l.areaCode, 0);
-    });
-
-    it('should return location by ip (3)', function() {
+    it('should return location by ip from the beginning of the range', function() {
       var l = ls.getLocation('2.2.3.29');
       assert.equal(l.countryCode, 'FR');
       assert.equal(l.countryName, 'France');
-      assert.equal(l.region, 'A2');
-      assert.equal(l.regionName, 'Bretagne');
       assert.equal(l.city, 'Rennes');
-      assert.equal(l.latitude, 48.111999999999995);
-      assert.equal(l.longitude, -1.6742999999999881);
-      assert.equal(l.metroCode, 0);
-      assert.equal(l.dmaCode, 0);
-      assert.equal(l.areaCode, 0);
     });
 
-    it('should return location by ip (4)', function() {
+    it('should return location for small country', function() {
       var l = ls.getLocation('180.189.170.18');
       assert.equal(l.countryCode, 'TL');
       assert.equal(l.countryName, 'Timor-Leste');
-      assert.equal(l.region, null);
-      assert.equal(l.regionName, null);
-      assert.equal(l.city, null);
-      assert.equal(l.latitude, -8.569999999999993);
-      assert.equal(l.longitude, 125.57);
-      assert.equal(l.metroCode, 0);
-      assert.equal(l.dmaCode, 0);
-      assert.equal(l.areaCode, 0);
+    });
+  });
+
+
+  describe('getLocationV6()', function() {
+
+    before(function() {
+      assert.equal(ls.init(GEO_CITY_V6), true);
+    });
+
+    it('should return correct data', function() {
+      assert.deepEqual(props(ls.getLocationV6('2001:208::')), {
+        countryCode: 'SG',
+        countryName: 'Singapore',
+        region: null,
+        city: null,
+        postalCode: null,
+        latitude: 1.3667000000000087,
+        longitude: 103.80000000000001,
+        dmaCode: 0,
+        areaCode: 0,
+        metroCode: 0,
+        regionName: null
+      });
+
+      assert.deepEqual(props(ls.getLocationV6('2a02:ff40::')), {
+        countryCode: 'IM',
+        countryName: 'Isle of Man',
+        region: null,
+        city: null,
+        postalCode: null,
+        latitude: 54.22999999999999,
+        longitude: -4.569999999999993,
+        dmaCode: 0,
+        areaCode: 0,
+        metroCode: 0,
+        regionName: null
+      });
     });
   });
 
