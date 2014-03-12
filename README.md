@@ -17,7 +17,7 @@ Free GEO databases available for download here: http://dev.maxmind.com/geoip/geo
 
 ## Main features
 
- - Country/Region/Location lookup by IP
+ - Country/Region/Location lookup by IP (v4 and v6)
  - Distance between two IP addresses (locations)
  - Timezone lookup by IP
  - Autonomous System Numbers (ASN) lookup by IP
@@ -48,6 +48,18 @@ var org = maxmind.getOrganization('66.6.44.4');
 
 ```
 
+## V6 Support
+
+Module is fully campatible with IPv6 maxmind databases. Make sure you initialize with
+proper IPv6 databases before making queries.
+
+```javascript
+maxmind.init('/path/to/GeoLiteCityV6.dat');
+var location = maxmind.getLocationV6('2001:4860:0:1001::3004:ef68');
+```
+
+All mathods works in the same way as for IPv4, the only difference is `V6` postfix in method names:
+`getCountryV6`, `getLocationV6` and `getOrganizationV6`.
 
 You can initialize module with several databases at once, and proper db will be automatically selected
 for particular query. If any options given they apply for all databases you initialize.
