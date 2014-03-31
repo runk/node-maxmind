@@ -2,7 +2,7 @@ node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](http
 ========
 
 Native Javascript module for IP GEO lookup using Maxmind databases.
-Up to [500% faster](https://github.com/runk/node-maxmind#performance--benchmark) than other GEO lookip libraries.
+Up to [500% faster](https://github.com/runk/node-maxmind#performance--benchmark) than other GEO lookup libraries.
 No binary or whatsoever dependencies.
 
 ## GEO databases
@@ -58,11 +58,11 @@ maxmind.init('/path/to/GeoLiteCityV6.dat');
 var location = maxmind.getLocationV6('2001:4860:0:1001::3004:ef68');
 ```
 
-All mathods works in the same way as for IPv4, the only difference is `V6` postfix in method names:
+All methods works in the same way as for IPv4, the only difference is `V6` postfix in method names:
 `getCountryV6`, `getLocationV6` and `getOrganizationV6`.
 
 You can initialize module with several databases at once, and proper db will be automatically selected
-for particular query. If any options given they apply for all databases you initialize.
+for particular query. If any option is given it applies to all databases you initialize.
 
 ```javascript
 var maxmind = require('maxmind');
