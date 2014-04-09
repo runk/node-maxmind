@@ -8,6 +8,7 @@ const GEO_COUNTRY   = __dirname + '/dbs/GeoIP.dat';
 const GEO_COUNTRY_V6 = __dirname + '/dbs/GeoIPv6.dat';
 const GEO_ASN       = __dirname + '/dbs/GeoIPASNum.dat';
 const GEO_ASN_V6    = __dirname + '/dbs/GeoIPASNumv6.dat';
+const GEO_SPEED     = __dirname + '/dbs/GeoIPNetSpeedCell.dat';
 
 
 describe('lib/lookup_service', function() {
@@ -206,4 +207,17 @@ describe('lib/lookup_service', function() {
 
   });
 
+  describe('getSpeed() - pending: maybe a parser issue for ' + GEO_SPEED, function() {
+    before(function() {
+      assert.equal(ls.init(GEO_SPEED), true);
+    });
+
+    it('should return the speed for known ips'); /* function() {
+      assert.equal(ls.getSpeed('89.66.148.0'), 'Cable/DSL');
+    }); */
+
+    it('should return "Unknown" for unknown ips'); /*, function() {
+      assert.equal(ls.getSpeed('189.166.48.10'), 'Cable/DSL');
+    }); */
+  });
 });
