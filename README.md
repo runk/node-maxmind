@@ -21,6 +21,7 @@ Free GEO databases available for download here: http://dev.maxmind.com/geoip/geo
  - Distance between two IP addresses (locations)
  - Timezone lookup by IP
  - Autonomous System Numbers (ASN) lookup by IP
+ - Network speed lookup by IP
 
 Module written in pure Javascript with no dependencies. Being able to work with binary Maxmind databases it doesn't
 require any "CSV - {specific lib format}" conversions as other modules do. Maxmind binary databases are highly optimized
@@ -45,6 +46,10 @@ var country = maxmind.getCountry('66.6.44.4');
 // Autonomous System Numbers (ASN) lookup
 maxmind.init('/path/to/GeoIPASNum.dat');
 var org = maxmind.getOrganization('66.6.44.4');
+
+// Net Speed lookup
+maxmind.init('/path/to/GeoIPNetSpeedCell.dat');
+var speed = maxmind.getOrganization('89.66.148.0');
 
 ```
 

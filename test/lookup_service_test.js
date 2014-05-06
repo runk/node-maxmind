@@ -8,6 +8,7 @@ const GEO_COUNTRY   = __dirname + '/dbs/GeoIP.dat';
 const GEO_COUNTRY_V6 = __dirname + '/dbs/GeoIPv6.dat';
 const GEO_ASN       = __dirname + '/dbs/GeoIPASNum.dat';
 const GEO_ASN_V6    = __dirname + '/dbs/GeoIPASNumv6.dat';
+const GEO_NETSPEED  = __dirname + '/dbs/GeoIPNetSpeedCell.dat';
 
 
 describe('lib/lookup_service', function() {
@@ -187,6 +188,17 @@ describe('lib/lookup_service', function() {
 
     it('should work fine with utf8', function() {
       assert.equal(ls.getOrganization('189.63.71.77'), 'AS28573 Serviços de Comunicação S.A.');
+    });
+  });
+
+
+  describe('getNetSpeed()', function() {
+    before(function() {
+      assert.equal(ls.init(GEO_NETSPEED), true);
+    });
+
+    it('should work fine with utf8', function() {
+      assert.equal(ls.getOrganization('89.66.148.0'), 'Cable/DSL');
     });
   });
 
