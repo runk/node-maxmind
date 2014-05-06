@@ -49,7 +49,7 @@ var org = maxmind.getOrganization('66.6.44.4');
 
 // Net Speed lookup
 maxmind.init('/path/to/GeoIPNetSpeedCell.dat');
-var speed = maxmind.getOrganization('89.66.148.0');
+var speed = maxmind.getNetSpeed('89.66.148.0');
 
 ```
 
