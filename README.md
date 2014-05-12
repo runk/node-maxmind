@@ -45,12 +45,19 @@ var country = maxmind.getCountry('66.6.44.4');
 
 // Autonomous System Numbers (ASN) lookup
 maxmind.init('/path/to/GeoIPASNum.dat');
-var org = maxmind.getOrganization('66.6.44.4');
+var org = maxmind.getAsn('66.6.44.4');
+
+// Internet Service Provider (ISP) lookup
+maxmind.init('/path/to/GeoISP.dat');
+var org = maxmind.getIsp('66.6.44.4');
 
 // Net Speed lookup
 maxmind.init('/path/to/GeoIPNetSpeedCell.dat');
 var speed = maxmind.getNetSpeed('89.66.148.0');
 
+// Organization lookup
+maxmind.init('/path/to/GeoIPOrg.dat');
+var org = maxmind.getOrganization('66.6.44.4');
 ```
 
 ## V6 Support
