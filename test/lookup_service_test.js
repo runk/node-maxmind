@@ -214,7 +214,7 @@ describe('lib/lookup_service', function() {
     });
 
     it('should work fine', function() {
-      assert.equal(ls.getOrganization('89.66.148.0'), 'Cable/DSL');
+      assert.equal(ls.getNetSpeed('89.66.148.0'), 'Cable/DSL');
     });
   });
 
