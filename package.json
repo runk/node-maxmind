@@ -1,12 +1,13 @@
 {
   "name": "maxmind",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "homepage": "https://github.com/runk/node-maxmind",
   "description": "IP lookup using Maxmind databases",
   "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone", "asn"],
   "author": "Dmitry Shirokov <deadrunk@gmail.com>",
   "contributors": [
-    "Thomas Birke @quafzi <quafzi@netextreme.de>"
+    "Thomas Birke @quafzi <quafzi@netextreme.de>",
+    "Afzaal Ameer @afzaalace"
   ],
   "dependencies": {},
   "devDependencies": {
