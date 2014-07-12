@@ -10,8 +10,8 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "mocha": ">= 1.10.0",
-    "jshint": ">= 2.1.3",
+    "mocha": "latest",
+    "jshint": "latest",
     "istanbul": "latest"
   },
   "repository": {
