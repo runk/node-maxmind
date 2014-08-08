@@ -17,6 +17,7 @@ describe('lib/lookup_service', function() {
       var c = ls.getCountry('109.60.171.33');
       assert.equal(c.name, 'Russian Federation');
       assert.equal(c.code, 'RU');
+      assert.equal(c.continentCode, 'EU');
 
       var org = ls.getOrganization('109.60.171.33');
       assert.equal(org, 'AS47241 CJSC "Ivtelecom"');
@@ -39,6 +40,7 @@ describe('lib/lookup_service', function() {
       var c = ls.getCountry('109.60.171.33');
       assert.equal(c.name, 'Russian Federation');
       assert.equal(c.code, 'RU');
+      assert.equal(c.continentCode, 'EU');
     });
 
     it('should return correct country with "indexCache" opt', function() {
@@ -48,6 +50,7 @@ describe('lib/lookup_service', function() {
       var c = ls.getCountry('109.60.171.33');
       assert.equal(c.name, 'Russian Federation');
       assert.equal(c.code, 'RU');
+      assert.equal(c.continentCode, 'EU');
     });
 
     it('should return correct country with "memoryCache" opt', function() {
@@ -57,6 +60,7 @@ describe('lib/lookup_service', function() {
       var c = ls.getCountry('109.60.171.33');
       assert.equal(c.name, 'Russian Federation');
       assert.equal(c.code, 'RU');
+      assert.equal(c.continentCode, 'EU');
     });
 
     it('should return correct country with default opts', function() {
@@ -68,6 +72,7 @@ describe('lib/lookup_service', function() {
       assert.equal(l.countryName, 'Russian Federation');
       assert.equal(l.region, '48');
       assert.equal(l.city, 'Moscow');
+      assert.equal(l.continentCode, 'EU');
     });
 
     it('should return correct country with "indexCache" opt', function() {
@@ -79,6 +84,7 @@ describe('lib/lookup_service', function() {
       assert.equal(l.countryName, 'Russian Federation');
       assert.equal(l.region, '48');
       assert.equal(l.city, 'Moscow');
+      assert.equal(l.continentCode, 'EU');
     });
 
     it('should return correct country with "memoryCache" opt', function() {
@@ -90,6 +96,7 @@ describe('lib/lookup_service', function() {
       assert.equal(l.countryName, 'Russian Federation');
       assert.equal(l.region, '48');
       assert.equal(l.city, 'Moscow');
+      assert.equal(l.continentCode, 'EU');
     });
 
   });

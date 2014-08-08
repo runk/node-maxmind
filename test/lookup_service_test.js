@@ -66,15 +66,16 @@ describe('lib/lookup_service', function() {
     });
 
     it('should return country by ip', function() {
-      assert.deepEqual(ls.getCountry('109.60.171.33'), {name: 'Russian Federation', code: 'RU'});
-      assert.deepEqual(ls.getCountry('210.250.100.200'), {name: 'Japan', code: 'JP'});
-      assert.deepEqual(ls.getCountry('1.2.1.1'), {name: 'China', code: 'CN'});
+      assert.deepEqual(ls.getCountry('109.60.171.33'), {name: 'Russian Federation', code: 'RU', continentCode: 'EU'});
+      assert.deepEqual(ls.getCountry('210.250.100.200'), {name: 'Japan', code: 'JP', continentCode: 'AS'});
+      assert.deepEqual(ls.getCountry('1.2.1.1'), {name: 'China', code: 'CN', continentCode: 'AS'});
     });
 
     it('should return unknown country by unknown ip', function() {
       var c = ls.getCountry('blahblah');
       assert.equal(c.name, 'N/A');
       assert.equal(c.code, '--');
+      assert.equal(c.continentCode, '--');
     });
   });
 
@@ -85,12 +86,12 @@ describe('lib/lookup_service', function() {
     });
 
     it('should return country by ip', function() {
-      assert.deepEqual(ls.getCountryV6('::64.17.254.216'), {code: 'US', name: 'United States'});
-      assert.deepEqual(ls.getCountryV6('2001:200::'), {code: 'JP', name: 'Japan'});
+      assert.deepEqual(ls.getCountryV6('::64.17.254.216'), {code: 'US', name: 'United States', continentCode: 'NA'});
+      assert.deepEqual(ls.getCountryV6('2001:200::'), {code: 'JP', name: 'Japan', continentCode: 'AS'});
     });
 
     it('should return unknown country by unknown ip', function() {
-      assert.deepEqual(ls.getCountryV6('blahblah'), {name: 'N/A', code: '--'});
+      assert.deepEqual(ls.getCountryV6('blahblah'), {name: 'N/A', code: '--', continentCode: '--'});
     });
   });
 
@@ -112,6 +113,7 @@ describe('lib/lookup_service', function() {
         dmaCode: 0,
         areaCode: 0,
         metroCode: 0,
+        continentCode: 'EU',
         regionName: 'Moscow City'
       });
     });
@@ -120,6 +122,7 @@ describe('lib/lookup_service', function() {
       var l = ls.getLocation('194.181.164.72');
       assert.equal(l.countryCode, 'PL');
       assert.equal(l.countryName, 'Poland');
+      assert.equal(l.continentCode, 'EU');
       assert.equal(l.city, 'Kraków');
     });
 
@@ -127,6 +130,7 @@ describe('lib/lookup_service', function() {
       var l = ls.getLocation('2.2.3.29');
       assert.equal(l.countryCode, 'FR');
       assert.equal(l.countryName, 'France');
+      assert.equal(l.continentCode, 'EU');
       assert.equal(l.city, 'Rennes');
     });
 
@@ -134,6 +138,7 @@ describe('lib/lookup_service', function() {
       var l = ls.getLocation('180.189.170.18');
       assert.equal(l.countryCode, 'TL');
       assert.equal(l.countryName, 'Timor-Leste');
+      assert.equal(l.continentCode, 'AS');
     });
   });
 
@@ -156,6 +161,7 @@ describe('lib/lookup_service', function() {
         dmaCode: 0,
         areaCode: 0,
         metroCode: 0,
+        continentCode: 'AS',
         regionName: null
       });
 
@@ -170,6 +176,7 @@ describe('lib/lookup_service', function() {
         dmaCode: 0,
         areaCode: 0,
         metroCode: 0,
+        continentCode: 'EU',
         regionName: null
       });
     });
