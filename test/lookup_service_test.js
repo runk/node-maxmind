@@ -41,8 +41,8 @@ describe('lib/lookup_service', function() {
   describe('seekCountry()', function() {
     it('should perform binary search', function() {
       var db = new Database(GEO_CITY);
-      assert.equal(ls.seekCountry(db, 3276048658), 2854053);
-      assert.equal(ls.seekCountry(db, 3539625160), 2779115);
+      assert.equal(ls.seekCountry(db, '195.68.137.18'), 2854053);
+      assert.equal(ls.seekCountry(db, '210.250.100.200'), 2779115);
     });
   });
 
@@ -72,7 +72,7 @@ describe('lib/lookup_service', function() {
     });
 
     it('should return unknown country by unknown ip', function() {
-      var c = ls.getCountry('blahblah');
+      var c = ls.getCountry('0.0.0.0');
       assert.equal(c.name, 'N/A');
       assert.equal(c.code, '--');
       assert.equal(c.continentCode, '--');
