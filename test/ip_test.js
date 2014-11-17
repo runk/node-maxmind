@@ -56,4 +56,18 @@ describe('lib/ip', function() {
 
   });
 
+
+  describe('v4toBinary()', function() {
+
+    it('should return proper result', function() {
+      assert.deepEqual(ip.v4toBinary('64.17.254.216'), [
+        0, 1, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 1, 0, 0, 0, 1,
+        1, 1, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 0, 0
+      ].join(''));
+    });
+
+  });
+
 });
