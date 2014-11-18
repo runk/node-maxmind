@@ -3,10 +3,10 @@ var geoip = require('geoip');
 var maxmind = require('./lib/lookup_service');
 
 function randip() {
-  return Math.floor(Math.random() * 255) + '.' +
-    Math.floor(Math.random() * 255) + '.' +
-    Math.floor(Math.random() * 255) + '.' +
-    Math.floor(Math.random() * 255);
+  return Math.ceil(Math.random() * 254) + '.' +
+    Math.ceil(Math.random() * 254) + '.' +
+    Math.ceil(Math.random() * 254) + '.' +
+    Math.ceil(Math.random() * 254);
 }
 
 
