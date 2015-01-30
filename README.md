@@ -7,7 +7,7 @@ No binary or whatsoever dependencies.
 
 ## GEO databases
 
-Free GEO databases available for download here: http://dev.maxmind.com/geoip/geolite.
+Free GEO databases are available for [download here](http://dev.maxmind.com/geoip/geolite). The npm package [maxmind-geolite-mirror](https://www.npmjs.com/package/maxmind-geolite-mirror) will mirror the databases locally and only re-fetch if the remote files are newer.
 
 
 ## Installation
