@@ -140,6 +140,23 @@ describe('lib/lookup_service', function() {
       assert.equal(l.countryName, 'Timor-Leste');
       assert.equal(l.continentCode, 'AS');
     });
+
+    it('should return location for small country', function() {
+      assert.deepEqual(props(ls.getLocation('24.121.1.1')), {
+        countryCode: 'US',
+        countryName: 'United States',
+        region: 'AZ',
+        city: 'Lake Havasu City',
+        postalCode: '86403',
+        latitude: 34.48490000000001,
+        longitude: -114.3286,
+        dmaCode: 753,
+        areaCode: 928,
+        metroCode: 753,
+        continentCode: 'NA',
+        regionName: 'Arizona'
+      });
+    });
   });
 
 
