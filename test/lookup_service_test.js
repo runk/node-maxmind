@@ -141,7 +141,7 @@ describe('lib/lookup_service', function() {
       assert.equal(l.continentCode, 'AS');
     });
 
-    it('should return location for small country', function() {
+    it('should return dma codes for US', function() {
       assert.deepEqual(props(ls.getLocation('24.121.1.1')), {
         countryCode: 'US',
         countryName: 'United States',
