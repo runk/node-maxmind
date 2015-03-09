@@ -63,6 +63,12 @@ describe('lib/lookup_service', function() {
       assert.equal(c.continentCode, 'EU');
     });
 
+    it('should work fine with both `memoryCache` and `indexCache`', function() {
+      assert.equal(ls.uninit(), true);
+      assert.equal(ls.init(GEO_COUNTRY, { memoryCache: true, indexCache: true }), true);
+      assert.equal(ls.getCountry('109.60.171.33').code, 'RU');
+    });
+
     it('should return correct country with default opts', function() {
       assert.equal(ls.uninit(), true);
       assert.equal(ls.init(GEO_CITY), true);
