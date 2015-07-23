@@ -101,6 +101,17 @@ var maxmind = require('maxmind');
 maxmind.init('/path/to/GeoIP.dat', {indexCache: true, checkForUpdates: true});
 ```
 
+## IP addresses validation
+
+Module supports validation for both IPv4 and IPv6 via the same function:
+
+```
+maxmind.validate('66.6.44.4'); // returns true
+maxmind.validate('66.6.44.boom!'); // returns false
+
+maxmind.validate('2001:4860:0:1001::3004:ef68'); // returns true
+maxmind.validate('2001:4860:0:1001::3004:boom!'); // returns false
+```
 
 ## Performance / Benchmark
 
