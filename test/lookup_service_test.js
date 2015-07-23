@@ -264,4 +264,19 @@ describe('lib/lookup_service', function() {
     });
   });
 
+
+  describe('validate', function() {
+    it('should work fine for IPv4', function() {
+      assert.equal(ls.validate('64.4.4.4'), true);
+      assert.equal(ls.validate('64.4.4.boom!'), false);
+      assert.equal(ls.validate(undefined), false);
+    });
+
+    it('should work fine for IPv6', function() {
+      assert.equal(ls.validate('2001:4860:0:1001::3004:ef68'), true);
+      assert.equal(ls.validate('::64.17.254.216'), true);
+      assert.equal(ls.validate('2001:4860:0:1001::3004:boom!'), false);
+    });
+  });
+
 });
