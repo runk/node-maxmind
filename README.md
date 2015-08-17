@@ -105,7 +105,7 @@ maxmind.init('/path/to/GeoIP.dat', {indexCache: true, checkForUpdates: true});
 
 Module supports validation for both IPv4 and IPv6 via the same function:
 
-```
+```javascript
 maxmind.validate('66.6.44.4'); // returns true
 maxmind.validate('66.6.44.boom!'); // returns false
 
