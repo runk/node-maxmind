@@ -3,6 +3,7 @@ var assert = require('assert'),
   DatabaseInfo = require('../lib/database_info');
 
 const GEO_CITY = __dirname + '/dbs/GeoIPCity.dat';
+const GEO_CITY2 = __dirname + '/dbs/GeoLite2-Country.mmdb';
 
 
 describe('lib/database', function() {
@@ -38,6 +39,10 @@ describe('lib/database', function() {
 
 
   describe('info', function() {
+    it.only('should return database info', function() {
+      db = new Database(GEO_CITY2, { indexCache: true });
+    });
+
     it('should return database info', function() {
       assert.ok(db.info instanceof DatabaseInfo);
       assert.equal(db.info.type, DatabaseInfo.CITY_EDITION_REV1);
