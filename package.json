@@ -3,7 +3,19 @@
   "version": "0.6.0",
   "homepage": "https://github.com/runk/node-maxmind",
   "description": "IP lookup using Maxmind databases",
-  "keywords": ["maxmind", "geo", "geobase", "geo lookup", "ip base", "geocode", "timezone", "asn"],
+  "keywords": [
+    "maxmind",
+    "mmdb",
+    "geo",
+    "geoip",
+    "geoip2",
+    "geobase",
+    "geo lookup",
+    "ip base",
+    "geocode",
+    "timezone",
+    "asn"
+  ],
   "author": "Dmitry Shirokov <deadrunk@gmail.com>",
   "contributors": [
     "Thomas Birke @quafzi <quafzi@netextreme.de>",
@@ -11,24 +23,28 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "mocha": "latest",
+    "ip-address": "^5.8.0",
+    "istanbul": "latest",
     "jshint": "latest",
-    "istanbul": "latest"
+    "mocha": "^2.4.5"
   },
   "repository": {
-    "type":"git",
-    "url":"git@github.com:runk/node-maxmind.git"
+    "type": "git",
+    "url": "git@github.com:runk/node-maxmind.git"
   },
   "bugs": {
-    "mail":"deadrunk@gmail.com",
-    "url":"http://github.com/runk/node-maxmind/issues"
+    "mail": "deadrunk@gmail.com",
+    "url": "http://github.com/runk/node-maxmind/issues"
   },
   "main": "index.js",
-  "engine": { "node": ">=0.8.0", "npm": "1" },
+  "engine": {
+    "node": ">=0.8.0",
+    "npm": "1"
+  },
   "license": "MIT",
   "scripts": {
     "lint": "jshint ./lib/*.js ./lib/**/*.js ./index.js ./examples/*.js",
-    "test":  "mocha -R spec --recursive",
+    "test": "mocha -R spec --recursive",
     "coverage": "istanbul cover _mocha -- -R dot --recursive",
     "benchmark": "node benchmark"
   }
