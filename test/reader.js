@@ -6,9 +6,40 @@ var ipaddr = require('ip-address');
 
 describe.only('lib/reader', function() {
 
+
+
   var dataDir = __dirname + '/data/test-data';
 
   describe('findAddressInTree()', function() {
+    // it.only('should', () => {
+    //   // var b = new Buffer([0x20, 0x01]);
+    //   var b = new Buffer([0x20, 0x01, 0x07]);
+    //   // var binary = b.toA
+
+    //   const pad = (s) => {
+    //     while (s.length < 8) s = '0' + s
+    //     return s;
+    //   }
+    //   const bin = b.toJSON().data.map((n) => pad(n.toString(2))).join('')
+
+    //   const max = b.length * 8
+    //   for (var i = 0; i < max; i++) {
+    //     var bi = Math.floor(i / 8)
+    //     tempBit = 0xFF & rawAddress[parseInt((i - ipStartBit) / 8, 10)];
+    //     bit = 1 & (tempBit >> 7 - (i % 8));
+    //     console.log(i, bin[i], (b[bi] >> Math.abs((i % 8) - 7)) & 1)
+    //     console.log('old', bit)
+    //     console.log('--')
+
+
+    //   }
+
+    // })
+    it('should', function() {
+      var mm = mmdbreader.openSync(dataDir + '/GeoIP2-City-Test.mmdb');
+      assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 0);
+    });
+
     it('should return correct value: city database', function() {
       var mm = mmdbreader.openSync(dataDir + '/GeoIP2-City-Test.mmdb');
       assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 0);

@@ -44,7 +44,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "jshint ./lib/*.js ./lib/**/*.js ./index.js ./examples/*.js",
-    "test": "mocha -R spec --recursive",
+    "test": "mocha -R spec --recursive --bail",
     "coverage": "istanbul cover _mocha -- -R dot --recursive",
     "benchmark": "node benchmark"
   }
