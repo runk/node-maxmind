@@ -4,7 +4,7 @@ var mmdbreader = require('../index');
 var ipaddr = require('ip-address');
 
 
-describe.only('lib/reader', function() {
+describe('lib/reader', function() {
 
 
 
