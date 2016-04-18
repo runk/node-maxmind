@@ -60,7 +60,9 @@ var countries = my.openSync(DB_FILE);
 suite['my'] = {
   init: function() {},
   run: function() {
-    countries.getGeoDataSync(randip())
+    // countries.reader.findAddressInTree('1.2.3.4');
+    countries.reader.resolveDataPointerSync(2875603)
+    // countries.getGeoDataSync(randip())
   }
 };
 
