@@ -61,8 +61,8 @@ suite['my'] = {
   init: function() {},
   run: function() {
     // countries.reader.findAddressInTree('1.2.3.4');
-    countries.reader.resolveDataPointerSync(2875603)
-    // countries.getGeoDataSync(randip())
+    // countries.reader.resolveDataPointerSync(2875603)
+    countries.getGeoDataSync(randip())
   }
 };
 
