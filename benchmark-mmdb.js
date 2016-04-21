@@ -61,8 +61,8 @@ suite['my'] = {
   init: function() {},
   run: function() {
     // countries.reader.findAddressInTree('1.2.3.4');
-    // countries.reader.resolveDataPointerSync(2875603)
-    countries.getGeoDataSync(randip())
+    countries.reader.resolveDataPointerSync(2875603)
+    // countries.getGeoDataSync(randip())
   }
 };
 
@@ -71,6 +71,7 @@ var n = 50000,
   best = Infinity,
   results = [];
 
+// console.profile('build');
 for (name in suite) {
   test = suite[name];
   test.init();
@@ -83,10 +84,12 @@ for (name in suite) {
   for (var i = 0; i < n; i++)
     test.run();
 
+
   result.time = new Date().getTime() - result.started;
   best = Math.min(best, result.time);
   results.push(result);
 }
+// console.profileEnd('build');
 
 results.sort(function(a, b) {
   return a.time - b.time;
