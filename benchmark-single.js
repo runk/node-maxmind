@@ -17,7 +17,7 @@ var reader = new MMDBReader(DB_FILE);
 // console.log(reader.cachedRead(20772773).value)
 // process.exit()
 
-var n = 1000000,
+var n = 5000000,
   best = Infinity,
   results = [];
 
@@ -29,6 +29,7 @@ for (var i = 0; i < n; i++) {
   countries2.reader.findAddressInTree(randip());
   // 203169 ops/s
   // 313087 ops/s
+  // 502k ops/s
 
   // countries2.getGeoDataSync(randip())
   // 120k ops/s
