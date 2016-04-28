@@ -30,6 +30,7 @@ for (var i = 0; i < n; i++) {
   // 203169 ops/s
   // 313087 ops/s
   // 502k ops/s
+  // 507k
 
   // countries2.getGeoDataSync(randip())
   // 120k ops/s
