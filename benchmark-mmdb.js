@@ -13,6 +13,8 @@ var geoip = new jGeoIP(DB_FILE);
 
 
 var suite = {};
+
+
 // suite['jgeoip'] = {
 //   init: function() {},
 //   run: function() {
@@ -54,15 +56,15 @@ var suite = {};
 
 var my = require('./');
 // open database
-var countries = my.openSync(DB_FILE);
+var countries2 = my.openSync(DB_FILE);
 
 
 suite['my'] = {
   init: function() {},
   run: function() {
-    // countries.reader.findAddressInTree('1.2.3.4');
-    countries.reader.resolveDataPointerSync(2875603)
-    // countries.getGeoDataSync(randip())
+    // countries2.reader.findAddressInTree('1.2.3.4');
+    // countries2.reader.resolveDataPointerSync(2875603)
+    countries2.getGeoDataSync(randip())
   }
 };
 
@@ -71,7 +73,8 @@ var n = 50000,
   best = Infinity,
   results = [];
 
-// console.profile('build');
+
+console.profile('build');
 for (name in suite) {
   test = suite[name];
   test.init();
@@ -89,7 +92,7 @@ for (name in suite) {
   best = Math.min(best, result.time);
   results.push(result);
 }
-// console.profileEnd('build');
+console.profileEnd('build');
 
 results.sort(function(a, b) {
   return a.time - b.time;
