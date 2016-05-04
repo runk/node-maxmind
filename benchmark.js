@@ -17,7 +17,37 @@ var reader = new MMDBReader(DB_FILE);
 // console.log(reader.cachedRead(20772773).value)
 // process.exit()
 
-var n = 5000000,
+
+// var Benchmark = require('benchmark');
+
+// var suite = new Benchmark.Suite();
+
+// // add tests
+// suite.add('maxmind', {
+//   minSamples: 50,
+//   // minTime: 10,
+//   fn: function() {
+//     countries2.reader.findAddressInTree(randip());
+//   }
+// })
+// .add('mmdb-reader', {
+//   minSamples: 50,
+//   // minTime: 10,
+//   fn: function() {
+//     reader.lookup(randip())
+//   }
+// })
+// .on('cycle', function(event) {
+//   console.log(String(event.target));
+// })
+// .on('complete', function() {
+//   console.log('Fastest is ' + this.filter('fastest').map('name'));
+// })
+// // run async
+// .run();
+
+
+var n = 500000,
   best = Infinity,
   results = [];
 
