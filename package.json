@@ -21,7 +21,9 @@
     "Thomas Birke @quafzi <quafzi@netextreme.de>",
     "Afzaal Ameer @afzaalace"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "lru-cache": "^4.0.1"
+  },
   "devDependencies": {
     "ip-address": "^5.8.0",
     "istanbul": "latest",
