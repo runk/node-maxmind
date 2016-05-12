@@ -61,7 +61,7 @@ for (var i = 0; i < n; i++) {
   // 502k ops/s
   // 507k
 
-  // countries2.getGeoData(randip())
+  // countries2.get(randip())
   // 120k ops/s
 
   // countries2.reader.resolveDataPointer(2875603);

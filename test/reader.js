@@ -1,12 +1,10 @@
 var assert = require('assert');
 var path = require('path');
-var mmdbreader = require('../index');
+var Reader = require('../lib/reader');
 var ipaddr = require('ip-address');
 
 
 describe('lib/reader', function() {
-
-
 
   var dataDir = __dirname + '/data/test-data';
 
@@ -36,28 +34,28 @@ describe('lib/reader', function() {
 
     // })
     it('should', function() {
-      var mm = mmdbreader.open(dataDir + '/GeoIP2-City-Test.mmdb');
-      assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 0);
+      var reader = Reader.open(dataDir + '/GeoIP2-City-Test.mmdb');
+      assert.equal(reader.findAddressInTree('1.1.1.1'), 0);
     });
 
     it('should return correct value: city database', function() {
-      var mm = mmdbreader.open(dataDir + '/GeoIP2-City-Test.mmdb');
-      assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 0);
-      assert.equal(mm.reader.findAddressInTree('175.16.199.1'), 3042);
-      assert.equal(mm.reader.findAddressInTree('175.16.199.88'), 3042);
-      assert.equal(mm.reader.findAddressInTree('175.16.199.255'), 3042);
-      assert.equal(mm.reader.findAddressInTree('::175.16.199.255'), 3042);
-      assert.equal(mm.reader.findAddressInTree('2a02:cf40:ffff::'), 4735);
-      assert.equal(mm.reader.findAddressInTree('2a02:cf47:0000::'), 4735);
-      assert.equal(mm.reader.findAddressInTree('2a02:cf47:0000:fff0:ffff::'), 4735);
-      assert.equal(mm.reader.findAddressInTree('2a02:cf48:0000::'), 0);
+      var reader = Reader.open(dataDir + '/GeoIP2-City-Test.mmdb');
+      assert.equal(reader.findAddressInTree('1.1.1.1'), 0);
+      assert.equal(reader.findAddressInTree('175.16.199.1'), 3042);
+      assert.equal(reader.findAddressInTree('175.16.199.88'), 3042);
+      assert.equal(reader.findAddressInTree('175.16.199.255'), 3042);
+      assert.equal(reader.findAddressInTree('::175.16.199.255'), 3042);
+      assert.equal(reader.findAddressInTree('2a02:cf40:ffff::'), 4735);
+      assert.equal(reader.findAddressInTree('2a02:cf47:0000::'), 4735);
+      assert.equal(reader.findAddressInTree('2a02:cf47:0000:fff0:ffff::'), 4735);
+      assert.equal(reader.findAddressInTree('2a02:cf48:0000::'), 0);
     });
 
     it('should return correct value: string entries', function() {
-      var mm = mmdbreader.open(dataDir + '/MaxMind-DB-string-value-entries.mmdb');
-      assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 98);
-      assert.equal(mm.reader.findAddressInTree('1.1.1.2'), 87);
-      assert.equal(mm.reader.findAddressInTree('175.2.1.1'), 0);
+      var reader = Reader.open(dataDir + '/MaxMind-DB-string-value-entries.mmdb');
+      assert.equal(reader.findAddressInTree('1.1.1.1'), 98);
+      assert.equal(reader.findAddressInTree('1.1.1.2'), 87);
+      assert.equal(reader.findAddressInTree('175.2.1.1'), 0);
     });
 
     describe('various record sizes and ip versions', function() {
@@ -101,9 +99,9 @@ describe('lib/reader', function() {
       for (var file in scenarios) {
         (function(file, ips) {
           it('should return correct value: ' + file, function() {
-            var mm = mmdbreader.open(dataDir + '/' + file);
+            var reader = Reader.open(dataDir + '/' + file);
             for (var ip in ips) {
-              assert.equal(mm.reader.findAddressInTree(ip), ips[ip], 'IP: ' + ip);
+              assert.equal(reader.findAddressInTree(ip), ips[ip], 'IP: ' + ip);
             }
           });
         })(file, scenarios[file]);
@@ -111,15 +109,16 @@ describe('lib/reader', function() {
     });
 
     describe('broken files and search trees', function() {
+      // NOTE: not sure what's the value of this test
       it.skip('should behave fine when there is no search tree', function() {
-        var mm = mmdbreader.open(dataDir + '/MaxMind-DB-no-ipv4-search-tree.mmdb');
+        var reader = Reader.open(dataDir + '/MaxMind-DB-no-ipv4-search-tree.mmdb');
       });
 
       it('should behave fine when search tree is broken', function() {
         // TODO: find out in what way the file is broken
-        var mm = mmdbreader.open(dataDir + '/MaxMind-DB-test-broken-search-tree-24.mmdb');
-        assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 102);
-        assert.equal(mm.reader.findAddressInTree('1.1.1.2'), 90);
+        var reader = Reader.open(dataDir + '/MaxMind-DB-test-broken-search-tree-24.mmdb');
+        assert.equal(reader.findAddressInTree('1.1.1.1'), 102);
+        assert.equal(reader.findAddressInTree('1.1.1.2'), 90);
       });
     });
   });
