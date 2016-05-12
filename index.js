@@ -1,6 +1,4 @@
-'use strict';
-
-var Reader = require('./lib/Reader.js');
+var Reader = require('./lib/reader.js');
 
 module.exports = MaxmindDBReader;
 
