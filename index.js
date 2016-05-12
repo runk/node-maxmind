@@ -8,28 +8,18 @@ function MaxmindDBReader() {
     return new MaxmindDBReader();
 }
 
-MaxmindDBReader.open = function openAsync(database, callback) {
-    Reader.open(database, function(err, reader){
-        if(err){
-            return callback(err);
-        }
-        var mmdbreader = MaxmindDBReader();
-        mmdbreader.reader = reader;
-        callback(null,mmdbreader);
-    });
-};
 
-MaxmindDBReader.openSync = function openSync(database) {
-    var mmdbreader = MaxmindDBReader();
-    mmdbreader.reader = Reader.openSync(database);
-    return mmdbreader;
+MaxmindDBReader.open = function(database) {
+  var mmdbreader = MaxmindDBReader();
+  mmdbreader.reader = Reader.open(database);
+  return mmdbreader;
 };
 
 
-MaxmindDBReader.prototype.getGeoDataSync = function getGeoDataSync(ipAddress) {
-    return this.reader.getSync(ipAddress);
+MaxmindDBReader.prototype.getGeoData = function(ipAddress) {
+  return this.reader.get(ipAddress);
 };
 
-MaxmindDBReader.prototype.getDatabaseMetadata = function getDatabaseMetadata() {
-    return this.reader.getMetadata();
+MaxmindDBReader.prototype.getMetadata = function() {
+  return this.reader.getMetadata();
 };

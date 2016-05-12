@@ -36,12 +36,12 @@ describe('lib/reader', function() {
 
     // })
     it('should', function() {
-      var mm = mmdbreader.openSync(dataDir + '/GeoIP2-City-Test.mmdb');
+      var mm = mmdbreader.open(dataDir + '/GeoIP2-City-Test.mmdb');
       assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 0);
     });
 
     it('should return correct value: city database', function() {
-      var mm = mmdbreader.openSync(dataDir + '/GeoIP2-City-Test.mmdb');
+      var mm = mmdbreader.open(dataDir + '/GeoIP2-City-Test.mmdb');
       assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 0);
       assert.equal(mm.reader.findAddressInTree('175.16.199.1'), 3042);
       assert.equal(mm.reader.findAddressInTree('175.16.199.88'), 3042);
@@ -54,7 +54,7 @@ describe('lib/reader', function() {
     });
 
     it('should return correct value: string entries', function() {
-      var mm = mmdbreader.openSync(dataDir + '/MaxMind-DB-string-value-entries.mmdb');
+      var mm = mmdbreader.open(dataDir + '/MaxMind-DB-string-value-entries.mmdb');
       assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 98);
       assert.equal(mm.reader.findAddressInTree('1.1.1.2'), 87);
       assert.equal(mm.reader.findAddressInTree('175.2.1.1'), 0);
@@ -101,7 +101,7 @@ describe('lib/reader', function() {
       for (var file in scenarios) {
         (function(file, ips) {
           it('should return correct value: ' + file, function() {
-            var mm = mmdbreader.openSync(dataDir + '/' + file);
+            var mm = mmdbreader.open(dataDir + '/' + file);
             for (var ip in ips) {
               assert.equal(mm.reader.findAddressInTree(ip), ips[ip], 'IP: ' + ip);
             }
@@ -112,12 +112,12 @@ describe('lib/reader', function() {
 
     describe('broken files and search trees', function() {
       it.skip('should behave fine when there is no search tree', function() {
-        var mm = mmdbreader.openSync(dataDir + '/MaxMind-DB-no-ipv4-search-tree.mmdb');
+        var mm = mmdbreader.open(dataDir + '/MaxMind-DB-no-ipv4-search-tree.mmdb');
       });
 
       it('should behave fine when search tree is broken', function() {
         // TODO: find out in what way the file is broken
-        var mm = mmdbreader.openSync(dataDir + '/MaxMind-DB-test-broken-search-tree-24.mmdb');
+        var mm = mmdbreader.open(dataDir + '/MaxMind-DB-test-broken-search-tree-24.mmdb');
         assert.equal(mm.reader.findAddressInTree('1.1.1.1'), 102);
         assert.equal(mm.reader.findAddressInTree('1.1.1.2'), 90);
       });

@@ -10,7 +10,7 @@ function randip() {
 var DB_FILE = './test/dbs/full/GeoLite2-City.mmdb';
 
 var my = require('./');
-var countries2 = my.openSync(DB_FILE);
+var countries2 = my.open(DB_FILE);
 
 var MMDBReader = require('mmdb-reader');
 var reader = new MMDBReader(DB_FILE);
@@ -43,7 +43,6 @@ var reader = new MMDBReader(DB_FILE);
 // .on('complete', function() {
 //   console.log('Fastest is ' + this.filter('fastest').map('name'));
 // })
-// // run async
 // .run();
 
 
@@ -62,10 +61,10 @@ for (var i = 0; i < n; i++) {
   // 502k ops/s
   // 507k
 
-  // countries2.getGeoDataSync(randip())
+  // countries2.getGeoData(randip())
   // 120k ops/s
 
-  // countries2.reader.resolveDataPointerSync(2875603);
+  // countries2.reader.resolveDataPointer(2875603);
   //36000 ops/s
 
 

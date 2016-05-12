@@ -27,36 +27,36 @@ describe('maxmind', function() {
   describe('basic functionality', function() {
 
     it('should successfully handle database', function() {
-      assert(mmdbreader.openSync(__dirname + '/data/test-data/GeoIP2-City-Test.mmdb'));
+      assert(mmdbreader.open(__dirname + '/data/test-data/GeoIP2-City-Test.mmdb'));
     });
 
     it('should fetch geo ip', function() {
-      var geoIp = mmdbreader.openSync(__dirname + '/data/test-data/GeoIP2-City-Test.mmdb');
+      var geoIp = mmdbreader.open(__dirname + '/data/test-data/GeoIP2-City-Test.mmdb');
       var data = actual('GeoIP2-City-Test.json');
-      assert.deepEqual(geoIp.getGeoDataSync('1.1.1.1'), null);
+      assert.deepEqual(geoIp.getGeoData('1.1.1.1'), null);
 
-      assert.deepEqual(geoIp.getGeoDataSync('175.16.198.255'), null);
-      assert.deepEqual(geoIp.getGeoDataSync('175.16.199.1'), data.get('::175.16.199.0/120'));
-      assert.deepEqual(geoIp.getGeoDataSync('175.16.199.255'), data.get('::175.16.199.0/120'))
-      assert.deepEqual(geoIp.getGeoDataSync('::175.16.199.255'), data.get('::175.16.199.0/120'))
-      assert.deepEqual(geoIp.getGeoDataSync('175.16.200.1'), null);
+      assert.deepEqual(geoIp.getGeoData('175.16.198.255'), null);
+      assert.deepEqual(geoIp.getGeoData('175.16.199.1'), data.get('::175.16.199.0/120'));
+      assert.deepEqual(geoIp.getGeoData('175.16.199.255'), data.get('::175.16.199.0/120'))
+      assert.deepEqual(geoIp.getGeoData('::175.16.199.255'), data.get('::175.16.199.0/120'))
+      assert.deepEqual(geoIp.getGeoData('175.16.200.1'), null);
 
-      assert.deepEqual(geoIp.getGeoDataSync('2a02:cf40:ffff::'), data.get('2a02:cf40::/29'));
-      assert.deepEqual(geoIp.getGeoDataSync('2a02:cf47:0000::'), data.get('2a02:cf40::/29'));
-      assert.deepEqual(geoIp.getGeoDataSync('2a02:cf48:0000::'), null);
+      assert.deepEqual(geoIp.getGeoData('2a02:cf40:ffff::'), data.get('2a02:cf40::/29'));
+      assert.deepEqual(geoIp.getGeoData('2a02:cf47:0000::'), data.get('2a02:cf40::/29'));
+      assert.deepEqual(geoIp.getGeoData('2a02:cf48:0000::'), null);
     });
 
     it('should handle corrupt database', function() {
       assert.throws(function verify() {
-        mmdbreader.openSync('./data/README.md');
+        mmdbreader.open('./data/README.md');
       });
     });
   });
 
   describe('section: data', function() {
     it('should decode all possible types - complex', function() {
-      var geoIp = mmdbreader.openSync(__dirname + '/data/test-data/MaxMind-DB-test-decoder.mmdb');
-      assert.deepEqual(geoIp.getGeoDataSync('::1.1.1.1'), {
+      var geoIp = mmdbreader.open(__dirname + '/data/test-data/MaxMind-DB-test-decoder.mmdb');
+      assert.deepEqual(geoIp.getGeoData('::1.1.1.1'), {
         array: [1, 2, 3],
         boolean: true,
         bytes: new Buffer([0, 0, 0, 42]),
@@ -74,8 +74,8 @@ describe('maxmind', function() {
     });
 
     it('should decode all possible types - zero/empty values', function() {
-      var geoIp = mmdbreader.openSync(__dirname + '/data/test-data/MaxMind-DB-test-decoder.mmdb');
-      assert.deepEqual(geoIp.getGeoDataSync('::0.0.0.0'), {
+      var geoIp = mmdbreader.open(__dirname + '/data/test-data/MaxMind-DB-test-decoder.mmdb');
+      assert.deepEqual(geoIp.getGeoData('::0.0.0.0'), {
         array: [],
         boolean: false,
         bytes: new Buffer([]),
@@ -112,14 +112,14 @@ describe('maxmind', function() {
         // TODO: check random address from the subnet?
         // see http://ip-address.js.org/#address4/biginteger
         // see https://github.com/andyperlitch/jsbn
-        assert.deepEqual(geoIp.getGeoDataSync(ip.startAddress().address), data.hash[subnet], subnet);
-        assert.deepEqual(geoIp.getGeoDataSync(ip.endAddress().address), data.hash[subnet], subnet);
+        assert.deepEqual(geoIp.getGeoData(ip.startAddress().address), data.hash[subnet], subnet);
+        assert.deepEqual(geoIp.getGeoData(ip.endAddress().address), data.hash[subnet], subnet);
       }
     };
 
     files.forEach(function(file) {
       it('should test everything: ' + file, function() {
-        var geoIp = mmdbreader.openSync(__dirname + '/data/test-data/' + file + '.mmdb');
+        var geoIp = mmdbreader.open(__dirname + '/data/test-data/' + file + '.mmdb');
         var data = actual(file + '.json');
         tester(geoIp, data);
       });
