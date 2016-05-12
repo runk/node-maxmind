@@ -9,43 +9,44 @@ function randip() {
 
 var DB_FILE = './test/dbs/full/GeoLite2-City.mmdb';
 
-var my = require('./');
-var countries2 = my.open(DB_FILE);
 
-var MMDBReader = require('mmdb-reader');
-var reader = new MMDBReader(DB_FILE);
-// console.log(reader.cachedRead(20772773).value)
-// process.exit()
+var Benchmark = require('benchmark');
 
-
-// var Benchmark = require('benchmark');
-
-// var suite = new Benchmark.Suite();
-
-// // add tests
-// suite.add('maxmind', {
-//   minSamples: 50,
-//   // minTime: 10,
-//   fn: function() {
-//     countries2.reader.findAddressInTree(randip());
-//   }
-// })
-// .add('mmdb-reader', {
-//   minSamples: 50,
-//   // minTime: 10,
-//   fn: function() {
-//     reader.lookup(randip())
-//   }
-// })
-// .on('cycle', function(event) {
-//   console.log(String(event.target));
-// })
-// .on('complete', function() {
-//   console.log('Fastest is ' + this.filter('fastest').map('name'));
-// })
-// .run();
+var suite = new Benchmark.Suite()
+suite.on('cycle', function(event) {
+  console.log(String(event.target));
+})
+.on('complete', function() {
+  console.log('Fastest is ' + this.filter('fastest').map('name'));
+});
 
 
+/******************* Maxmind ***********************/
+var my = require('./').open(DB_FILE);
+
+suite.add('maxmind', {
+  minSamples: 50,
+  // minTime: 10,
+  fn: function() {
+    my.findAddressInTree(randip());
+  }
+});
+
+/***************** mmdb-reader *********************/
+var MMDBReader = require('mmdb-reader')(DB_FILE);
+
+suite.add('mmdb-reader', {
+  minSamples: 50,
+  // minTime: 10,
+  fn: function() {
+    MMDBReader.lookup(randip())
+  }
+});
+
+suite.run();
+
+
+/*
 var n = 500000,
   best = Infinity,
   results = [];
@@ -83,3 +84,4 @@ console.log(~~(n / ((f - s) / 1000)), "op/sec");
 console.log(process.memoryUsage())
 
 // console.profileEnd('build');
+*/
