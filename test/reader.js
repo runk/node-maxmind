@@ -9,17 +9,16 @@ describe('lib/reader', function() {
   var dataDir = __dirname + '/data/test-data';
 
   describe('findAddressInTree()', function() {
+
     // it.only('should', () => {
     //   // var b = new Buffer([0x20, 0x01]);
     //   var b = new Buffer([0x20, 0x01, 0x07]);
     //   // var binary = b.toA
-
     //   const pad = (s) => {
     //     while (s.length < 8) s = '0' + s
     //     return s;
     //   }
     //   const bin = b.toJSON().data.map((n) => pad(n.toString(2))).join('')
-
     //   const max = b.length * 8
     //   for (var i = 0; i < max; i++) {
     //     var bi = Math.floor(i / 8)
@@ -28,18 +27,16 @@ describe('lib/reader', function() {
     //     console.log(i, bin[i], (b[bi] >> Math.abs((i % 8) - 7)) & 1)
     //     console.log('old', bit)
     //     console.log('--')
-
-
     //   }
-
     // })
+
     it('should', function() {
-      var reader = Reader.open(dataDir + '/GeoIP2-City-Test.mmdb');
+      var reader = new Reader(dataDir + '/GeoIP2-City-Test.mmdb');
       assert.equal(reader.findAddressInTree('1.1.1.1'), 0);
     });
 
     it('should return correct value: city database', function() {
-      var reader = Reader.open(dataDir + '/GeoIP2-City-Test.mmdb');
+      var reader = new Reader(dataDir + '/GeoIP2-City-Test.mmdb');
       assert.equal(reader.findAddressInTree('1.1.1.1'), 0);
       assert.equal(reader.findAddressInTree('175.16.199.1'), 3042);
       assert.equal(reader.findAddressInTree('175.16.199.88'), 3042);
@@ -52,7 +49,7 @@ describe('lib/reader', function() {
     });
 
     it('should return correct value: string entries', function() {
-      var reader = Reader.open(dataDir + '/MaxMind-DB-string-value-entries.mmdb');
+      var reader = new Reader(dataDir + '/MaxMind-DB-string-value-entries.mmdb');
       assert.equal(reader.findAddressInTree('1.1.1.1'), 98);
       assert.equal(reader.findAddressInTree('1.1.1.2'), 87);
       assert.equal(reader.findAddressInTree('175.2.1.1'), 0);
@@ -99,7 +96,7 @@ describe('lib/reader', function() {
       for (var file in scenarios) {
         (function(file, ips) {
           it('should return correct value: ' + file, function() {
-            var reader = Reader.open(dataDir + '/' + file);
+            var reader = new Reader(dataDir + '/' + file);
             for (var ip in ips) {
               assert.equal(reader.findAddressInTree(ip), ips[ip], 'IP: ' + ip);
             }
@@ -111,12 +108,12 @@ describe('lib/reader', function() {
     describe('broken files and search trees', function() {
       // NOTE: not sure what's the value of this test
       it.skip('should behave fine when there is no search tree', function() {
-        var reader = Reader.open(dataDir + '/MaxMind-DB-no-ipv4-search-tree.mmdb');
+        var reader = new Reader(dataDir + '/MaxMind-DB-no-ipv4-search-tree.mmdb');
       });
 
       it('should behave fine when search tree is broken', function() {
         // TODO: find out in what way the file is broken
-        var reader = Reader.open(dataDir + '/MaxMind-DB-test-broken-search-tree-24.mmdb');
+        var reader = new Reader(dataDir + '/MaxMind-DB-test-broken-search-tree-24.mmdb');
         assert.equal(reader.findAddressInTree('1.1.1.1'), 102);
         assert.equal(reader.findAddressInTree('1.1.1.2'), 90);
       });

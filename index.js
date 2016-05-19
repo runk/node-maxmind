@@ -1,1 +1,5 @@
-module.exports = require('./lib/reader');
+var Reader = require('./lib/reader');
+
+exports.open = function(database) {
+  return new Reader(database);
+};
