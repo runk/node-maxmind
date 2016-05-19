@@ -30,14 +30,14 @@ describe('lib/reader', function() {
     //   }
     // })
 
-    it('should', function() {
+    it('should work for most basic case', function() {
       var reader = new Reader(dataDir + '/GeoIP2-City-Test.mmdb');
-      assert.equal(reader.findAddressInTree('1.1.1.1'), 0);
+      assert.equal(reader.findAddressInTree('1.1.1.1'), null);
     });
 
     it('should return correct value: city database', function() {
       var reader = new Reader(dataDir + '/GeoIP2-City-Test.mmdb');
-      assert.equal(reader.findAddressInTree('1.1.1.1'), 0);
+      assert.equal(reader.findAddressInTree('1.1.1.1'), null);
       assert.equal(reader.findAddressInTree('175.16.199.1'), 3042);
       assert.equal(reader.findAddressInTree('175.16.199.88'), 3042);
       assert.equal(reader.findAddressInTree('175.16.199.255'), 3042);
@@ -45,14 +45,14 @@ describe('lib/reader', function() {
       assert.equal(reader.findAddressInTree('2a02:cf40:ffff::'), 4735);
       assert.equal(reader.findAddressInTree('2a02:cf47:0000::'), 4735);
       assert.equal(reader.findAddressInTree('2a02:cf47:0000:fff0:ffff::'), 4735);
-      assert.equal(reader.findAddressInTree('2a02:cf48:0000::'), 0);
+      assert.equal(reader.findAddressInTree('2a02:cf48:0000::'), null);
     });
 
     it('should return correct value: string entries', function() {
       var reader = new Reader(dataDir + '/MaxMind-DB-string-value-entries.mmdb');
       assert.equal(reader.findAddressInTree('1.1.1.1'), 98);
       assert.equal(reader.findAddressInTree('1.1.1.2'), 87);
-      assert.equal(reader.findAddressInTree('175.2.1.1'), 0);
+      assert.equal(reader.findAddressInTree('175.2.1.1'), null);
     });
 
     describe('various record sizes and ip versions', function() {
@@ -61,23 +61,23 @@ describe('lib/reader', function() {
           '1.1.1.1': 102,
           '1.1.1.2': 90,
           '1.1.1.32': 114,
-          '1.1.1.33': 0,
+          '1.1.1.33': null,
         },
         v6: {
-          '::1:ffff:fffa': 0,
+          '::1:ffff:fffa': null,
           '::1:ffff:ffff': 176,
           '::2:0000:0000': 194,
-          '::2:0000:0060': 0,
+          '::2:0000:0060': null,
         },
         mix: {
           '1.1.1.1': 315,
           '1.1.1.2': 301,
           '1.1.1.32': 329,
-          '1.1.1.33': 0,
-          '::1:ffff:fffa': 0,
+          '1.1.1.33': null,
+          '::1:ffff:fffa': null,
           '::1:ffff:ffff': 344,
           '::2:0000:0000': 362,
-          '::2:0000:0060': 0,
+          '::2:0000:0060': null,
         }
       };
 
