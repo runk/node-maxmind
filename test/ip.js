@@ -7,8 +7,8 @@ describe('lib/ip', function() {
   describe('parse()', function() {
     describe('ipv4', function() {
       it('should successfully parse v4', function() {
-        assert.deepEqual(ip.parse('127.0.0.1'), new Buffer([0x7f, 0x00, 0x00, 0x01]));
-        assert.deepEqual(ip.parse('10.10.200.59'), new Buffer([0x0a, 0x0a, 0xc8, 0x3b]));
+        assert.deepEqual(ip.parse('127.0.0.1'), [0x7f, 0x00, 0x00, 0x01]);
+        assert.deepEqual(ip.parse('10.10.200.59'), [0x0a, 0x0a, 0xc8, 0x3b]);
       });
     });
 
