@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "ip-address": "^5.8.0",
-    "istanbul": "latest",
+    "istanbul": "^0.4.3",
     "jshint": "latest",
     "mocha": "^2.4.5"
   },
@@ -47,7 +47,7 @@
   "scripts": {
     "lint": "jshint ./lib/*.js ./lib/**/*.js ./index.js ./examples/*.js",
     "test": "mocha -R spec --recursive --bail",
-    "coverage": "istanbul cover _mocha -- -R dot --recursive",
+    "coverage": "istanbul cover _mocha -- -R spec --timeout 5000 --recursive test",
     "benchmark": "node benchmark"
   }
 }
