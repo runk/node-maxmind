@@ -106,9 +106,11 @@ describe('lib/reader', function() {
     });
 
     describe('broken files and search trees', function() {
-      // NOTE: not sure what's the value of this test
-      it.skip('should behave fine when there is no search tree', function() {
+      it('should behave fine when there is no  ipv4 search tree', function() {
         var reader = new Reader(dataDir + '/MaxMind-DB-no-ipv4-search-tree.mmdb');
+        assert.equal(reader.findAddressInTree('::1:ffff:ffff'), 80);
+        // TODO: perhaps null should be returned here, note that pointer is larger than file itself
+        assert.equal(reader.findAddressInTree('1.1.1.1'), 4811873);
       });
 
       it('should behave fine when search tree is broken', function() {
