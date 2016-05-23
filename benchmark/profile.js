@@ -1,3 +1,7 @@
+'use strict';
+
+/* eslint-disable no-console */
+var path = require('path');
 
 function randip() {
   return Math.ceil(Math.random() * 254) + '.' +
@@ -7,18 +11,15 @@ function randip() {
 }
 
 
-var DB_FILE = __dirname + '/GeoLite2-City.mmdb';
+var DB_FILE = path.join(__dirname, '/GeoLite2-City.mmdb');
 
 
-var n = 500000,
-  best = Infinity,
-  results = [];
-
+var n = 500000;
 
 // console.profile('build');
 
 var my = require('../').open(DB_FILE);
-var s = Date.now()
+var s = Date.now();
 for (var i = 0; i < n; i++) {
   my.findAddressInTree(randip());
   // 203169 ops/s
@@ -42,9 +43,9 @@ for (var i = 0; i < n; i++) {
 }
 var f = Date.now();
 
-console.log(n, 'iterations')
-console.log(f - s, 'ms')
-console.log(~~(n / ((f - s) / 1000)), "op/sec");
-console.log(process.memoryUsage())
+console.log(n, 'iterations');
+console.log(f - s, 'ms');
+console.log(~~(n / ((f - s) / 1000)), 'op/sec');
+console.log(process.memoryUsage());
 
 // console.profileEnd('build');

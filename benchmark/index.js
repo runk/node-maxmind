@@ -1,3 +1,7 @@
+'use strict';
+
+/* eslint-disable no-console */
+var path = require('path');
 
 function randip() {
   return Math.ceil(Math.random() * 254) + '.' +
@@ -7,12 +11,12 @@ function randip() {
 }
 
 
-var DB_FILE = __dirname + '/GeoLite2-City.mmdb';
+var DB_FILE = path.join(__dirname, '/GeoLite2-City.mmdb');
 
 
 var Benchmark = require('benchmark');
 
-var suite = new Benchmark.Suite()
+var suite = new Benchmark.Suite();
 suite.on('cycle', function(event) {
   console.log(String(event.target));
 })
@@ -40,7 +44,7 @@ suite.add('mmdb-reader', {
   minSamples: 50,
   // minTime: 10,
   fn: function() {
-    MMDBReader.lookup(randip())
+    MMDBReader.lookup(randip());
   }
 });
 
@@ -51,7 +55,7 @@ suite.add('maxmind-db-reader', {
   minSamples: 50,
   // minTime: 10,
   fn: function() {
-    mmdbreader.getGeoDataSync(randip())
+    mmdbreader.getGeoDataSync(randip());
   }
 });
 

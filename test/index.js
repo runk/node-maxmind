@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var maxmind = require('../index');
 
@@ -25,7 +27,7 @@ describe('index', function() {
     it('should fail when someone tries to use legacy api', function() {
       assert.throws(function() {
         maxmind.init();
-      }, /Maxmind v1 module has changed API/)
+      }, /Maxmind v1 module has changed API/);
     });
   });
 

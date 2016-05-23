@@ -26,9 +26,10 @@
     "lru-cache": "^4.0.1"
   },
   "devDependencies": {
+    "eslint": "^2.9.0",
+    "eslint-config-defaults": "^9.0.0",
     "ip-address": "^5.8.0",
     "istanbul": "^0.4.3",
-    "jshint": "latest",
     "mocha": "^2.4.5"
   },
   "repository": {
@@ -46,9 +47,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "jshint ./lib/*.js ./lib/**/*.js ./index.js ./examples/*.js",
+    "lint": "eslint -c .eslintrc .",
+    "pretest": "npm run lint",
     "test": "mocha -R spec --recursive --bail",
-    "coverage": "istanbul cover _mocha -- -R spec --timeout 5000 --recursive test",
+    "coverage": "istanbul cover _mocha -- -R spec --timeout 5000 --recursive",
     "benchmark": "node benchmark"
   }
 }

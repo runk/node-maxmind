@@ -3,3 +3,4 @@ testing.js
 node_modules
 .DS_Store
 coverage
+npm-debug.log
