@@ -135,4 +135,12 @@ describe('maxmind', function() {
     });
   });
 
+  describe('legacy', function() {
+    it('should fail when someone tries to use legacy api', function() {
+      assert.throws(function() {
+        maxmind.init();
+      }, /Maxmind v1 module has changed API/)
+    });
+  });
+
 });
