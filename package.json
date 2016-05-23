@@ -48,7 +48,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint -c .eslintrc .",
-    "pretest": "npm run lint",
+    "prepublish": "npm run lint",
     "test": "mocha -R spec --recursive --bail",
     "coverage": "istanbul cover _mocha -- -R spec --timeout 5000 --recursive",
     "benchmark": "node benchmark"
