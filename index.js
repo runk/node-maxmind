@@ -1,7 +1,7 @@
 'use strict';
 
-var net = require('net');
 var Reader = require('./lib/reader');
+var ip = require('./lib/ip');
 
 exports.open = function(database, opts) {
   return new Reader(database, opts);
@@ -16,18 +16,4 @@ exports.init = function() {
   );
 };
 
-exports.validate = function(ip) {
-  var version = net.isIP(ip);
-  switch (version) {
-    case 4:
-      return net.isIPv4(ip);
-    case 6:
-      return net.isIPv6(ip);
-    case 0:
-      return false;
-    default:
-      throw new Error(
-        'net.isIP call returned unexpected value: "' + version + '"'
-      );
-  }
-};
+exports.validate = ip.validate;

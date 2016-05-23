@@ -34,4 +34,19 @@ describe('lib/ip', function() {
       assert.strictEqual(ip.bitAt(address, 999), 0);
     });
   });
+
+  describe('validate()', function() {
+    it('should work fine for IPv4', function() {
+      assert.equal(ip.validate('64.4.4.4'), true);
+      assert.equal(ip.validate('64.4.4.boom!'), false);
+      assert.equal(ip.validate(undefined), false);
+      assert.equal(ip.validate('kraken'), false);
+    });
+
+    it('should work fine for IPv6', function() {
+      assert.equal(ip.validate('2001:4860:0:1001::3004:ef68'), true);
+      assert.equal(ip.validate('::64.17.254.216'), true);
+      assert.equal(ip.validate('2001:4860:0:1001::3004:boom!'), false);
+    });
+  });
 });

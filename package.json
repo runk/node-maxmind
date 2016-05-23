@@ -23,12 +23,12 @@
   ],
   "dependencies": {
     "big-integer": "^1.6.15",
-    "lru-cache": "^4.0.1"
+    "lru-cache": "^4.0.1",
+    "ip-address": "^5.8.0"
   },
   "devDependencies": {
     "eslint": "^2.9.0",
     "eslint-config-defaults": "^9.0.0",
-    "ip-address": "^5.8.0",
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5"
   },
