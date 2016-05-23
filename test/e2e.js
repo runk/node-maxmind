@@ -53,6 +53,12 @@ describe('maxmind', function() {
         maxmind.open('./data/README.md');
       });
     });
+
+    it('should accept cache options', function() {
+      assert(maxmind.open(dataDir + '/GeoIP2-City-Test.mmdb', {
+        cache: { max: 1000 }
+      }));
+    });
   });
 
   describe('section: data', function() {

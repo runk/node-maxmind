@@ -1,8 +1,8 @@
 var net = require('net');
 var Reader = require('./lib/reader');
 
-exports.open = function(database) {
-  return new Reader(database);
+exports.open = function(database, opts) {
+  return new Reader(database, opts);
 };
 
 exports.init = function() {
