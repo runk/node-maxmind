@@ -1,4 +1,3 @@
-test/dbs
+benchmark/*.mmdb
 coverage
-testing.js
 .DS_Store
