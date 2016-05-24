@@ -4,7 +4,7 @@ instrumentation:
   extensions:
     - .js
   default-excludes: true
-  excludes: ["benchmark/*.js"]
+  excludes: []
   embed-source: false
   variable: __coverage__
   compact: true

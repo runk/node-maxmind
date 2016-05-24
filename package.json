@@ -40,7 +40,7 @@
     "url": "http://github.com/runk/node-maxmind/issues"
   },
   "main": "index.js",
-  "engine": {
+  "engines": {
     "node": ">=0.8.0",
     "npm": "1"
   },
