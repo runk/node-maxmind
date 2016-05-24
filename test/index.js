@@ -5,8 +5,6 @@ var maxmind = require('../index');
 
 
 describe('index', function() {
-
-
   describe('validate()', function() {
     it('should work fine for both IPv4 and IPv6', function() {
       assert.equal(maxmind.validate('64.4.4.4'), true);
@@ -15,7 +13,6 @@ describe('index', function() {
     });
   });
 
-
   describe('init()', function() {
     it('should fail when someone tries to use legacy api', function() {
       assert.throws(function() {
@@ -23,5 +20,4 @@ describe('index', function() {
       }, /Maxmind v1 module has changed API/);
     });
   });
-
 });

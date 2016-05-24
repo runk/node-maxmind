@@ -101,5 +101,13 @@ describe('lib/reader', function() {
         assert.equal(reader.findAddressInTree('1.1.1.2'), 90);
       });
     });
+
+    describe('legacy binary format', function() {
+      it('should provide meaningful message when one tries to use legacy db', function() {
+        assert.throws(function() {
+          new Reader(path.join(__dirname, 'legacy/GeoIPCityv6.dat'));
+        }, /Maxmind v1 module has changed API/);
+      });
+    });
   });
 });
