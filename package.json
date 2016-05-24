@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "eslint": "^2.9.0",
-    "eslint-config-defaults": "^9.0.0",
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5"
   },
