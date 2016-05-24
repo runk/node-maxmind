@@ -46,11 +46,14 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "eslint -c .eslintrc .",
-    "prepublish": "npm run lint",
-    "test": "mocha -R spec --recursive --bail",
+    "benchmark": "node benchmark",
     "coverage": "istanbul cover _mocha -- -R spec --timeout 5000 --recursive",
     "coverage:check": "istanbul check-coverage",
-    "benchmark": "node benchmark"
+    "lint": "eslint -c .eslintrc .",
+    "prepublish": "npm run lint",
+    "release:major": "npm run lint && npm test && npm version major && npm publish && git push --follow-tags",
+    "release:minor": "npm run lint && npm test && npm version minor && npm publish && git push --follow-tags",
+    "release:patch": "npm run lint && npm test && npm version patch && npm publish && git push --follow-tags",
+    "test": "mocha -R spec --recursive --bail"
   }
 }
