@@ -102,11 +102,17 @@ describe('lib/reader', function() {
       });
     });
 
-    describe('legacy binary format', function() {
+    describe('invalid database format', function() {
       it('should provide meaningful message when one tries to use legacy db', function() {
         assert.throws(function() {
-          new Reader(path.join(__dirname, 'legacy/GeoIPCityv6.dat'));
+          new Reader(path.join(__dirname, 'databases/legacy.dat'));
         }, /Maxmind v1 module has changed API/);
+      });
+
+      it('should provide meaningful message when one tries to use unknown format', function() {
+        assert.throws(function() {
+          new Reader(path.join(__dirname, 'databases/broken.dat'));
+        }, /Cannot parse binary database/);
       });
     });
   });

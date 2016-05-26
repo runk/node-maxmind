@@ -55,4 +55,24 @@ describe('lib/decoder', function() {
       assert.deepEqual(decoder.sizeFromCtrlByte(63, 0), { value: 131872, offset: 3 });
     });
   });
+
+  describe('decodePointer()', function() {
+    var decoder = new Decoder(new Buffer([0x01, 0x02, 0x03, 0x04]));
+
+    it('should return correct value (pointer size = 0)', function() {
+      assert.deepEqual(decoder.decodePointer(39, 0), { value: 1793, offset: 1 });
+    });
+
+    it('should return correct value (pointer size = 1)', function() {
+      assert.deepEqual(decoder.decodePointer(45, 0), { value: 329986, offset: 2 });
+    });
+
+    it('should return correct value (pointer size = 2)', function() {
+      assert.deepEqual(decoder.decodePointer(48, 0), { value: 592387, offset: 3 });
+    });
+
+    it('should return correct value (pointer size = 3)', function() {
+      assert.deepEqual(decoder.decodePointer(56, 0), { value: 16909060, offset: 4 });
+    });
+  });
 });
