@@ -29,11 +29,30 @@ describe('lib/decoder', function() {
 
   describe('decode()', function() {
     it('should throw when extended type has wrong size', function() {
-      var test = new Decoder(new Buffer([0x00, 0x00]), 1);
+      var test = new Decoder(new Buffer([0x00, 0x00]));
       assert.throws(function() {
         test.decode(0);
       }, /Invalid Extended Type at offset 1 val 7/);
     });
   });
 
+  describe('sizeFromCtrlByte()', function() {
+    var decoder = new Decoder(new Buffer([0x01, 0x02, 0x03, 0x04]));
+
+    it('should return correct value (size <29)', function() {
+      assert.deepEqual(decoder.sizeFromCtrlByte(60, 0), { value: 28, offset: 0 });
+    });
+
+    it('should return correct value (size = 29)', function() {
+      assert.deepEqual(decoder.sizeFromCtrlByte(61, 0), { value: 30, offset: 1 });
+    });
+
+    it('should return correct value (size = 30)', function() {
+      assert.deepEqual(decoder.sizeFromCtrlByte(62, 0), { value: 543, offset: 2 });
+    });
+
+    it('should return correct value (size = 31)', function() {
+      assert.deepEqual(decoder.sizeFromCtrlByte(63, 0), { value: 131872, offset: 3 });
+    });
+  });
 });
