@@ -15,17 +15,46 @@ describe('lib/ip', function() {
     });
 
     describe('ipv6', function() {
-      it('should successfully parse v6', function() {
-        assert.deepEqual(ip.parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334'),
-          new Buffer([0x20, 0x01, 0x0d, 0xb8, 0x85, 0xa3, 0x00, 0x00, 0x00, 0x00, 0x8a, 0x2e, 0x03, 0x70, 0x73, 0x34]));
-        assert.deepEqual(ip.parse('2001:db8:85a3::8a2e:370:7334'),
-          new Buffer([0x20, 0x01, 0x0d, 0xb8, 0x85, 0xa3, 0x00, 0x00, 0x00, 0x00, 0x8a, 0x2e, 0x03, 0x70, 0x73, 0x34]));
+      it('should parse complete address', function() {
+        assert.deepEqual(
+          ip.parse('2001:0db8:85a3:0042:1000:8a2e:0370:7334'),
+          [0x20, 0x1, 0xd, 0xb8, 0x85, 0xa3, 0, 0x42, 0x10, 0, 0x8a, 0x2e, 0x03, 0x70, 0x73, 0x34]
+        );
+        assert.deepEqual(
+          ip.parse('2001:0db8:85a3:0000:0000:8a2e:0370:7334'),
+          [0x20, 0x01, 0x0d, 0xb8, 0x85, 0xa3, 0x00, 0x00, 0x00, 0x00, 0x8a, 0x2e, 0x03, 0x70, 0x73, 0x34]
+        );
       });
 
-      it('should complain for invalid address', function() {
-        assert.throws(function() {
-          ip.parse('::kraken');
-        }, /Invalid IPv6 address/);
+      it('should parse two-part address', function() {
+        assert.deepEqual(
+          ip.parse('2001:4860:0:1001::3004:ef68'),
+          [0x20, 0x01, 0x48, 0x60, 0, 0, 0x10, 0x01, 0, 0, 0, 0, 0x30, 0x04, 0xef, 0x68]
+        );
+        assert.deepEqual(
+          ip.parse('2001:db8:85a3::8a2e:370:7334'),
+          [0x20, 0x01, 0x0d, 0xb8, 0x85, 0xa3, 0x00, 0x00, 0x00, 0x00, 0x8a, 0x2e, 0x03, 0x70, 0x73, 0x34]
+        );
+      });
+
+      it('should parse `::` in the end of address', function() {
+        var expected = [0x20, 0x01, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        assert.deepEqual(ip.parse('2001:200::'), expected);
+        assert.deepEqual(ip.parse('2001:0200:0000:0000:0000:0000:0000:0000'), expected);
+      });
+
+      it('should parse ipv4 with `::ffff`', function() {
+        var expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 64, 17, 254, 216];
+        assert.deepEqual(ip.parse('::ffff:64.17.254.216'), expected);
+        assert.deepEqual(ip.parse('::ffff:4011:fed8'), expected);
+        assert.deepEqual(ip.parse('0000:0000:0000:0000:0000:ffff:4011:fed8'), expected);
+      });
+
+      it('should parse ipv4 with `::`', function() {
+        var expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 17, 254, 216];
+        assert.deepEqual(ip.parse('::64.17.254.216'), expected);
+        assert.deepEqual(ip.parse('::4011:fed8'), expected);
+        assert.deepEqual(ip.parse('0000:0000:0000:0000:0000:0000:4011:fed8'), expected);
       });
     });
   });
