@@ -42,7 +42,7 @@
   "main": "index.js",
   "engines": {
     "node": ">=0.8.0",
-    "npm": "1"
+    "npm": ">=1"
   },
   "license": "MIT",
   "scripts": {
@@ -54,6 +54,7 @@
     "release:major": "npm run lint && npm test && npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm run lint && npm test && npm version minor && npm publish && git push --follow-tags",
     "release:patch": "npm run lint && npm test && npm version patch && npm publish && git push --follow-tags",
-    "test": "mocha -R spec --recursive --bail"
+    "mocha": "mocha -R spec --recursive --bail",
+    "test": "npm run lint && npm run coverage && npm run coverage:check"
   }
 }

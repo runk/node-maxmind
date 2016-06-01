@@ -44,10 +44,12 @@ describe('lib/ip', function() {
       });
 
       it('should parse ipv4 with `::ffff`', function() {
-        var expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 64, 17, 254, 216];
-        assert.deepEqual(ip.parse('::ffff:64.17.254.216'), expected);
-        assert.deepEqual(ip.parse('::ffff:4011:fed8'), expected);
-        assert.deepEqual(ip.parse('0000:0000:0000:0000:0000:ffff:4011:fed8'), expected);
+        var expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 2, 254, 216];
+        assert.deepEqual(ip.parse('::ffff:1.2.254.216'), expected);
+        assert.deepEqual(ip.parse('::ffff:0102:fed8'), expected);
+        assert.deepEqual(ip.parse('::ffff:102:fed8'), expected);
+        assert.deepEqual(ip.parse('0000:0000:0000:0000:0000:ffff:0102:fed8'), expected);
+        assert.deepEqual(ip.parse('0000:0000:0000:0000:0000:ffff:102:fed8'), expected);
       });
 
       it('should parse ipv4 with `::`', function() {
