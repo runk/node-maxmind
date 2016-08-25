@@ -76,6 +76,10 @@ In case you want to use legacy GeoIP binary databases you should use [maxmind@0.
  - MaxMind DB file format specification http://maxmind.github.io/MaxMind-DB/
  - MaxMind test/sample DB files https://github.com/maxmind/MaxMind-DB
  - GeoLite2 Free Downloadable Databases http://dev.maxmind.com/geoip/geoip2/geolite2/
+ - Great talk about V8 performance https://www.youtube.com/watch?v=UJPdhx5zTaw
+ - V8 Optimization killers https://github.com/petkaantonov/bluebird/wiki/Optimization-killers
+ - More V8 performance tips http://www.html5rocks.com/en/tutorials/speed/v8/
+
 
 ## License
 
