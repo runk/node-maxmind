@@ -44,7 +44,7 @@ describe('index', function() {
 
     it('should successfully handle errors while opening a db', function(done) {
       maxmind.open('/foo/bar', function(err) {
-        assert(/no such file or directory/.test(err.message));
+        assert.equal(err.code, 'ENOENT');
         done();
       });
     });
