@@ -1,5 +1,6 @@
 'use strict';
 
+var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
 var Reader = require('../lib/reader');
@@ -8,16 +9,19 @@ var Reader = require('../lib/reader');
 describe('lib/reader', function() {
 
   var dataDir = path.join(__dirname, 'data/test-data');
+  var read = function(dir, filepath) {
+    return fs.readFileSync(path.join(dir, filepath));
+  };
 
   describe('findAddressInTree()', function() {
 
     it('should work for most basic case', function() {
-      var reader = new Reader(path.join(dataDir, 'GeoIP2-City-Test.mmdb'));
+      var reader = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
       assert.equal(reader.findAddressInTree('1.1.1.1'), null);
     });
 
     it('should return correct value: city database', function() {
-      var reader = new Reader(path.join(dataDir, 'GeoIP2-City-Test.mmdb'));
+      var reader = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
       assert.equal(reader.findAddressInTree('1.1.1.1'), null);
       assert.equal(reader.findAddressInTree('175.16.199.1'), 3042);
       assert.equal(reader.findAddressInTree('175.16.199.88'), 3042);
@@ -30,7 +34,7 @@ describe('lib/reader', function() {
     });
 
     it('should return correct value: string entries', function() {
-      var reader = new Reader(path.join(dataDir, 'MaxMind-DB-string-value-entries.mmdb'));
+      var reader = new Reader(read(dataDir, 'MaxMind-DB-string-value-entries.mmdb'));
       assert.equal(reader.findAddressInTree('1.1.1.1'), 98);
       assert.equal(reader.findAddressInTree('1.1.1.2'), 87);
       assert.equal(reader.findAddressInTree('175.2.1.1'), null);
@@ -77,7 +81,7 @@ describe('lib/reader', function() {
       for (var file in scenarios) {
         (function(file, ips) {
           it('should return correct value: ' + file, function() {
-            var reader = new Reader(path.join(dataDir, '' + file));
+            var reader = new Reader(read(dataDir, '' + file));
             for (var ip in ips) {
               assert.equal(reader.findAddressInTree(ip), ips[ip], 'IP: ' + ip);
             }
@@ -88,7 +92,7 @@ describe('lib/reader', function() {
 
     describe('broken files and search trees', function() {
       it('should behave fine when there is no  ipv4 search tree', function() {
-        var reader = new Reader(path.join(dataDir, 'MaxMind-DB-no-ipv4-search-tree.mmdb'));
+        var reader = new Reader(read(dataDir, 'MaxMind-DB-no-ipv4-search-tree.mmdb'));
         assert.equal(reader.findAddressInTree('::1:ffff:ffff'), 80);
         // TODO: perhaps null should be returned here, note that pointer is larger than file itself
         assert.equal(reader.findAddressInTree('1.1.1.1'), 4811873);
@@ -96,7 +100,7 @@ describe('lib/reader', function() {
 
       it('should behave fine when search tree is broken', function() {
         // TODO: find out in what way the file is broken
-        var reader = new Reader(path.join(dataDir, 'MaxMind-DB-test-broken-search-tree-24.mmdb'));
+        var reader = new Reader(read(dataDir, 'MaxMind-DB-test-broken-search-tree-24.mmdb'));
         assert.equal(reader.findAddressInTree('1.1.1.1'), 102);
         assert.equal(reader.findAddressInTree('1.1.1.2'), 90);
       });
@@ -105,13 +109,13 @@ describe('lib/reader', function() {
     describe('invalid database format', function() {
       it('should provide meaningful message when one tries to use legacy db', function() {
         assert.throws(function() {
-          new Reader(path.join(__dirname, 'databases/legacy.dat'));
+          new Reader(read(path.join(__dirname, 'databases'), 'legacy.dat'));
         }, /Maxmind v1 module has changed API/);
       });
 
       it('should provide meaningful message when one tries to use unknown format', function() {
         assert.throws(function() {
-          new Reader(path.join(__dirname, 'databases/broken.dat'));
+          new Reader(read(path.join(__dirname, 'databases'), 'broken.dat'));
         }, /Cannot parse binary database/);
       });
     });

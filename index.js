@@ -12,11 +12,8 @@ exports.open = function(filepath, opts, cb) {
     If you want to open library synchronously, use maxmind.openSync function.');
 
   fs.readFile(filepath, function(err, database) {
-    if (err) {
-      cb(err);
-    } else {
-      cb(null, new Reader(database, opts));
-    }
+    if (err) cb(err);
+    else cb(null, new Reader(database, opts));
   });
 };
 
