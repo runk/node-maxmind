@@ -5,6 +5,7 @@ var fs = require('fs');
 var Reader = require('./lib/reader');
 var ip = require('./lib/ip');
 var utils = require('./lib/utils');
+var index = require('./index');
 
 exports.Reader = Reader;
 
@@ -15,12 +16,16 @@ exports.open = function(filepath, opts, cb) {
 
   fs.readFile(filepath, function(err, database) {
     if (err) cb(err);
-    else cb(null, new Reader(database, opts));
+    else cb(null, index.load(database, opts));
   });
 };
 
 exports.openSync = function(filepath, opts) {
-  return new Reader(fs.readFileSync(filepath), opts);
+  return index.load(fs.readFileSync(filepath), opts);
+};
+
+exports.load = function(database, opts) {
+  return new Reader(database, opts);
 };
 
 exports.init = function() {
