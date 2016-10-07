@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:runk/node-maxmind.git"
+    "url": "https://github.com/runk/node-maxmind.git"
   },
   "bugs": {
     "mail": "deadrunk@gmail.com",
