@@ -49,7 +49,7 @@ Module is fully campatible with IPv6. There are no differences in API between IP
 
 ```javascript
 var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb');
-var location = maxmind.get('2001:4860:0:1001::3004:ef68');
+var location = lookup.get('2001:4860:0:1001::3004:ef68');
 ```
 
 
