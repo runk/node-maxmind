@@ -31,11 +31,11 @@ describe('maxmind', function() {
   describe('basic functionality', function() {
 
     it('should successfully handle database', function() {
-      assert(maxmind.open(path.join(dataDir, 'GeoIP2-City-Test.mmdb')));
+      assert(maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb')));
     });
 
     it('should fetch geo ip', function() {
-      var geoIp = maxmind.open(path.join(dataDir, 'GeoIP2-City-Test.mmdb'));
+      var geoIp = maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'));
       var data = actual('GeoIP2-City-Test.json');
       assert.deepEqual(geoIp.get('1.1.1.1'), null);
 
@@ -52,12 +52,12 @@ describe('maxmind', function() {
 
     it('should handle corrupt database', function() {
       assert.throws(function verify() {
-        maxmind.open('./data/README.md');
+        maxmind.openSync('./data/README.md');
       });
     });
 
     it('should accept cache options', function() {
-      assert(maxmind.open(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
+      assert(maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
         cache: { max: 1000 }
       }));
     });
@@ -65,7 +65,7 @@ describe('maxmind', function() {
 
   describe('section: data', function() {
     it('should decode all possible types - complex', function() {
-      var geoIp = maxmind.open(path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb'));
+      var geoIp = maxmind.openSync(path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb'));
       assert.deepEqual(geoIp.get('::1.1.1.1'), {
         array: [1, 2, 3],
         boolean: true,
@@ -84,7 +84,7 @@ describe('maxmind', function() {
     });
 
     it('should decode all possible types - zero/empty values', function() {
-      var geoIp = maxmind.open(path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb'));
+      var geoIp = maxmind.openSync(path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb'));
       assert.deepEqual(geoIp.get('::0.0.0.0'), {
         array: [],
         boolean: false,
@@ -102,7 +102,7 @@ describe('maxmind', function() {
     });
 
     it('should return correct value: string entries', function() {
-      var geoIp = maxmind.open(path.join(dataDir, 'MaxMind-DB-string-value-entries.mmdb'));
+      var geoIp = maxmind.openSync(path.join(dataDir, 'MaxMind-DB-string-value-entries.mmdb'));
       assert.equal(geoIp.get('1.1.1.1'), '1.1.1.1/32');
       assert.equal(geoIp.get('1.1.1.2'), '1.1.1.2/31');
       assert.equal(geoIp.get('175.2.1.1'), null);
@@ -136,7 +136,7 @@ describe('maxmind', function() {
 
     files.forEach(function(file) {
       it('should test everything: ' + file, function() {
-        var geoIp = maxmind.open(path.join(dataDir, '/' + file + '.mmdb'));
+        var geoIp = maxmind.openSync(path.join(dataDir, '/' + file + '.mmdb'));
         var data = actual(file + '.json');
         tester(geoIp, data);
       });
