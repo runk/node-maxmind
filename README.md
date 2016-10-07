@@ -12,7 +12,9 @@ Free GEO databases are available for [download here](http://dev.maxmind.com/geoi
 
 ## Installation
 
-    npm i maxmind
+```shell
+npm i maxmind
+```
 
 
 ## Usage
@@ -20,10 +22,23 @@ Free GEO databases are available for [download here](http://dev.maxmind.com/geoi
 ```javascript
 var maxmind = require('maxmind');
 
-var cityLookup = maxmind.open('/path/to/GeoLite2-City.mmdb');
+maxmind.open('/path/to/GeoLite2-City.mmdb', (err, cityLookup) => {
+  var city = cityLookup.get('66.6.44.4');
+});
+
+maxmind.open('/path/to/GeoOrg.mmdb', (err, orgLookup) => {
+  var city = orgLookup.get('66.6.44.4');
+});
+
+// Be careful with sync version! Since mmdb files
+// are quite large (city database is about 100Mb)
+// `fs.readFileSync` blocks whole process while it
+// reads file into buffer.
+
+var cityLookup = maxmind.openSync('/path/to/GeoLite2-City.mmdb');
 var city = cityLookup.get('66.6.44.4');
 
-var orgLookup = maxmind.open('/path/to/GeoOrg.mmdb');
+var orgLookup = maxmind.openSync('/path/to/GeoOrg.mmdb');
 var organization = orgLookup.get('66.6.44.4');
 ```
 
@@ -33,7 +48,7 @@ var organization = orgLookup.get('66.6.44.4');
 Module is fully campatible with IPv6. There are no differences in API between IPv4 and IPv6.
 
 ```javascript
-var lookup = maxmind.open('/path/to/GeoLite2.mmdb');
+var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb');
 var location = maxmind.get('2001:4860:0:1001::3004:ef68');
 ```
 
@@ -43,7 +58,7 @@ var location = maxmind.get('2001:4860:0:1001::3004:ef68');
 Right now the only option you can configure is cache. Module uses [lru-cache](https://github.com/isaacs/node-lru-cache). You can configure its settings by doing following:
 
 ```javascript
-var lookup = maxmind.open('/path/to/GeoLite2.mmdb', {
+var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
   cache: {
     max: 1000, // max items in cache
     maxAge: 1000 * 60 * 60 // life time in milliseconds
