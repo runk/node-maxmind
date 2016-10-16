@@ -6,6 +6,8 @@ var Reader = require('./lib/reader');
 var ip = require('./lib/ip');
 var utils = require('./lib/utils');
 
+exports.Reader = Reader;
+
 exports.open = function(filepath, opts, cb) {
   if (!cb) cb = opts;
   assert.equal(typeof cb, 'function', 'Callback function must be provided. \
