@@ -30,7 +30,8 @@
     "github-publish-release": "^1.2.3",
     "ip-address": "^5.8.0",
     "istanbul": "^0.4.3",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.6"
   },
   "repository": {
     "type": "git",

@@ -15,12 +15,30 @@ exports.open = function(filepath, opts, cb) {
 
   fs.readFile(filepath, function(err, database) {
     if (err) cb(err);
-    else cb(null, new Reader(database, opts));
+    else {
+      var reader = new Reader(database, opts);
+      if (opts && !!opts.watchForUpdates) {
+        fs.watch(filepath, function(event, filename) {
+          fs.readFile(filename, function(err, database) {
+            if (err) throw err;
+            reader.load(database);
+          });
+        });
+      }
+      cb(null, reader);
+    }
   });
 };
 
 exports.openSync = function(filepath, opts) {
-  return new Reader(fs.readFileSync(filepath), opts);
+  var reader = new Reader(fs.readFileSync(filepath), opts);
+  if (opts && !!opts.watchForUpdates) {
+    fs.watch(filepath, function() {
+      reader.load(fs.readFileSync(filepath));
+    });
+  }
+
+  return reader;
 };
 
 exports.init = function() {
