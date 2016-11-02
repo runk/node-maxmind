@@ -40,6 +40,12 @@ var city = cityLookup.get('66.6.44.4');
 
 var orgLookup = maxmind.openSync('/path/to/GeoOrg.mmdb');
 var organization = orgLookup.get('66.6.44.4');
+
+// You can also manually load the mmdb files into
+// memory (eg. they aren't on the same filesystem)
+
+var database = buffer;
+var cityLookup = maxmind.load(database, opts);
 ```
 
 
