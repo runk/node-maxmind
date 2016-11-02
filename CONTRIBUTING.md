@@ -7,7 +7,7 @@ Make sure you run `npm i` command in the project's dir before you begin, it'll i
 $ npm i
 $ git submodule init
 $ git submodule update
-```x
+```
 
 Currently code coverage is **100%**, so new tests are essential when you add new functionality. There're several npm tasks
 which you can find useful:
