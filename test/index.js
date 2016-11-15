@@ -1,13 +1,26 @@
 'use strict';
 
 var assert = require('assert');
+var fs = require('fs');
 var path = require('path');
 var maxmind = require('../index');
+var Reader = require('../lib/reader');
 
 
 describe('index', function() {
   var dataDir = path.join(__dirname, 'data/test-data');
   var dbPath = path.join(dataDir, 'GeoIP2-City-Test.mmdb');
+
+  describe('load(database, opts)', function() {
+    var database = fs.readFileSync(dbPath);
+    var opts = {};
+
+    it('should return an intance of Reader', function() {
+      var reader = maxmind.load(database, opts);
+      assert.equal(reader.constructor, Reader);
+      assert.equal(reader.db, database);
+    });
+  });
 
   describe('validate()', function() {
     it('should work fine for both IPv4 and IPv6', function() {
