@@ -54,8 +54,8 @@ var location = lookup.get('2001:4860:0:1001::3004:ef68');
 
 
 ## Options
-
-Right now the only option you can configure is cache. Module uses [lru-cache](https://github.com/isaacs/node-lru-cache). You can configure its settings by doing following:
+### cache
+Module uses [lru-cache](https://github.com/isaacs/node-lru-cache). You can configure its settings by doing following:
 
 ```javascript
 var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
@@ -64,6 +64,12 @@ var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
     maxAge: 1000 * 60 * 60 // life time in milliseconds
   }
 })
+lookup.get('1.1.1.1');
+```
+### watchForUpdates
+Supports reloading the reader when changes occur to the database that is loaded. (default `false`)
+```javascript
+var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {watchForUpdates:true})
 lookup.get('1.1.1.1');
 ```
 
