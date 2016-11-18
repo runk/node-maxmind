@@ -63,13 +63,13 @@ var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
     max: 1000, // max items in cache
     maxAge: 1000 * 60 * 60 // life time in milliseconds
   }
-})
+});
 lookup.get('1.1.1.1');
 ```
 ### watchForUpdates
-Supports reloading the reader when changes occur to the database that is loaded. (default `false`)
+Supports reloading the reader when changes occur to the database that is loaded. (default `false`). Only supported by Node v0.5.10+.
 ```javascript
-var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {watchForUpdates:true})
+var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', { watchForUpdates: true });
 lookup.get('1.1.1.1');
 ```
 
