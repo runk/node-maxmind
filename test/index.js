@@ -84,6 +84,15 @@ describe('index', function() {
       }, /Callback function must be provided/);
     });
 
+    it('should return an error when gzip file attempted', function(done) {
+      var dbPath = path.join(__dirname, 'databases/GeoIP2-City-Test.mmdb.gz');
+      maxmind.open(dbPath, function(err) {
+        assert.equal(err.message,
+          'Looks like you are passing in a file in gzip format, please use mmdb database instead.');
+        done();
+      });
+    });
+
     it('should check for an error when cannot read database on update', function(done) {
       var counter = 0;
       var cb = function(err, reader) {
