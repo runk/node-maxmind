@@ -4,6 +4,7 @@ var assert = require('assert');
 var fs = require('fs');
 var Reader = require('./lib/reader');
 var ip = require('./lib/ip');
+var isGzip = require('./lib/is-gzip');
 var utils = require('./lib/utils');
 
 exports.Reader = Reader;
@@ -15,6 +16,9 @@ exports.open = function(filepath, opts, cb) {
 
   fs.readFile(filepath, function(err, database) {
     if (err) return cb(err);
+    if (isGzip(database)) {
+      return cb(new Error('Looks like you are passing in a file in gzip format, please use mmdb database instead.'));
+    }
     var reader = new Reader(database, opts);
     if (opts && !!opts.watchForUpdates) {
       fs.watch(filepath, function() {
