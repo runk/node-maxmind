@@ -27,6 +27,7 @@ describe('lib/reader', function() {
       assert.equal(reader.findAddressInTree('175.16.199.88'), 3042);
       assert.equal(reader.findAddressInTree('175.16.199.255'), 3042);
       assert.equal(reader.findAddressInTree('::175.16.199.255'), 3042);
+      assert.equal(reader.findAddressInTree('::ffff:175.16.199.255'), 3042);
       assert.equal(reader.findAddressInTree('2a02:cf40:ffff::'), 4735);
       assert.equal(reader.findAddressInTree('2a02:cf47:0000::'), 4735);
       assert.equal(reader.findAddressInTree('2a02:cf47:0000:fff0:ffff::'), 4735);
