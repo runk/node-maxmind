@@ -15,7 +15,7 @@ describe('index', function() {
   var watchHandler;
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
-    sandbox.stub(fs, 'watch', function(path, cb) { watchHandler = cb; });
+    sandbox.stub(fs, 'watch').callsFake(function(path, cb) { watchHandler = cb; });
     sandbox.spy(fs, 'readFile');
     sandbox.spy(fs, 'readFileSync');
   });
@@ -103,7 +103,7 @@ describe('index', function() {
             assert(reader instanceof Reader);
             assert(fs.readFile.calledOnce);
             fs.readFile.restore();
-            sandbox.stub(fs, 'readFile', function(path, cb) { cb(new Error('Crazy shit')); });
+            sandbox.stub(fs, 'readFile').callsFake(function(path, cb) { cb(new Error('Crazy shit')); });
             watchHandler();
             break;
 
