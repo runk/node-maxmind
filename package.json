@@ -22,16 +22,16 @@
     "Afzaal Ameer @afzaalace"
   ],
   "dependencies": {
-    "big-integer": "^1.6.15",
-    "lru-cache": "^4.0.1"
+    "big-integer": "^1.6.22",
+    "lru-cache": "^4.0.2"
   },
   "devDependencies": {
-    "eslint": "^2.9.0",
-    "github-publish-release": "^1.2.3",
-    "ip-address": "^5.8.0",
-    "istanbul": "^0.4.3",
-    "mocha": "^2.4.5",
-    "sinon": "^1.17.6"
+    "eslint": "^3.19.0",
+    "github-publish-release": "^4.0.0",
+    "ip-address": "^5.8.8",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.1",
+    "sinon": "^2.3.0"
   },
   "repository": {
     "type": "git",
