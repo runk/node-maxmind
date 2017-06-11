@@ -39,6 +39,13 @@ describe('index', function() {
   });
 
   describe('open()', function() {
+    it('should handle exceptions', function(done) {
+      maxmind.open(path.join(__dirname, 'databases', 'empty.dat'), function(err) {
+        assert(err instanceof Error);
+        done();
+      });
+    });
+
     it('should work with most basic usage', function(done) {
       maxmind.open(dbPath, function(err, lookup) {
         if (err) return done(err);
