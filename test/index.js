@@ -120,7 +120,7 @@ describe('index', function() {
     });
 
     it('should handler reader errors', function(done) {
-      maxmind.open(path.join(__dirname, 'databases/broken.dat'), function(err, lookup) {
+      maxmind.open(path.join(__dirname, 'databases/broken.dat'), function(err) {
         assert.equal(err.message, 'Cannot parse binary database');
         done();
       });
