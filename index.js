@@ -19,7 +19,14 @@ exports.open = function(filepath, opts, cb) {
     if (isGzip(database)) {
       return cb(new Error('Looks like you are passing in a file in gzip format, please use mmdb database instead.'));
     }
-    var reader = new Reader(database, opts);
+
+    try {
+      var reader = new Reader(database, opts);
+    } catch (err) {
+      cb(err);
+      return;
+    }
+
     if (opts && !!opts.watchForUpdates) {
       fs.watch(filepath, function() {
         fs.readFile(filepath, function(err, database) {
