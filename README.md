@@ -66,6 +66,8 @@ var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
 });
 lookup.get('1.1.1.1');
 ```
+You can also disable cache, by setting <code>{ cache: false }</code>
+
 ### watchForUpdates
 Supports reloading the reader when changes occur to the database that is loaded. (default `false`). Only supported by Node v0.5.10+.
 ```javascript
