@@ -45,7 +45,7 @@ var organization = orgLookup.get('66.6.44.4');
 
 ## V6 Support
 
-Module is fully campatible with IPv6. There are no differences in API between IPv4 and IPv6.
+Module is fully compatible with IPv6. There are no differences in API between IPv4 and IPv6.
 
 ```javascript
 var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb');
