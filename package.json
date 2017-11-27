@@ -31,6 +31,7 @@
     "ip-address": "^5.8.8",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.1",
+    "nyc": "^11.3.0",
     "sinon": "^2.3.0"
   },
   "repository": {
@@ -53,7 +54,6 @@
     "coverage:check": "istanbul check-coverage",
     "lint": "eslint -c .eslintrc .",
     "release": "scripts/release",
-    "mocha": "mocha -R spec --recursive --bail",
-    "test": "npm run lint && npm run coverage && npm run coverage:check"
+    "test": "scripts/test"
   }
 }

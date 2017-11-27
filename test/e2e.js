@@ -143,4 +143,89 @@ describe('maxmind', function() {
     });
   });
 
+  describe('section: locales', function() {
+    it('should trim unwanted locales: whitelist en', function() {
+      var geoIp = maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
+        locales: ['en']
+      });
+      assert.deepEqual(geoIp.get('175.16.199.1'), {
+        city: { geoname_id: 2038180, names: { en: 'Changchun' } },
+        continent: { code: 'AS', geoname_id: 6255147, names: { en: 'Asia' } },
+        country: { geoname_id: 1814991, iso_code: 'CN', names: { en: 'China' } },
+        location: {
+          latitude: 43.88,
+          longitude: 125.3228,
+          time_zone: 'Asia/Harbin',
+        },
+        registered_country: { geoname_id: 1814991, iso_code: 'CN', names: { en: 'China' } },
+        subdivisions: [{
+          geoname_id: 2036500,
+          iso_code: '22',
+          names: {
+            en: 'Jilin Sheng'
+          }
+        }]
+      });
+    });
+
+    it('should trim unwanted locales: whitelist en and ru', function() {
+      var geoIp = maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
+        locales: ['ru', 'es']
+      });
+      assert.deepEqual(geoIp.get('175.16.199.1'), {
+        city: {
+          geoname_id: 2038180,
+          names: {
+            ru: 'Чанчунь'
+          }
+        },
+        continent: {
+          code: 'AS',
+          geoname_id: 6255147,
+          names: {
+            es: 'Asia',
+            ru: 'Азия'
+          }
+        },
+        country: {
+          geoname_id: 1814991,
+          iso_code: 'CN',
+          names: {
+            es: 'China',
+            ru: 'Китай'
+          }
+        },
+        location: {
+          latitude: 43.88,
+          longitude: 125.3228,
+          time_zone: 'Asia/Harbin',
+        },
+        registered_country: {
+          geoname_id: 1814991,
+          iso_code: 'CN',
+          names: {
+            es: 'China',
+            ru: 'Китай'
+          }
+        },
+        subdivisions: [{
+          geoname_id: 2036500,
+          iso_code: '22',
+          names: {}
+        }]
+      });
+    });
+
+    it('should error when locales is not array', function() {
+      assert.throws(function() {
+        maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), { locales: 'en' });
+      }, /opts.locales should be an array/);
+    });
+
+    it('should error when locale is not supported', function() {
+      assert.throws(function() {
+        maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), { locales: ['jp'] });
+      }, /opts.locales has unknown values/);
+    });
+  });
 });
