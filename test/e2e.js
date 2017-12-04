@@ -24,7 +24,7 @@ var actual = function(file) {
   };
 };
 
-describe('maxmind', function() {
+describe.only('maxmind', function() {
 
   var dataDir = path.join(__dirname, 'data/test-data');
 

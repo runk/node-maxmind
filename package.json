@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "big-integer": "^1.6.22",
+    "hashlru": "^2.2.0",
     "lru-cache": "^4.0.2"
   },
   "devDependencies": {
