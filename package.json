@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "big-integer": "^1.6.22",
-    "hashlru": "^2.2.0"
+    "tiny-lru": "^1.4.13"
   },
   "devDependencies": {
     "eslint": "^2.13.1",

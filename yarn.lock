@@ -558,10 +558,6 @@ has-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-1.0.0.tgz#9d9e793165ce017a00f00418c43f942a7b1d11fa"
 
-hashlru@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/hashlru/-/hashlru-2.2.0.tgz#793a58943f902aea578177d7b0335f13f2694b71"
-
 https-proxy-agent@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-1.0.0.tgz#35f7da6c48ce4ddbfa264891ac593ee5ff8671e6"
@@ -1165,6 +1161,10 @@ text-table@~0.2.0:
 through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
+
+tiny-lru@^1.4.13:
+  version "1.4.13"
+  resolved "https://registry.yarnpkg.com/tiny-lru/-/tiny-lru-1.4.13.tgz#5b7ef3d1901840dd4e1e6b47f3c8d8600fab1a3d"
 
 tryit@^1.0.1:
   version "1.0.3"
