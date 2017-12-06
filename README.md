@@ -55,13 +55,12 @@ var location = lookup.get('2001:4860:0:1001::3004:ef68');
 
 ## Options
 ### cache
-Module uses [lru-cache](https://github.com/isaacs/node-lru-cache). You can configure its settings by doing following:
+Module uses [tiny-lru](https://github.com/avoidwork/tiny-lru). You can configure its settings by doing following:
 
 ```javascript
 var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
   cache: {
-    max: 1000, // max items in cache
-    maxAge: 1000 * 60 * 60 // life time in milliseconds
+    max: 500, // Max items in cache, by default it's 6000
   }
 });
 lookup.get('1.1.1.1');
