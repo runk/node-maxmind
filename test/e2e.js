@@ -143,7 +143,7 @@ describe('maxmind', function() {
     });
   });
 
-  describe('section: locales', function() {
+  describe('locales support', function() {
     it('should trim unwanted locales: whitelist en', function() {
       var geoIp = maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
         locales: ['en']
