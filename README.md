@@ -2,12 +2,12 @@ node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](http
 ========
 
 Pure Javascript module for Geo IP lookup using Maxmind binary databases (aka mmdb or geoip2).
-Fastest Maxmind lookup library available - up to [8000% faster](https://github.com/runk/node-maxmind-benchmark) than other libraries. Module has 100% test coverage with comprehensive test suite. It natively works with binary Maxmind database format and doesn't require any "CSV - {specific lib format}" conversions as some other modules do. Maxmind binary databases are highly optimized for size and performance so there's no point working with other than that format.
+Fastest Maxmind lookup library available - up to [17,000% faster](https://github.com/runk/node-maxmind-benchmark) than other libraries. Module has 100% test coverage with comprehensive test suite. It natively works with binary Maxmind database format and doesn't require any "CSV - {specific lib format}" conversions as some other modules do. Maxmind binary databases are highly optimized for size and performance so there's no point working with other than that format.
 
 
 ## GEO databases
 
-Free GEO databases are available for [download here](http://dev.maxmind.com/geoip/geoip2/geolite2/). If you need better accuracy you should consider buying [commercial subscription](https://www.maxmind.com/en/geoip2-databases).
+You might want to use [geolite2](https://github.com/runk/node-geolite2) module with free geo databases. Alternatively, free databases available for [download here](http://dev.maxmind.com/geoip/geoip2/geolite2/). If you need better accuracy you should consider buying [commercial subscription](https://www.maxmind.com/en/geoip2-databases).
 
 
 ## Installation
