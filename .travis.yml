@@ -1,5 +1,5 @@
 language: node_js
 node_js:
-  - "4.4"
+  - "4.8"
   - "6.9"
   - "8.4"

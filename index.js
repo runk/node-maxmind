@@ -31,7 +31,7 @@ exports.open = function(filepath, opts, cb) {
       fs.watch(filepath, function() {
         fs.readFile(filepath, function(err, database) {
           if (err) return cb(err);
-          reader.load(database);
+          reader.load(database, opts);
         });
       });
     }
@@ -43,7 +43,7 @@ exports.openSync = function(filepath, opts) {
   var reader = new Reader(fs.readFileSync(filepath), opts);
   if (opts && !!opts.watchForUpdates) {
     fs.watch(filepath, function() {
-      reader.load(fs.readFileSync(filepath));
+      reader.load(fs.readFileSync(filepath), opts);
     });
   }
 
