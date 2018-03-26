@@ -14,8 +14,7 @@ which you can find useful:
 
 - `npm test` runs tests
 - `npm run lint` runs js linter
-- `npm run coverage` runs code coverage task and generates a report
-- `npm run benchmark` runs performance benchmark
+- `npm test --coverage` runs code coverage task and generates a report
 
 One pull request per one feature, nothing unusual.
 

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Exit immediately if a pipeline returns non-zero status
+# http://www.gnu.org/software/bash/manual/bashref.html#The-Set-Builtin
+set -e
+
+export NODE_ENV=test
+
+# --watch option
+if [ -n "$npm_config_watch" ]; then WATCH="--watch"; else WATCH=""; fi
+
+# --coverage option
+if [ -n "$npm_config_coverage" ]; then RUNNER="nyc mocha"; else RUNNER="mocha"; fi
+
+
+$RUNNER \
+  --check-leaks \
+  --bail \
+  --grep ${npm_config_grep:-''} \
+  --recursive \
+  --timeout 1s \
+  --inline-diffs \
+  $WATCH \
+  ${npm_config_file:-'test'}
