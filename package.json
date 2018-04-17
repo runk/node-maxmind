@@ -19,7 +19,8 @@
   "author": "Dmitry Shirokov <deadrunk@gmail.com>",
   "contributors": [
     "Thomas Birke @quafzi <quafzi@netextreme.de>",
-    "Afzaal Ameer @afzaalace"
+    "Afzaal Ameer @afzaalace",
+    "Andrew N Golovkov @AndorCS"
   ],
   "dependencies": {
     "big-integer": "^1.6.27",
