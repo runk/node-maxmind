@@ -28,11 +28,17 @@ exports.open = function(filepath, opts, cb) {
     }
 
     if (opts && !!opts.watchForUpdates) {
+      if (opts.watchForUpdatesHook && typeof opts.watchForUpdatesHook != 'function') {
+        throw new Error('opts.watchForUpdatesHook should be a function');
+      }
       fs.watch(filepath, function() {
         fs.readFile(filepath, function(err, database) {
           if (err) return cb(err);
           reader.load(database, opts);
         });
+        if (opts.watchForUpdatesHook) {
+          opts.watchForUpdatesHook();
+        }
       });
     }
     cb(null, reader);
@@ -42,8 +48,14 @@ exports.open = function(filepath, opts, cb) {
 exports.openSync = function(filepath, opts) {
   var reader = new Reader(fs.readFileSync(filepath), opts);
   if (opts && !!opts.watchForUpdates) {
+    if (opts.watchForUpdatesHook && typeof opts.watchForUpdatesHook != 'function') {
+      throw new Error('opts.watchForUpdatesHook should be a function');
+    }
     fs.watch(filepath, function() {
       reader.load(fs.readFileSync(filepath), opts);
+      if (opts.watchForUpdatesHook) {
+        opts.watchForUpdatesHook();
+      }
     });
   }
 

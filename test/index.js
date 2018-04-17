@@ -71,6 +71,22 @@ describe('index', function() {
       });
     });
 
+    it('should work with auto updates and call specified hook', function(done) {
+      var hook = sinon.spy();
+      var options = {
+        watchForUpdates: true,
+        watchForUpdatesHook: hook,
+      };
+      maxmind.open(dbPath, options, function(err, lookup) {
+        if (err) return done(err);
+        assert(lookup.get('2001:230::'));
+        assert(hook.notCalled);
+        watchHandler();
+        assert(hook.calledOnce);
+        done();
+      });
+    });
+
     it('should successfully handle errors while opening a db', function(done) {
       maxmind.open('/foo/bar', function(err) {
         assert.equal(err.code, 'ENOENT');
@@ -141,5 +157,19 @@ describe('index', function() {
       watchHandler();
       assert(fs.readFileSync.calledTwice);
     });
+
+    it('should successfully handle database updates and call specified hook', function() {
+      var hook = sinon.spy();
+      var opts = {
+        watchForUpdates: true,
+        watchForUpdatesHook: hook,
+      };
+      var lookup = maxmind.openSync(dbPath, opts);
+      assert(lookup.get('2001:230::'));
+      assert(hook.notCalled);
+      watchHandler();
+      assert(hook.calledOnce);
+    });
+
   });
 });
