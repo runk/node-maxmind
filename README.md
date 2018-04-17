@@ -72,6 +72,16 @@ var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', { watchForUpdates: true 
 lookup.get('1.1.1.1');
 ```
 
+Also, you can specify custom hook function on database update.
+
+```javascript
+var opts = {
+  watchForUpdates: true,
+  watchForUpdatesHook: () => { console.log('database updated!'); },
+};
+var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', opts);
+lookup.get('1.1.1.1');
+```
 
 ## IP addresses validation
 
