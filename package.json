@@ -1,6 +1,6 @@
 {
   "name": "maxmind",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "homepage": "https://github.com/runk/node-maxmind",
   "description": "IP lookup using Maxmind databases",
   "keywords": [
