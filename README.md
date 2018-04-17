@@ -1,6 +1,8 @@
 node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](https://travis-ci.org/runk/node-maxmind)
 ========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/runk/node-maxmind.svg)](https://greenkeeper.io/)
+
 Pure Javascript module for Geo IP lookup using Maxmind binary databases (aka mmdb or geoip2).
 Fastest Maxmind lookup library available - up to [17,000% faster](https://github.com/runk/node-maxmind-benchmark) than other libraries. Module has 100% test coverage with comprehensive test suite. It natively works with binary Maxmind database format and doesn't require any "CSV - {specific lib format}" conversions as some other modules do. Maxmind binary databases are highly optimized for size and performance so there's no point working with other than that format.
 
