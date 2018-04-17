@@ -32,13 +32,13 @@ exports.open = function(filepath, opts, cb) {
         throw new Error('opts.watchForUpdatesHook should be a function');
       }
       fs.watch(filepath, function() {
-        if (opts.watchForUpdatesHook) {
-          opts.watchForUpdatesHook();
-        }
         fs.readFile(filepath, function(err, database) {
           if (err) return cb(err);
           reader.load(database, opts);
         });
+        if (opts.watchForUpdatesHook) {
+          opts.watchForUpdatesHook();
+        }
       });
     }
     cb(null, reader);
@@ -52,10 +52,10 @@ exports.openSync = function(filepath, opts) {
       throw new Error('opts.watchForUpdatesHook should be a function');
     }
     fs.watch(filepath, function() {
+      reader.load(fs.readFileSync(filepath), opts);
       if (opts.watchForUpdatesHook) {
         opts.watchForUpdatesHook();
       }
-      reader.load(fs.readFileSync(filepath), opts);
     });
   }
 

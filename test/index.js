@@ -72,7 +72,7 @@ describe('index', function() {
     });
 
     it('should work with auto updates and call specified hook', function(done) {
-      var hook = sinon.spy(function() {});
+      var hook = sinon.spy();
       var options = {
         watchForUpdates: true,
         watchForUpdatesHook: hook,
@@ -159,16 +159,16 @@ describe('index', function() {
     });
 
     it('should successfully handle database updates and call specified hook', function() {
-      var hook = sinon.spy(function() {});
+      var hook = sinon.spy();
       var opts = {
         watchForUpdates: true,
         watchForUpdatesHook: hook,
       };
       var lookup = maxmind.openSync(dbPath, opts);
       assert(lookup.get('2001:230::'));
-      console.log(hook.notCalled);
+      assert(hook.notCalled);
       watchHandler();
-      console.log(hook.calledOnce);
+      assert(hook.calledOnce);
     });
 
   });
