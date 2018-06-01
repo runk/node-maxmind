@@ -74,6 +74,16 @@ var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', { watchForUpdates: true 
 lookup.get('1.1.1.1');
 ```
 
+You also can specify wether the watcher should be persistent or not. If it is persistent, a node process will be blocked in watching state if the watcher is the only thing still running in the program. You can use `watchForUpdatesNonPersistent` option (default `false`) to prevent this behavior.
+```javascript
+var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
+  watchForUpdates: true,
+  watchForUpdateNonPersistent: true,
+});
+lookup.get('1.1.1.1');
+```
+
+
 Also, you can specify custom hook function on database update.
 
 ```javascript
