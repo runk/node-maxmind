@@ -31,7 +31,8 @@ exports.open = function(filepath, opts, cb) {
       if (opts.watchForUpdatesHook && typeof opts.watchForUpdatesHook != 'function') {
         throw new Error('opts.watchForUpdatesHook should be a function');
       }
-      fs.watch(filepath, function() {
+      var watcherOptions = {persistent: opts.watchForUpdatesNonPersistent !== true};
+      fs.watch(filepath, watcherOptions, function() {
         fs.readFile(filepath, function(err, database) {
           if (err) return cb(err);
           reader.load(database, opts);
@@ -51,7 +52,8 @@ exports.openSync = function(filepath, opts) {
     if (opts.watchForUpdatesHook && typeof opts.watchForUpdatesHook != 'function') {
       throw new Error('opts.watchForUpdatesHook should be a function');
     }
-    fs.watch(filepath, function() {
+    var watcherOptions = {persistent: opts.watchForUpdatesNonPersistent !== true};
+    fs.watch(filepath, watcherOptions, function() {
       reader.load(fs.readFileSync(filepath), opts);
       if (opts.watchForUpdatesHook) {
         opts.watchForUpdatesHook();

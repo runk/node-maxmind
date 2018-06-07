@@ -14,8 +14,8 @@ describe('index', function() {
   var sandbox;
   var watchHandler;
   beforeEach(function() {
-    sandbox = sinon.sandbox.create();
-    sandbox.stub(fs, 'watch').callsFake(function(path, cb) { watchHandler = cb; });
+    sandbox = sinon.createSandbox();
+    sandbox.stub(fs, 'watch').callsFake(function(path, options, cb) { watchHandler = cb; });
     sandbox.spy(fs, 'readFile');
     sandbox.spy(fs, 'readFileSync');
   });
@@ -76,6 +76,7 @@ describe('index', function() {
       var options = {
         watchForUpdates: true,
         watchForUpdatesHook: hook,
+        watchForUpdatesNonPersistent: false,
       };
       maxmind.open(dbPath, options, function(err, lookup) {
         if (err) return done(err);
