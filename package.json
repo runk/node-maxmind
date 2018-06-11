@@ -27,13 +27,13 @@
     "tiny-lru": "^1.6.1"
   },
   "devDependencies": {
-    "eslint": "^2.13.1",
-    "github-publish-release": "^4.2.1",
-    "ip-address": "^5.8.9",
-    "istanbul": "^0.4.0",
-    "mocha": "^5.2.0",
-    "nyc": "^11.9.0",
-    "sinon": "^5.1.1"
+    "eslint": "2.13.1",
+    "github-publish-release": "4.2.1",
+    "ip-address": "5.8.9",
+    "istanbul": "0.4.5",
+    "mocha": "5.2.0",
+    "nyc": "11.9.0",
+    "sinon": "5.1.1"
   },
   "repository": {
     "type": "git",
