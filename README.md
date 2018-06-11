@@ -77,7 +77,7 @@ You also can specify wether the watcher should be persistent or not. If it is pe
 ```javascript
 var lookup = maxmind.openSync('/path/to/GeoLite2.mmdb', {
   watchForUpdates: true,
-  watchForUpdateNonPersistent: true,
+  watchForUpdatesNonPersistent: true,
 });
 lookup.get('1.1.1.1');
 ```
