@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "eslint": "2.13.1",
-    "github-publish-release": "4.2.1",
+    "github-publish-release": "5.0.0",
     "ip-address": "5.8.9",
     "istanbul": "0.4.5",
     "mocha": "5.2.0",
