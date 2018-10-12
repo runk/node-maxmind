@@ -4,5 +4,3 @@ node_modules
 coverage
 npm-debug.log
 .nyc_output
-yarn.lock
-yarn*.log
