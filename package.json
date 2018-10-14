@@ -33,7 +33,7 @@
     "istanbul": "0.4.5",
     "mocha": "5.2.0",
     "nyc": "13.1.0",
-    "sinon": "6.3.5"
+    "sinon": "7.0.0"
   },
   "repository": {
     "type": "git",
