@@ -1,4 +1,4 @@
-node-maxmind [![Build Status](https://travis-ci.org/runk/node-maxmind.png)](https://travis-ci.org/runk/node-maxmind)
+node-maxmind [![Build Status](https://api.travis-ci.org/runk/node-maxmind.svg?branch=master)](https://travis-ci.org/runk/node-maxmind)
 ========
 
 
