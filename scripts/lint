@@ -16,3 +16,5 @@ if [ -n "$npm_config_fix" ]; then
 fi
 
 if [ "$LIST" ]; then eslint $FIX --config .eslintrc $LIST; fi
+
+tslint index.d.ts

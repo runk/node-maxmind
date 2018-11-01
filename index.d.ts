@@ -37,7 +37,7 @@ export interface IBaseCountry {
   names: INames;
 }
 
-export interface ICountry extends IBaseCountry{
+export interface ICountry extends IBaseCountry {
   confidence: number;
 }
 
@@ -82,20 +82,20 @@ export interface ITraits {
   isp: string;
   organization: string;
   user_type: 'business'
-    | 'cafe'
-    | 'cellular'
-    | 'college'
-    | 'content_delivery_network'
-    | 'dialup'
-    | 'government'
-    | 'hosting'
-    | 'library'
-    | 'military'
-    | 'residential'
-    | 'router'
-    | 'school'
-    | 'search_engine_spider'
-    | 'traveler'
+  | 'cafe'
+  | 'cellular'
+  | 'college'
+  | 'content_delivery_network'
+  | 'dialup'
+  | 'government'
+  | 'hosting'
+  | 'library'
+  | 'military'
+  | 'residential'
+  | 'router'
+  | 'school'
+  | 'search_engine_spider'
+  | 'traveler';
 }
 
 export interface IFields {
@@ -116,9 +116,8 @@ export interface IReader {
 
 export type openCb = (err: Error, cb: IReader) => void;
 
-export function open(filepath: string, opts?: IOpenOpts | openCb, cb?: openCb) : void;
+export function open(filepath: string, opts?: IOpenOpts | openCb, cb?: openCb): void;
 
 export function openSync(filepath: string, opts?: IOpenOpts): IReader;
 
 export function validate(ipAddress: string): boolean;
-
