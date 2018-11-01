@@ -44,6 +44,7 @@
     "url": "http://github.com/runk/node-maxmind/issues"
   },
   "main": "index.js",
+  "typings": "./index.d.ts",
   "engines": {
     "node": ">=4.8",
     "npm": ">=1"
