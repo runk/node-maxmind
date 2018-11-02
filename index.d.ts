@@ -99,15 +99,15 @@ export interface ITraits {
 }
 
 export interface IFields {
-  city: ICity;
-  continent: IContinent;
-  country: ICountry;
-  location: ILocation;
-  postal: IPostal;
-  registered_country: IBaseCountry;
-  represented_country: IRepresentedCountry;
-  subdivisions: ISubdivisions;
-  traits: ITraits;
+  city?: ICity;
+  continent?: IContinent;
+  country?: ICountry;
+  location?: ILocation;
+  postal?: IPostal;
+  registered_country?: IBaseCountry;
+  represented_country?: IRepresentedCountry;
+  subdivisions?: ISubdivisions;
+  traits?: ITraits;
 }
 
 export interface IReader {
