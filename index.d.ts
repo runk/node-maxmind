@@ -112,6 +112,20 @@ export interface IFields {
 
 export interface IReader {
   get: (ipAddress: string) => IFields;
+  metadata: {
+    binaryFormatMajorVersion: number;
+    binaryFormatMinorVersion: number;
+    buildEpoch: Date;
+    databaseType: string;
+    languages: string[];
+    description: any;
+    ipVersion: number;
+    nodeCount: number;
+    recordSize: number;
+    nodeByteSize: number;
+    searchTreeSize: number;
+    treeDepth: number;
+  };
 }
 
 export type openCb = (err: Error, cb: IReader) => void;
