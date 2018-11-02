@@ -19,7 +19,7 @@ export interface INames {
 }
 
 export interface ICity {
-  confidence: number;
+  confidence?: number;
   geoname_id: number;
   names: INames;
 }
@@ -38,22 +38,22 @@ export interface IBaseCountry {
 }
 
 export interface ICountry extends IBaseCountry {
-  confidence: number;
+  confidence?: number;
 }
 
 export interface ILocation {
-  accuracy_radius: number;
+  accuracy_radius?: number;
   average_income?: number;
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
   metro_code?: number;
   population_density?: number;
-  time_zone: string;
+  time_zone?: string;
 }
 
 export interface IPostal {
   code?: string;
-  confidence: number;
+  confidence?: number;
 }
 
 export interface IRepresentedCountry extends IBaseCountry {
@@ -61,27 +61,27 @@ export interface IRepresentedCountry extends IBaseCountry {
 }
 
 export interface ISubdivisions {
-  confidence: number;
-  geoname_id: number;
-  iso_code: string;
-  names: INames;
+  confidence?: number;
+  geoname_id?: number;
+  iso_code?: string;
+  names?: INames;
 }
 
 export interface ITraits {
-  autonomous_system_number: number;
-  autonomous_system_organization: string;
-  domain: string;
+  autonomous_system_number?: number;
+  autonomous_system_organization?: string;
+  domain?: string;
   ip_address: string;
-  is_anonymous: boolean;
-  is_anonymous_proxy: boolean;
-  is_anonymous_vpn: boolean;
-  is_hosting_provider: boolean;
-  is_public_proxy: boolean;
-  is_satellite_provider: boolean;
-  is_tor_exit_node: boolean;
-  isp: string;
-  organization: string;
-  user_type: 'business'
+  is_anonymous?: boolean;
+  is_anonymous_proxy?: boolean;
+  is_anonymous_vpn?: boolean;
+  is_hosting_provider?: boolean;
+  is_public_proxy?: boolean;
+  is_satellite_provider?: boolean;
+  is_tor_exit_node?: boolean;
+  isp?: string;
+  organization?: string;
+  user_type?: 'business'
   | 'cafe'
   | 'cellular'
   | 'college'
