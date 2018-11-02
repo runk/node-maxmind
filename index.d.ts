@@ -63,7 +63,7 @@ export interface IRepresentedCountry extends IBaseCountry {
 export interface ISubdivisions {
   confidence: number;
   geoname_id: number;
-  iso_code: number;
+  iso_code: string;
   names: INames;
 }
 
