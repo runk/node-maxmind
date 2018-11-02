@@ -106,7 +106,7 @@ export interface IFields {
   postal?: IPostal;
   registered_country?: IBaseCountry;
   represented_country?: IRepresentedCountry;
-  subdivisions?: ISubdivisions;
+  subdivisions?: ISubdivisions[];
   traits?: ITraits;
 }
 
