@@ -8,14 +8,14 @@ export interface IOpenOpts {
 }
 
 export interface INames {
-  de: string;
+  de?: string;
   en: string;
-  es: string;
-  fr: string;
-  ja: string;
-  'pt-BR': string;
-  ru: string;
-  'zh-CN': string;
+  es?: string;
+  fr?: string;
+  ja?: string;
+  'pt-BR'?: string;
+  ru?: string;
+  'zh-CN'?: string;
 }
 
 export interface ICity {
