@@ -111,7 +111,7 @@ export interface IFields {
 }
 
 export interface IReader {
-  get: (ipAddress: string) => IFields;
+  get: (ipAddress: string) => IFields | null;
   metadata: {
     binaryFormatMajorVersion: number;
     binaryFormatMinorVersion: number;
