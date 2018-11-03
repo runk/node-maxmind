@@ -98,20 +98,54 @@ export interface ITraits {
   | 'traveler';
 }
 
-export interface IFields {
-  city?: ICity;
+export interface ICountryResponse {
   continent?: IContinent;
   country?: ICountry;
-  location?: ILocation;
-  postal?: IPostal;
   registered_country?: IBaseCountry;
   represented_country?: IRepresentedCountry;
-  subdivisions?: ISubdivisions[];
   traits?: ITraits;
 }
 
-export interface IReader {
-  get: (ipAddress: string) => IFields | null;
+export interface ICityResponse extends ICountryResponse {
+  city?: ICity;
+  location?: ILocation;
+  postal?: IPostal;
+  subdivisions?: ISubdivisions[];
+}
+
+export interface IAnonymousIPResponse {
+  ip_address: string;
+  is_anonymous?: boolean;
+  is_anonymous_proxy?: boolean;
+  is_anonymous_vpn?: boolean;
+  is_hosting_provider?: boolean;
+  is_public_proxy?: boolean;
+  is_tor_exit_node?: boolean;
+}
+
+export interface IAsnResponse {
+  autonomous_system_number: number;
+  autonomous_system_organization: string;
+  ip_address: string;
+}
+
+export interface IConnectionTypeResponse {
+  connection_type: string;
+  ip_address: string;
+}
+
+export interface IDomainResponse {
+  domain: string;
+  ip_address: string;
+}
+
+export interface IIspResponse extends IAsnResponse {
+  isp: string;
+  organization: string;
+}
+
+export interface IReader<T> {
+  get: (ipAddress: string) => T | null;
   metadata: {
     binaryFormatMajorVersion: number;
     binaryFormatMinorVersion: number;
@@ -128,10 +162,10 @@ export interface IReader {
   };
 }
 
-export type openCb = (err: Error, cb: IReader) => void;
+export type openCb<T> = (err: Error, cb: IReader<T>) => void;
 
-export function open(filepath: string, opts?: IOpenOpts | openCb, cb?: openCb): void;
+export function open<T>(filepath: string, opts?: IOpenOpts | openCb<T>, cb?: openCb<T>): void;
 
-export function openSync(filepath: string, opts?: IOpenOpts): IReader;
+export function openSync<T>(filepath: string, opts?: IOpenOpts): IReader<T>;
 
 export function validate(ipAddress: string): boolean;
