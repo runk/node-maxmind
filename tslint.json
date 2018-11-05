@@ -1,6 +1,10 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
     "quotemark": [
       true,
       "single"
