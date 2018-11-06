@@ -165,9 +165,9 @@ export interface IReader {
 }
 
 export class Reader implements IReader {
+  public metadata: IMetadata;
+  public get: (ipAddress: string) => ICityResponse | null;
   constructor(buffer: Buffer, opts?: IOpenOpts);
-  get: (ipAddress: string) => ICityResponse | null;
-  metadata: IMetadata;
 }
 
 export type openCb = (err: Error, cb: IReader) => void;
