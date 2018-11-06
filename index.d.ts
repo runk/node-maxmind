@@ -144,28 +144,36 @@ export interface IIspResponse extends IAsnResponse {
   organization: string;
 }
 
-export interface IReader<T> {
-  get: (ipAddress: string) => T | null;
-  metadata: {
-    binaryFormatMajorVersion: number;
-    binaryFormatMinorVersion: number;
-    buildEpoch: Date;
-    databaseType: string;
-    languages: string[];
-    description: any;
-    ipVersion: number;
-    nodeCount: number;
-    recordSize: number;
-    nodeByteSize: number;
-    searchTreeSize: number;
-    treeDepth: number;
-  };
+export interface IMetadata {
+  binaryFormatMajorVersion: number;
+  binaryFormatMinorVersion: number;
+  buildEpoch: Date;
+  databaseType: string;
+  languages: string[];
+  description: any;
+  ipVersion: number;
+  nodeCount: number;
+  recordSize: number;
+  nodeByteSize: number;
+  searchTreeSize: number;
+  treeDepth: number;
 }
 
-export type openCb<T> = (err: Error, cb: IReader<T>) => void;
+export interface IReader {
+  get: (ipAddress: string) => ICityResponse | null;
+  metadata: IMetadata;
+}
 
-export function open<T>(filepath: string, opts?: IOpenOpts | openCb<T>, cb?: openCb<T>): void;
+export class Reader implements IReader {
+  constructor(buffer: Buffer, opts?: IOpenOpts);
+  get: (ipAddress: string) => ICityResponse | null;
+  metadata: IMetadata;
+}
 
-export function openSync<T>(filepath: string, opts?: IOpenOpts): IReader<T>;
+export type openCb = (err: Error, cb: IReader) => void;
+
+export function open(filepath: string, opts?: IOpenOpts | openCb, cb?: openCb): void;
+
+export function openSync(filepath: string, opts?: IOpenOpts): IReader;
 
 export function validate(ipAddress: string): boolean;
