@@ -1,7 +1,6 @@
 export interface OpenOpts {
   cache?: {
-    max?: number,
-    maxAge?: number;
+    max: number,
   };
   watchForUpdates?: boolean;
   watchForUpdatesNonPersistent?: boolean;
@@ -174,10 +173,10 @@ export class Reader<T extends Response = any> {
   constructor(buffer: Buffer, opts?: OpenOpts);
 }
 
-export type openCb = (err: Error, cb: Reader) => void;
+export type openCb<T extends Response = any> = (err: Error, cb: Reader<T>) => void;
 
-export function open(filepath: string, opts?: OpenOpts | openCb, cb?: openCb): void;
+export function open<T extends Response = any>(filepath: string, opts?: OpenOpts | openCb<T>, cb?: openCb<T>): void;
 
-export function openSync(filepath: string, opts?: OpenOpts): Reader;
+export function openSync<T extends Response = any>(filepath: string, opts?: OpenOpts): Reader<T>;
 
 export function validate(ipAddress: string): boolean;

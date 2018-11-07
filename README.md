@@ -20,6 +20,8 @@ npm i maxmind
 
 ## Usage
 
+### JavaScript
+
 ```javascript
 var maxmind = require('maxmind');
 
@@ -43,6 +45,47 @@ var orgLookup = maxmind.openSync('/path/to/GeoOrg.mmdb');
 var organization = orgLookup.get('66.6.44.4');
 ```
 
+### TypeScript
+
+```typescript
+import * as maxmind from 'maxmind';
+
+maxmind.open<maxmind.CityResponse>('/path/to/GeoLite2-City.mmdb', (err, cityLookup) => {
+  let city = cityLookup.get('8.8.8.8'); // inferred type maxmind.CityResponse
+});
+
+
+// sync version
+
+let cityLookup = maxmind.openSync<maxmind.CityResponse>('/path/to/GeoLite2-City.mmdb');
+let city = cityLookup.get('8.8.8.8'); // inferred type maxmind.CityResponse
+
+
+// use Reader class directly
+
+let cityLookup: maxmind.Reader<maxmind.CityResponse> = null;
+myLib.downloadFromCloudToStream(someCloudMaxmindDbUrl, (err, buffer) => {
+  if (!err) {
+    cityLookup = new maxmind.Reader(buffer);
+  }
+});
+
+if (cityLookup) {
+  let city = cityLookup.get('8.8.8.8'); // inferred type maxmind.CityResponse
+}
+```
+
+Supported response types:
+
+```
+- CountryResponse
+- CityResponse
+- AnonymousIPResponse
+- AsnResponse
+- ConnectionTypeResponse
+- DomainResponse
+- IspResponse
+```
 
 ## V6 Support
 
