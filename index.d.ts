@@ -1,4 +1,4 @@
-export interface IOpenOpts {
+export interface OpenOpts {
   cache?: {
     max: number,
   };
@@ -7,81 +7,81 @@ export interface IOpenOpts {
   watchForUpdatesHook?: () => void;
 }
 
-export interface INames {
-  de?: string;
-  en: string;
-  es?: string;
-  fr?: string;
-  ja?: string;
-  'pt-BR'?: string;
-  ru?: string;
-  'zh-CN'?: string;
+export interface Names {
+  readonly de?: string;
+  readonly en: string;
+  readonly es?: string;
+  readonly fr?: string;
+  readonly ja?: string;
+  readonly 'pt-BR'?: string;
+  readonly ru?: string;
+  readonly 'zh-CN'?: string;
 }
 
-export interface ICity {
-  confidence?: number;
-  geoname_id: number;
-  names: INames;
+export interface CityRecord {
+  readonly confidence?: number;
+  readonly geoname_id: number;
+  readonly names: Names;
 }
 
-export interface IContinent {
-  code: 'AF' | 'AN' | 'AS' | 'EU' | 'NA' | 'OC' | 'SA';
-  geoname_id: number;
-  names: INames;
+export interface ContinentRecord {
+  readonly code: 'AF' | 'AN' | 'AS' | 'EU' | 'NA' | 'OC' | 'SA';
+  readonly geoname_id: number;
+  readonly names: Names;
 }
 
-export interface IBaseCountry {
-  geoname_id: number;
-  is_in_european_union?: boolean;
-  iso_code: string;
-  names: INames;
+export interface RegisteredCountryRecord {
+  readonly geoname_id: number;
+  readonly is_in_european_union?: boolean;
+  readonly iso_code: string;
+  readonly names: Names;
 }
 
-export interface ICountry extends IBaseCountry {
-  confidence?: number;
+export interface CountryRecord extends RegisteredCountryRecord {
+  readonly confidence?: number;
 }
 
-export interface ILocation {
-  accuracy_radius?: number;
-  average_income?: number;
-  latitude?: number;
-  longitude?: number;
-  metro_code?: number;
-  population_density?: number;
-  time_zone?: string;
+export interface LocationRecord {
+  readonly accuracy_radius: number;
+  readonly average_income?: number;
+  readonly latitude: number;
+  readonly longitude: number;
+  readonly metro_code?: number;
+  readonly population_density?: number;
+  readonly time_zone?: string;
 }
 
-export interface IPostal {
-  code?: string;
-  confidence?: number;
+export interface PostalRecord {
+  readonly code: string;
+  readonly confidence?: number;
 }
 
-export interface IRepresentedCountry extends IBaseCountry {
-  type: string;
+export interface RepresentedCountryRecord extends RegisteredCountryRecord {
+  readonly type: string;
 }
 
-export interface ISubdivisions {
-  confidence?: number;
-  geoname_id?: number;
-  iso_code?: string;
-  names?: INames;
+export interface SubdivisionsRecord {
+  readonly confidence?: number;
+  readonly geoname_id: number;
+  readonly iso_code: string;
+  readonly names: Names;
 }
 
-export interface ITraits {
-  autonomous_system_number?: number;
-  autonomous_system_organization?: string;
-  domain?: string;
-  ip_address: string;
-  is_anonymous?: boolean;
-  is_anonymous_proxy?: boolean;
-  is_anonymous_vpn?: boolean;
-  is_hosting_provider?: boolean;
-  is_public_proxy?: boolean;
-  is_satellite_provider?: boolean;
-  is_tor_exit_node?: boolean;
-  isp?: string;
-  organization?: string;
-  user_type?: 'business'
+export interface TraitsRecord {
+  readonly autonomous_system_number?: number;
+  readonly autonomous_system_organization?: string;
+  readonly domain?: string;
+  ip_address?: string;
+  readonly is_anonymous?: boolean;
+  readonly is_anonymous_proxy?: boolean;
+  readonly is_anonymous_vpn?: boolean;
+  readonly is_hosting_provider?: boolean;
+  readonly is_public_proxy?: boolean;
+  readonly is_satellite_provider?: boolean;
+  readonly is_tor_exit_node?: boolean;
+  readonly isp?: string;
+  readonly organization?: string;
+  readonly user_type?: 'business'
   | 'cafe'
   | 'cellular'
   | 'college'
@@ -98,82 +98,85 @@ export interface ITraits {
   | 'traveler';
 }
 
-export interface ICountryResponse {
-  continent?: IContinent;
-  country?: ICountry;
-  registered_country?: IBaseCountry;
-  represented_country?: IRepresentedCountry;
-  traits?: ITraits;
+export interface CountryResponse {
+  readonly continent?: ContinentRecord;
+  readonly country?: CountryRecord;
+  readonly registered_country?: RegisteredCountryRecord;
+  readonly represented_country?: RepresentedCountryRecord;
+  readonly traits?: TraitsRecord;
 }
 
-export interface ICityResponse extends ICountryResponse {
-  city?: ICity;
-  location?: ILocation;
-  postal?: IPostal;
-  subdivisions?: ISubdivisions[];
+export interface CityResponse extends CountryResponse {
+  readonly city?: CityRecord;
+  readonly location?: LocationRecord;
+  readonly postal?: PostalRecord;
+  readonly subdivisions?: SubdivisionsRecord[];
 }
 
-export interface IAnonymousIPResponse {
-  ip_address: string;
-  is_anonymous?: boolean;
-  is_anonymous_proxy?: boolean;
-  is_anonymous_vpn?: boolean;
-  is_hosting_provider?: boolean;
-  is_public_proxy?: boolean;
-  is_tor_exit_node?: boolean;
+export interface AnonymousIPResponse {
+  ip_address?: string;
+  readonly is_anonymous?: boolean;
+  readonly is_anonymous_proxy?: boolean;
+  readonly is_anonymous_vpn?: boolean;
+  readonly is_hosting_provider?: boolean;
+  readonly is_public_proxy?: boolean;
+  readonly is_tor_exit_node?: boolean;
 }
 
-export interface IAsnResponse {
-  autonomous_system_number: number;
-  autonomous_system_organization: string;
-  ip_address: string;
+export interface AsnResponse {
+  readonly autonomous_system_number: number;
+  readonly autonomous_system_organization: string;
+  ip_address?: string;
 }
 
-export interface IConnectionTypeResponse {
-  connection_type: string;
-  ip_address: string;
+export interface ConnectionTypeResponse {
+  readonly connection_type: string;
+  ip_address?: string;
 }
 
-export interface IDomainResponse {
-  domain: string;
-  ip_address: string;
+export interface DomainResponse {
+  readonly domain: string;
+  ip_address?: string;
 }
 
-export interface IIspResponse extends IAsnResponse {
-  isp: string;
-  organization: string;
+export interface IspResponse extends AsnResponse {
+  readonly isp: string;
+  readonly organization: string;
 }
 
-export interface IMetadata {
-  binaryFormatMajorVersion: number;
-  binaryFormatMinorVersion: number;
-  buildEpoch: Date;
-  databaseType: string;
-  languages: string[];
-  description: any;
-  ipVersion: number;
-  nodeCount: number;
-  recordSize: number;
-  nodeByteSize: number;
-  searchTreeSize: number;
-  treeDepth: number;
+export type Response = CountryResponse
+  | CityResponse
+  | AnonymousIPResponse
+  | AsnResponse
+  | ConnectionTypeResponse
+  | DomainResponse
+  | IspResponse;
+
+export interface Metadata {
+  readonly binaryFormatMajorVersion: number;
+  readonly binaryFormatMinorVersion: number;
+  readonly buildEpoch: Date;
+  readonly databaseType: string;
+  readonly languages: string[];
+  readonly description: any;
+  readonly ipVersion: number;
+  readonly nodeCount: number;
+  readonly recordSize: number;
+  readonly nodeByteSize: number;
+  readonly searchTreeSize: number;
+  readonly treeDepth: number;
 }
 
-export interface IReader {
-  get: (ipAddress: string) => ICityResponse | null;
-  metadata: IMetadata;
+export class Reader<T extends Response = any> {
+  public metadata: Metadata;
+  public get: (ipAddress: string) => T | null;
+  constructor(buffer: Buffer, opts?: OpenOpts);
 }
 
-export class Reader implements IReader {
-  public metadata: IMetadata;
-  public get: (ipAddress: string) => ICityResponse | null;
-  constructor(buffer: Buffer, opts?: IOpenOpts);
-}
+export type openCb<T extends Response = any> = (err: Error, cb: Reader<T>) => void;
 
-export type openCb = (err: Error, cb: IReader) => void;
+export function open<T extends Response = any>(filepath: string, opts?: OpenOpts | openCb<T>, cb?: openCb<T>): void;
 
-export function open(filepath: string, opts?: IOpenOpts | openCb, cb?: openCb): void;
-
-export function openSync(filepath: string, opts?: IOpenOpts): IReader;
+export function openSync<T extends Response = any>(filepath: string, opts?: OpenOpts): Reader<T>;
 
 export function validate(ipAddress: string): boolean;
