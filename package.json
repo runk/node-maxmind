@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "big-integer": "^1.6.31",
-    "tiny-lru": "^1.6.1"
+    "tiny-lru": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "10.12.12",
