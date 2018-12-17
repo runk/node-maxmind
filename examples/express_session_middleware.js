@@ -22,9 +22,8 @@ module.exports = () => {
         return next()
       }
       if(city.country) {
-        if(city.country.iso_code) {
+        if(city.country.iso_code)
           req.session.country = city.country.iso_code
-        }
       }
       if(city.postal && !req.session.zip) {
     		if(city.postal.code)
