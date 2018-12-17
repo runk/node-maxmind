@@ -32,10 +32,6 @@ module.exports = () => {
           req.session.city = city.city.names ? city.city.names.en : ''
         if(city.subdivisions)
           req.session.state = city.subdivisions[0].iso_code
-        if(req.session.city) {
-          req.session.city_state = req.session.city + ', ' + req.session.state
-          res.locals.city_state = req.session.city_state  
-        }
         if(city.location) {
           if(city.location.latitude)
             req.session.latitude = city.location.latitude
