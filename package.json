@@ -27,7 +27,7 @@
     "tiny-lru": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "10.12.12",
+    "@types/node": "10.12.15",
     "eslint": "2.13.1",
     "github-publish-release": "5.0.1",
     "ip-address": "5.8.9",
