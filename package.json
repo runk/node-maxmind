@@ -34,7 +34,7 @@
     "istanbul": "0.4.5",
     "mocha": "5.2.0",
     "nyc": "13.1.0",
-    "sinon": "7.2.2",
+    "sinon": "7.2.3",
     "tslint": "5.12.1",
     "typescript": "3.2.2"
   },
