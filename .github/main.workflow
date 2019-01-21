@@ -1,10 +1,17 @@
 workflow "New workflow" {
   on = "push"
-  resolves = ["GitHub Action for npm"]
+  resolves = ["Deps"]
 }
 
-action "GitHub Action for npm" {
+action "Deps" {
   uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
-  secrets = ["GITHUB_TOKEN"]
-  runs = "install"
+  runs = "npm install"
+  
+  resolves = ["Linter"]
+}
+
+action "Linter" {
+  uses = "actions/npm@de7a3705a9510ee12702e124482fad6af249991b"
+  runs = "npm run lnt"
+  
 }
