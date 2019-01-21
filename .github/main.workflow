@@ -8,7 +8,3 @@ action "GitHub Action for npm" {
   secrets = ["GITHUB_TOKEN"]
   runs = "install"
 }
-
-workflow "New workflow 1" {
-  on = "push"
-}
