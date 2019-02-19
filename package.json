@@ -33,7 +33,7 @@
     "ip-address": "5.8.9",
     "istanbul": "0.4.5",
     "mocha": "6.0.0",
-    "nyc": "13.1.0",
+    "nyc": "13.3.0",
     "sinon": "7.2.3",
     "tslint": "5.12.1",
     "typescript": "3.3.3"
