@@ -30,7 +30,7 @@
     "@types/node": "10.12.21",
     "eslint": "2.13.1",
     "github-publish-release": "5.0.1",
-    "ip-address": "5.8.9",
+    "ip-address": "5.9.0",
     "istanbul": "0.4.5",
     "mocha": "6.0.0",
     "nyc": "13.1.0",
