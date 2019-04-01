@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "diagnostics": true,
+    "esModuleInterop": true,
+    "extendedDiagnostics": true,
+    "listEmittedFiles": true,
+    "module": "commonjs",
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext"
+  },
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "__mocks__"]
+}

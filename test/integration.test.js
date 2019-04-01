@@ -5,13 +5,11 @@ var assert = require('assert');
 var maxmind = require('../index');
 var ipaddr = require('ip-address');
 
-
 var actual = function(file) {
   var data = require('./data/source-data/' + file);
   var hash = {};
   data.forEach(function(item) {
-    for (var key in item)
-      hash[key] = item[key];
+    for (var key in item) hash[key] = item[key];
   });
 
   return {
@@ -25,47 +23,69 @@ var actual = function(file) {
 };
 
 describe('maxmind', function() {
-
   var dataDir = path.join(__dirname, 'data/test-data');
 
   describe('basic functionality', function() {
-
-    it('should successfully handle database', function() {
-      assert(maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb')));
+    it('should successfully handle database', async () => {
+      await maxmind.open(path.join(dataDir, 'GeoIP2-City-Test.mmdb'));
     });
 
-    it('should fetch geo ip', function() {
-      var geoIp = maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'));
+    it('should fetch geo ip', async () => {
+      var geoIp = await maxmind.open(
+        path.join(dataDir, 'GeoIP2-City-Test.mmdb')
+      );
       var data = actual('GeoIP2-City-Test.json');
       assert.deepEqual(geoIp.get('1.1.1.1'), null);
 
       assert.deepEqual(geoIp.get('175.16.198.255'), null);
-      assert.deepEqual(geoIp.get('175.16.199.1'), data.get('::175.16.199.0/120'));
-      assert.deepEqual(geoIp.get('175.16.199.255'), data.get('::175.16.199.0/120'));
-      assert.deepEqual(geoIp.get('::175.16.199.255'), data.get('::175.16.199.0/120'));
+      assert.deepEqual(
+        geoIp.get('175.16.199.1'),
+        data.get('::175.16.199.0/120')
+      );
+      assert.deepEqual(
+        geoIp.get('175.16.199.255'),
+        data.get('::175.16.199.0/120')
+      );
+      assert.deepEqual(
+        geoIp.get('::175.16.199.255'),
+        data.get('::175.16.199.0/120')
+      );
       assert.deepEqual(geoIp.get('175.16.200.1'), null);
 
-      assert.deepEqual(geoIp.get('2a02:cf40:ffff::'), data.get('2a02:cf40::/29'));
-      assert.deepEqual(geoIp.get('2a02:cf47:0000::'), data.get('2a02:cf40::/29'));
+      assert.deepEqual(
+        geoIp.get('2a02:cf40:ffff::'),
+        data.get('2a02:cf40::/29')
+      );
+      assert.deepEqual(
+        geoIp.get('2a02:cf47:0000::'),
+        data.get('2a02:cf40::/29')
+      );
       assert.deepEqual(geoIp.get('2a02:cf48:0000::'), null);
     });
 
-    it('should handle corrupt database', function() {
-      assert.throws(function verify() {
-        maxmind.openSync('./data/README.md');
-      });
+    it('should handle corrupt database', async () => {
+      await maxmind
+        .open('./data/README.md')
+        .then(() => Promise.reject(new Error('Should not happen')))
+        .catch(err => {
+          assert(err.message, 'asda');
+        });
     });
 
-    it('should accept cache options', function() {
-      assert(maxmind.openSync(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
-        cache: { max: 1000 }
-      }));
+    it('should accept cache options', async () => {
+      assert(
+        await maxmind.open(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
+          cache: { max: 1000 }
+        })
+      );
     });
   });
 
   describe('section: data', function() {
-    it('should decode all possible types - complex', function() {
-      var geoIp = maxmind.openSync(path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb'));
+    it('should decode all possible types - complex', async () => {
+      var geoIp = await maxmind.open(
+        path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb')
+      );
       assert.deepEqual(geoIp.get('::1.1.1.1'), {
         array: [1, 2, 3],
         boolean: true,
@@ -83,8 +103,10 @@ describe('maxmind', function() {
       });
     });
 
-    it('should decode all possible types - zero/empty values', function() {
-      var geoIp = maxmind.openSync(path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb'));
+    it('should decode all possible types - zero/empty values', async () => {
+      var geoIp = await maxmind.open(
+        path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb')
+      );
       assert.deepEqual(geoIp.get('::0.0.0.0'), {
         array: [],
         boolean: false,
@@ -101,8 +123,10 @@ describe('maxmind', function() {
       });
     });
 
-    it('should return correct value: string entries', function() {
-      var geoIp = maxmind.openSync(path.join(dataDir, 'MaxMind-DB-string-value-entries.mmdb'));
+    it('should return correct value: string entries', async () => {
+      var geoIp = await maxmind.open(
+        path.join(dataDir, 'MaxMind-DB-string-value-entries.mmdb')
+      );
       assert.equal(geoIp.get('1.1.1.1'), '1.1.1.1/32');
       assert.equal(geoIp.get('1.1.1.2'), '1.1.1.2/31');
       assert.equal(geoIp.get('175.2.1.1'), null);
@@ -110,7 +134,6 @@ describe('maxmind', function() {
   });
 
   describe('section: binary search tree', function() {
-
     var files = [
       'GeoIP2-Anonymous-IP-Test',
       'GeoIP2-City-Test',
@@ -129,18 +152,27 @@ describe('maxmind', function() {
         // TODO: check random address from the subnet?
         // see http://ip-address.js.org/#address4/biginteger
         // see https://github.com/andyperlitch/jsbn
-        assert.deepEqual(geoIp.get(ip.startAddress().address), data.hash[subnet], subnet);
-        assert.deepEqual(geoIp.get(ip.endAddress().address), data.hash[subnet], subnet);
+        assert.deepEqual(
+          geoIp.get(ip.startAddress().address),
+          data.hash[subnet],
+          subnet
+        );
+        assert.deepEqual(
+          geoIp.get(ip.endAddress().address),
+          data.hash[subnet],
+          subnet
+        );
       }
     };
 
     files.forEach(function(file) {
-      it('should test everything: ' + file, function() {
-        var geoIp = maxmind.openSync(path.join(dataDir, '/' + file + '.mmdb'));
+      it('should test everything: ' + file, async () => {
+        var geoIp = await maxmind.open(
+          path.join(dataDir, '/' + file + '.mmdb')
+        );
         var data = actual(file + '.json');
         tester(geoIp, data);
       });
     });
   });
-
 });

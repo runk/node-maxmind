@@ -13,7 +13,7 @@ Currently code coverage is **100%**, so new tests are essential when you add new
 which you can find useful:
 
 - `npm test` runs tests
-- `npm run lint` runs js linter
+- `npm run lint` runs linter
 - `npm test --coverage` runs code coverage task and generates a report
 
 One pull request per one feature, nothing unusual.
