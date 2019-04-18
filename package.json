@@ -32,7 +32,7 @@
     "github-publish-release": "5.0.1",
     "ip-address": "5.9.0",
     "istanbul": "0.4.5",
-    "mocha": "6.0.0",
+    "mocha": "6.1.4",
     "nyc": "14.0.0",
     "sinon": "7.2.3",
     "tslint": "5.12.1",
