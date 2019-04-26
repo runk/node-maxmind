@@ -9,24 +9,24 @@ assert(
   'Apparently you are using old version of node. Please upgrade to node 0.10 or above.'
 );
 
-const types = [
-  'extended', //  0
-  'pointer', //  1
-  'utf8_string', //  2
-  'double', //  3
-  'bytes', //  4
-  'uint16', //  5
-  'uint32', //  6
-  'map', //  7
-  'int32', //  8
-  'uint64', //  9
-  'uint128', // 10
-  'array', // 11
-  'container', // 12
-  'end_marker', // 13
-  'boolean', // 14
-  'float', // 15
-];
+enum Type {
+  Extended = 0,
+  Pointer,
+  String,
+  Double,
+  Bytes,
+  Uint16,
+  Uint32,
+  Map,
+  Int32,
+  Uint64,
+  Uint128,
+  Array,
+  Container,
+  End_marker,
+  Boolean,
+  Float,
+}
 
 const pointerValueOffset = [0, 2048, 526336, 0];
 
@@ -60,14 +60,14 @@ export default class Decoder {
   public decode(offset: number): any {
     let tmp: any;
     const ctrlByte = this.db[offset++];
-    let type = types[ctrlByte >> 5];
+    let type: Type = ctrlByte >> 5;
 
-    if (type === 'pointer') {
+    if (type === Type.Pointer) {
       tmp = this.decodePointer(ctrlByte, offset);
       return cursor(this.decodeFast(tmp.value).value, tmp.offset);
     }
 
-    if (type === 'extended') {
+    if (type === Type.Extended) {
       tmp = this.db[offset] + 7;
       if (tmp < 8) {
         throw new Error(
@@ -75,7 +75,7 @@ export default class Decoder {
         );
       }
 
-      type = types[tmp];
+      type = tmp;
       offset++;
     }
 
@@ -94,7 +94,7 @@ export default class Decoder {
     return result;
   }
 
-  public decodeByType(type: string, offset: number, size: number): Cursor {
+  public decodeByType(type: Type, offset: number, size: number): Cursor {
     const newOffset = offset + size;
 
     // ipv4 types occurrence stats:
@@ -107,29 +107,29 @@ export default class Decoder {
     // 1 x uint64
     // 14 x boolean
     switch (type) {
-      case 'utf8_string':
+      case Type.String:
         return cursor(this.decodeString(offset, size), newOffset);
-      case 'map':
+      case Type.Map:
         return this.decodeMap(size, offset);
-      case 'uint32':
+      case Type.Uint32:
         return cursor(this.decodeUint(offset, size), newOffset);
-      case 'double':
+      case Type.Double:
         return cursor(this.decodeDouble(offset), newOffset);
-      case 'array':
+      case Type.Array:
         return this.decodeArray(size, offset);
-      case 'boolean':
+      case Type.Boolean:
         return cursor(this.decodeBoolean(size), offset);
-      case 'float':
+      case Type.Float:
         return cursor(this.decodeFloat(offset), newOffset);
-      case 'bytes':
+      case Type.Bytes:
         return cursor(this.decodeBytes(offset, size), newOffset);
-      case 'uint16':
+      case Type.Uint16:
         return cursor(this.decodeUint(offset, size), newOffset);
-      case 'int32':
+      case Type.Int32:
         return cursor(this.decodeInt32(offset, size), newOffset);
-      case 'uint64':
+      case Type.Uint64:
         return cursor(this.decodeUint(offset, size), newOffset);
-      case 'uint128':
+      case Type.Uint128:
         return cursor(this.decodeUint(offset, size), newOffset);
     }
 
@@ -271,6 +271,7 @@ export default class Decoder {
     const map: Record<string, any> = {};
 
     for (let i = 0; i < size; i++) {
+      // NB! key can be either Pointer or String type
       tmp = this.decode(offset);
       key = tmp.value;
       tmp = this.decode(tmp.offset);
