@@ -23,20 +23,20 @@
     "Andrew N Golovkov @AndorCS"
   ],
   "dependencies": {
-    "@types/sinon": "^7.0.11",
-    "tiny-lru": "^6.0.0"
+    "tiny-lru": "6.0.0"
   },
   "devDependencies": {
-    "@types/ip-address": "^5.8.2",
-    "@types/jest": "^24.0.11",
+    "@types/sinon": "7.0.11",
+    "@types/ip-address": "5.8.2",
+    "@types/jest": "24.0.11",
     "@types/node": "10.12.20",
     "github-publish-release": "5.0.1",
     "ip-address": "5.8.9",
-    "jest": "^24.7.1",
+    "jest": "24.7.1",
     "sinon": "7.2.3",
-    "ts-jest": "^24.0.2",
+    "ts-jest": "24.0.2",
     "tslint": "5.12.1",
-    "typescript": "^3.3.1"
+    "typescript": "3.3.1"
   },
   "repository": {
     "type": "git",
