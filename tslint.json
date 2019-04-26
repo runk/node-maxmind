@@ -1,13 +1,23 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "interface-name": [
+    "interface-name": [true, "never-prefix"],
+    "quotemark": [true, "single"],
+    "no-bitwise": false,
+    "trailing-comma": [
       true,
-      "never-prefix"
+      {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
+      }
     ],
-    "quotemark": [
-      true,
-      "single"
-    ]
+    "object-literal-sort-keys": false,
+		"radix": false,
+		"forin": false
   }
 }

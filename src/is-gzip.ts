@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function(buf) {
+export default (buf: Buffer): boolean => {
   if (!buf || buf.length < 3) {
     return false;
   }

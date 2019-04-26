@@ -1,13 +1,4 @@
-export interface OpenOpts {
-  cache?: {
-    max: number,
-  };
-  watchForUpdates?: boolean;
-  watchForUpdatesNonPersistent?: boolean;
-  watchForUpdatesHook?: () => void;
-}
-
-export interface Names {
+interface Names {
   readonly de?: string;
   readonly en: string;
   readonly es?: string;
@@ -18,30 +9,30 @@ export interface Names {
   readonly 'zh-CN'?: string;
 }
 
-export interface CityRecord {
+interface CityRecord {
   readonly confidence?: number;
   readonly geoname_id: number;
   readonly names: Names;
 }
 
-export interface ContinentRecord {
+interface ContinentRecord {
   readonly code: 'AF' | 'AN' | 'AS' | 'EU' | 'NA' | 'OC' | 'SA';
   readonly geoname_id: number;
   readonly names: Names;
 }
 
-export interface RegisteredCountryRecord {
+interface RegisteredCountryRecord {
   readonly geoname_id: number;
   readonly is_in_european_union?: boolean;
   readonly iso_code: string;
   readonly names: Names;
 }
 
-export interface CountryRecord extends RegisteredCountryRecord {
+interface CountryRecord extends RegisteredCountryRecord {
   readonly confidence?: number;
 }
 
-export interface LocationRecord {
+interface LocationRecord {
   readonly accuracy_radius: number;
   readonly average_income?: number;
   readonly latitude: number;
@@ -51,23 +42,23 @@ export interface LocationRecord {
   readonly time_zone?: string;
 }
 
-export interface PostalRecord {
+interface PostalRecord {
   readonly code: string;
   readonly confidence?: number;
 }
 
-export interface RepresentedCountryRecord extends RegisteredCountryRecord {
+interface RepresentedCountryRecord extends RegisteredCountryRecord {
   readonly type: string;
 }
 
-export interface SubdivisionsRecord {
+interface SubdivisionsRecord {
   readonly confidence?: number;
   readonly geoname_id: number;
   readonly iso_code: string;
   readonly names: Names;
 }
 
-export interface TraitsRecord {
+interface TraitsRecord {
   readonly autonomous_system_number?: number;
   readonly autonomous_system_organization?: string;
   readonly domain?: string;
@@ -82,21 +73,22 @@ export interface TraitsRecord {
   readonly is_tor_exit_node?: boolean;
   readonly isp?: string;
   readonly organization?: string;
-  readonly user_type?: 'business'
-  | 'cafe'
-  | 'cellular'
-  | 'college'
-  | 'content_delivery_network'
-  | 'dialup'
-  | 'government'
-  | 'hosting'
-  | 'library'
-  | 'military'
-  | 'residential'
-  | 'router'
-  | 'school'
-  | 'search_engine_spider'
-  | 'traveler';
+  readonly user_type?:
+    | 'business'
+    | 'cafe'
+    | 'cellular'
+    | 'college'
+    | 'content_delivery_network'
+    | 'dialup'
+    | 'government'
+    | 'hosting'
+    | 'library'
+    | 'military'
+    | 'residential'
+    | 'router'
+    | 'school'
+    | 'search_engine_spider'
+    | 'traveler';
 }
 
 export interface CountryResponse {
@@ -145,39 +137,11 @@ export interface IspResponse extends AsnResponse {
   readonly organization: string;
 }
 
-export type Response = CountryResponse
+export type Response =
+  | CountryResponse
   | CityResponse
   | AnonymousIPResponse
   | AsnResponse
   | ConnectionTypeResponse
   | DomainResponse
   | IspResponse;
-
-export interface Metadata {
-  readonly binaryFormatMajorVersion: number;
-  readonly binaryFormatMinorVersion: number;
-  readonly buildEpoch: Date;
-  readonly databaseType: string;
-  readonly languages: string[];
-  readonly description: any;
-  readonly ipVersion: number;
-  readonly nodeCount: number;
-  readonly recordSize: number;
-  readonly nodeByteSize: number;
-  readonly searchTreeSize: number;
-  readonly treeDepth: number;
-}
-
-export class Reader<T extends Response = any> {
-  public metadata: Metadata;
-  public get: (ipAddress: string) => T | null;
-  constructor(buffer: Buffer, opts?: OpenOpts);
-}
-
-export type openCb<T extends Response = any> = (err: Error, cb: Reader<T>) => void;
-
-export function open<T extends Response = any>(filepath: string, opts?: OpenOpts | openCb<T>, cb?: openCb<T>): void;
-
-export function openSync<T extends Response = any>(filepath: string, opts?: OpenOpts): Reader<T>;
-
-export function validate(ipAddress: string): boolean;
