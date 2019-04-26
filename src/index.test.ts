@@ -3,7 +3,7 @@ import path from 'path';
 import sinon, { SinonSpy } from 'sinon';
 import fs from './fs';
 import maxmind from './index';
-import { CityRecord } from './reader/response';
+import { CityResponse } from './reader/response';
 
 const nah = () => Promise.reject(new Error('Should not happen'));
 
@@ -44,7 +44,7 @@ describe('index', () => {
 
   describe('open()', () => {
     it('should work with most basic usage', async () => {
-      const lookup = await maxmind.open<CityRecord>(dbPath);
+      const lookup = await maxmind.open<CityResponse>(dbPath);
       assert(lookup.get('2001:230::'));
     });
 

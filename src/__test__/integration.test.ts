@@ -1,40 +1,43 @@
-'use strict';
+import assert from 'assert';
+import ipaddr from 'ip-address';
+import path from 'path';
+import maxmind from '../index';
+import Reader from '../reader';
+import { Response } from '../reader/response';
 
-var path = require('path');
-var assert = require('assert');
-var maxmind = require('../index');
-var ipaddr = require('ip-address');
+const dataDir = path.join(__dirname, '../../test/data/test-data');
+const srcDir = path.join(__dirname, '../../test/data/source-data');
 
-var actual = function(file) {
-  var data = require('./data/source-data/' + file);
-  var hash = {};
-  data.forEach(function(item) {
-    for (var key in item) hash[key] = item[key];
+const actual = (file: string) => {
+  const data = require(path.join(srcDir, file));
+  const hash: Record<string, any> = {};
+  data.forEach((item: any) => {
+    for (const key in item) {
+      hash[key] = item[key];
+    }
   });
 
   return {
-    hash: hash,
-    get: function(subnet) {
-      var item = hash[subnet];
+    hash,
+    get: (subnet: string) => {
+      const item = hash[subnet];
       assert(item);
       return item;
-    }
+    },
   };
 };
 
-describe('maxmind', function() {
-  var dataDir = path.join(__dirname, 'data/test-data');
-
-  describe('basic functionality', function() {
+describe('maxmind', () => {
+  describe('basic functionality', () => {
     it('should successfully handle database', async () => {
       await maxmind.open(path.join(dataDir, 'GeoIP2-City-Test.mmdb'));
     });
 
     it('should fetch geo ip', async () => {
-      var geoIp = await maxmind.open(
+      const geoIp = await maxmind.open(
         path.join(dataDir, 'GeoIP2-City-Test.mmdb')
       );
-      var data = actual('GeoIP2-City-Test.json');
+      const data = actual('GeoIP2-City-Test.json');
       assert.deepEqual(geoIp.get('1.1.1.1'), null);
 
       assert.deepEqual(geoIp.get('175.16.198.255'), null);
@@ -67,7 +70,7 @@ describe('maxmind', function() {
       await maxmind
         .open('./data/README.md')
         .then(() => Promise.reject(new Error('Should not happen')))
-        .catch(err => {
+        .catch((err) => {
           assert(err.message, 'asda');
         });
     });
@@ -75,15 +78,15 @@ describe('maxmind', function() {
     it('should accept cache options', async () => {
       assert(
         await maxmind.open(path.join(dataDir, 'GeoIP2-City-Test.mmdb'), {
-          cache: { max: 1000 }
+          cache: { max: 1000 },
         })
       );
     });
   });
 
-  describe('section: data', function() {
+  describe('section: data', () => {
     it('should decode all possible types - complex', async () => {
-      var geoIp = await maxmind.open(
+      const geoIp = await maxmind.open(
         path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb')
       );
       assert.deepEqual(geoIp.get('::1.1.1.1'), {
@@ -99,12 +102,12 @@ describe('maxmind', function() {
         uint16: 100,
         uint32: 268435456,
         uint64: '1152921504606846976',
-        utf8_string: 'unicode! ☯ - ♫'
+        utf8_string: 'unicode! ☯ - ♫',
       });
     });
 
     it('should decode all possible types - zero/empty values', async () => {
-      var geoIp = await maxmind.open(
+      const geoIp = await maxmind.open(
         path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb')
       );
       assert.deepEqual(geoIp.get('::0.0.0.0'), {
@@ -119,12 +122,12 @@ describe('maxmind', function() {
         uint16: 0,
         uint32: 0,
         uint64: '0',
-        utf8_string: ''
+        utf8_string: '',
       });
     });
 
     it('should return correct value: string entries', async () => {
-      var geoIp = await maxmind.open(
+      const geoIp = await maxmind.open(
         path.join(dataDir, 'MaxMind-DB-string-value-entries.mmdb')
       );
       assert.equal(geoIp.get('1.1.1.1'), '1.1.1.1/32');
@@ -133,8 +136,8 @@ describe('maxmind', function() {
     });
   });
 
-  describe('section: binary search tree', function() {
-    var files = [
+  describe('section: binary search tree', () => {
+    const files = [
       'GeoIP2-Anonymous-IP-Test',
       'GeoIP2-City-Test',
       'GeoIP2-Connection-Type-Test',
@@ -143,12 +146,12 @@ describe('maxmind', function() {
       'GeoIP2-Enterprise-Test',
       'GeoIP2-ISP-Test',
       'GeoIP2-Precision-City-Test',
-      'GeoIP2-Precision-ISP-Test'
+      'GeoIP2-Precision-ISP-Test',
     ];
 
-    var tester = function(geoIp, data) {
-      for (var subnet in data.hash) {
-        var ip = new ipaddr.Address6(subnet);
+    const tester = (geoIp: Reader<Response>, data: any) => {
+      for (const subnet in data.hash) {
+        const ip = new ipaddr.Address6(subnet);
         // TODO: check random address from the subnet?
         // see http://ip-address.js.org/#address4/biginteger
         // see https://github.com/andyperlitch/jsbn
@@ -165,12 +168,12 @@ describe('maxmind', function() {
       }
     };
 
-    files.forEach(function(file) {
+    files.forEach((file) => {
       it('should test everything: ' + file, async () => {
-        var geoIp = await maxmind.open(
+        const geoIp = await maxmind.open(
           path.join(dataDir, '/' + file + '.mmdb')
         );
-        var data = actual(file + '.json');
+        const data = actual(file + '.json');
         tester(geoIp, data);
       });
     });
