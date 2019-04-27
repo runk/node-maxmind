@@ -2,6 +2,7 @@ import assert from 'assert';
 // @ts-ignore
 import lru from 'tiny-lru';
 import { OpenOpts } from '.';
+import * as primitives from './decoder/primitives';
 import utils from './utils';
 
 assert(
@@ -108,29 +109,32 @@ export default class Decoder {
     // 14 x boolean
     switch (type) {
       case Type.String:
-        return cursor(this.decodeString(offset, size), newOffset);
+        return cursor(
+          primitives.decodeString(this.db, offset, size),
+          newOffset
+        );
       case Type.Map:
         return this.decodeMap(size, offset);
       case Type.Uint32:
-        return cursor(this.decodeUint(offset, size), newOffset);
+        return cursor(primitives.decodeUint(this.db, offset, size), newOffset);
       case Type.Double:
-        return cursor(this.decodeDouble(offset), newOffset);
+        return cursor(primitives.decodeDouble(this.db, offset), newOffset);
       case Type.Array:
         return this.decodeArray(size, offset);
       case Type.Boolean:
-        return cursor(this.decodeBoolean(size), offset);
+        return cursor(primitives.decodeBoolean(size), offset);
       case Type.Float:
-        return cursor(this.decodeFloat(offset), newOffset);
+        return cursor(primitives.decodeFloat(this.db, offset), newOffset);
       case Type.Bytes:
-        return cursor(this.decodeBytes(offset, size), newOffset);
+        return cursor(primitives.decodeBytes(this.db, offset, size), newOffset);
       case Type.Uint16:
-        return cursor(this.decodeUint(offset, size), newOffset);
+        return cursor(primitives.decodeUint(this.db, offset, size), newOffset);
       case Type.Int32:
-        return cursor(this.decodeInt32(offset, size), newOffset);
+        return cursor(primitives.decodeInt32(this.db, offset, size), newOffset);
       case Type.Uint64:
-        return cursor(this.decodeUint(offset, size), newOffset);
+        return cursor(primitives.decodeUint(this.db, offset, size), newOffset);
       case Type.Uint128:
-        return cursor(this.decodeUint(offset, size), newOffset);
+        return cursor(primitives.decodeUint(this.db, offset, size), newOffset);
     }
 
     throw new Error('Unknown type ' + type + ' at offset ' + offset);
@@ -185,10 +189,6 @@ export default class Decoder {
     );
   }
 
-  public decodeBytes(offset: number, size: number): Buffer {
-    return this.db.slice(offset, offset + size);
-  }
-
   public decodePointer(ctrlByte: number, offset: number): Cursor {
     // Pointers use the last five bits in the control byte to calculate the pointer value.
 
@@ -241,6 +241,13 @@ export default class Decoder {
 
   public decodeArray(size: number, offset: number): Cursor {
     let tmp;
+
+    if (size === 1) {
+      tmp = this.decode(offset);
+      offset = tmp.offset;
+      return cursor([tmp.value], offset);
+    }
+
     const array = [];
 
     for (let i = 0; i < size; i++) {
@@ -252,93 +259,37 @@ export default class Decoder {
     return cursor(array, offset);
   }
 
-  public decodeBoolean(size: number) {
-    return size !== 0;
-  }
-
-  public decodeDouble(offset: number) {
-    return this.db.readDoubleBE(offset, true);
-  }
-
-  public decodeFloat(offset: number) {
-    return this.db.readFloatBE(offset, true);
+  public decodeMapItem(map: Record<string, any>, offset: number) {
+    let tmp;
+    // NB! key can be either Pointer or String type
+    tmp = this.decode(offset);
+    const key = tmp.value;
+    tmp = this.decode(tmp.offset);
+    map[key] = tmp.value;
+    return tmp.offset;
   }
 
   public decodeMap(size: number, offset: number) {
-    let tmp;
-    let key;
-
     const map: Record<string, any> = {};
 
-    for (let i = 0; i < size; i++) {
-      // NB! key can be either Pointer or String type
-      tmp = this.decode(offset);
-      key = tmp.value;
-      tmp = this.decode(tmp.offset);
-      offset = tmp.offset;
-      map[key] = tmp.value;
+    const r = 3;
+    let iterations = size % r;
+
+    // Decreasing number of iterations
+    while (iterations) {
+      offset = this.decodeMapItem(map, offset);
+      iterations--;
+    }
+
+    iterations = Math.floor(size / r);
+
+    while (iterations) {
+      offset = this.decodeMapItem(map, offset);
+      offset = this.decodeMapItem(map, offset);
+      offset = this.decodeMapItem(map, offset);
+      iterations--;
     }
 
     return cursor(map, offset);
-  }
-
-  public decodeInt32(offset: number, size: number) {
-    if (size === 0) {
-      return 0;
-    }
-    return this.db.readInt32BE(offset, true);
-  }
-
-  public decodeUint(offset: number, size: number) {
-    switch (size) {
-      case 0:
-        return 0;
-      case 1:
-        return this.db[offset];
-      case 2:
-        return utils.concat2(this.db[offset + 0], this.db[offset + 1]);
-      case 3:
-        return utils.concat3(
-          this.db[offset + 0],
-          this.db[offset + 1],
-          this.db[offset + 2]
-        );
-      case 4:
-        return utils.concat4(
-          this.db[offset + 0],
-          this.db[offset + 1],
-          this.db[offset + 2],
-          this.db[offset + 3]
-        );
-      case 8:
-        return this.decodeBigUint(offset, size);
-      case 16:
-        return this.decodeBigUint(offset, size);
-    }
-    return 0;
-  }
-
-  public decodeString(offset: number, size: number) {
-    // @ts-ignore
-    return this.db.utf8Slice(offset, offset + size);
-
-    // A little slower:
-    // return this.db.toString('utf8', offset, offset + size);
-  }
-
-  public decodeBigUint(offset: number, size: number) {
-    const buffer = Buffer.alloc(size);
-    this.db.copy(buffer, 0, offset, offset + size);
-
-    let integer = BigInt(0);
-
-    const numberOfLongs = size / 4;
-    for (let i = 0; i < numberOfLongs; i++) {
-      integer =
-        integer * BigInt(4294967296) +
-        BigInt(buffer.readUInt32BE(i << 2, true));
-    }
-
-    return integer.toString();
   }
 }
