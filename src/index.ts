@@ -72,3 +72,5 @@ export default {
   openSync,
   validate: ip.validate,
 };
+
+export { default as Reader } from './reader';
