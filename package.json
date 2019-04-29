@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/sinon": "7.0.11",
     "@types/ip-address": "5.8.2",
-    "@types/jest": "24.0.11",
+    "@types/jest": "24.0.12",
     "@types/node": "10.12.20",
     "github-publish-release": "5.0.1",
     "ip-address": "5.8.9",
