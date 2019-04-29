@@ -23,7 +23,7 @@
     "Andrew N Golovkov @AndorCS"
   ],
   "dependencies": {
-    "tiny-lru": "6.0.0"
+    "tiny-lru": "6.0.1"
   },
   "devDependencies": {
     "@types/sinon": "7.0.11",
