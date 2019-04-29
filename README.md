@@ -38,7 +38,7 @@ const lookup = await maxmind.open<CityResponse>('/path/to/GeoLite2-City.mmdb');
 console.log(lookup.get('66.6.44.4')); // inferred type maxmind.CityResponse
 
 // Use Reader class directly
-import Reader from 'maxmind/lib/reader';
+import { Reader } from 'maxmind';
 const buffer = await downloadFromCloudToStream();
 const lookup = new Reader<CityResponse>(buffer);
 let city = lookup.get('8.8.8.8'); // inferred type maxmind.CityResponse
