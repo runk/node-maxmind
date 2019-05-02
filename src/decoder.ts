@@ -58,7 +58,7 @@ export default class Decoder {
     );
   }
 
-  public decode(offset: number): Cursor {
+  public decode(offset: number): any {
     let tmp: any;
     const ctrlByte = this.db[offset++];
     let type: Type = ctrlByte >> 5;
@@ -88,23 +88,8 @@ export default class Decoder {
     const cached = this.cache.get(offset);
     if (cached) {
       return cached;
-  public decodeMapKey(offset: number): Cursor {
-    let tmp: any;
-    const ctrlByte = this.db[offset++];
-    const type: Type = ctrlByte >> 5;
-
-    if (type === Type.Pointer) {
-      tmp = this.decodePointer(ctrlByte, offset);
-      return cursor(this.decodeMapKey(tmp.value).value, tmp.offset);
     }
 
-    const size = this.sizeFromCtrlByte(ctrlByte, offset);
-    const newOffset = size.offset + size.value;
-    return cursor(
-      primitives.decodeString(this.db, size.offset, size.value),
-      newOffset
-    );
-  }
     const result = this.decode(offset);
     this.cache.set(offset, result);
     return result;
@@ -277,9 +262,8 @@ export default class Decoder {
   public decodeMapItem(map: Record<string, any>, offset: number) {
     let tmp;
     // NB! key can be either Pointer or String type
-    tmp = this.decodeMapKey(offset);
+    tmp = this.decode(offset);
     const key = tmp.value;
-
     tmp = this.decode(tmp.offset);
     map[key] = tmp.value;
     return tmp.offset;
