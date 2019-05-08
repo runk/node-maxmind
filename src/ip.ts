@@ -1,14 +1,10 @@
 import net from 'net';
 
+const re = /\d+/g;
+
 const parseIPv4 = (input: string): number[] => {
-  const ip = input.split('.', 4);
-
-  const o0 = parseInt(ip[0]);
-  const o1 = parseInt(ip[1]);
-  const o2 = parseInt(ip[2]);
-  const o3 = parseInt(ip[3]);
-
-  return [o0, o1, o2, o3];
+  const match = input.match(re);
+  return [+match![0], +match![1], +match![2], +match![3]];
 };
 
 const hex = (v: string): string => {
@@ -57,15 +53,16 @@ const parse = (ip: string): number[] => {
   return ip.indexOf(':') === -1 ? parseIPv4(ip) : parseIPv6(ip);
 };
 
+
 const bitAt = (rawAddress: Buffer | number[], idx: number): number => {
   // 8 bits per octet in the buffer (>>3 is slightly faster than Math.floor(idx/8))
-  const bufIdx = idx >> 3;
+  const octetIdx = idx >> 3;
 
   // Offset within the octet (basicallg equivalent to 8  - (idx % 8))
   const bitIdx = 7 ^ (idx & 7);
 
   // Shift the offset rightwards by bitIdx bits and & it to grab the bit
-  return (rawAddress[bufIdx] >>> bitIdx) & 1;
+  return (rawAddress[octetIdx] >> bitIdx) & 1;
 };
 
 const validate = (ip: string): boolean => {

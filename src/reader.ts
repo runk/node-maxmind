@@ -43,6 +43,7 @@ export default class Reader<T extends Response> {
 
   public findAddressInTree(ipAddress: string): number | null {
     const rawAddress = ipUtil.parse(ipAddress);
+    // const bits = address.map(byte => byte.toString(2).padStart(8, '0')).join('');
     const nodeCount = this.metadata.nodeCount;
 
     // When storing IPv4 addresses in an IPv6 tree, they are stored as-is, so they

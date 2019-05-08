@@ -116,7 +116,24 @@ describe('lib/ip', () => {
       });
 
       it('should parse ipv4 with `::ffff`', () => {
-        const expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 2, 254, 216];
+        const expected = [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          255,
+          255,
+          1,
+          2,
+          254,
+          216,
+        ];
         assert.deepEqual(ip.parse('::ffff:1.2.254.216'), expected);
         assert.deepEqual(ip.parse('::ffff:0102:fed8'), expected);
         assert.deepEqual(ip.parse('::ffff:102:fed8'), expected);
@@ -144,12 +161,18 @@ describe('lib/ip', () => {
 
   describe('bitAt()', () => {
     it('should return correct bit for given offset', () => {
-      const address = Buffer.from([0x0a, 0x0a, 0xc8, 0x3b]);
-      assert.equal(ip.bitAt(address, 1), 0);
-      assert.equal(ip.bitAt(address, 10), 0);
-      assert.equal(ip.bitAt(address, 23), 0);
-      assert.equal(ip.bitAt(address, 31), 1);
-      assert.equal(ip.bitAt(address, 999), 0);
+      const address = [10, 10, 200, 59];
+      const bits = address
+        .map((byte) => byte.toString(2).padStart(8, '0'))
+        .join('');
+      const output = [];
+      for (let i = 0; i < 128; i++) {
+        output.push(ip.bitAt(address, i));
+      }
+      assert.deepEqual(
+        output.join(''),
+        '00001010000010101100100000111011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+      );
     });
   });
 
