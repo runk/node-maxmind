@@ -6,7 +6,7 @@ import utils from './utils';
 
 assert(
   typeof BigInt !== 'undefined',
-  'Apparently you are using old version of node. Please upgrade to node 10.x or above.'
+  'Apparently you are using old version of node. Please upgrade to node 10.4.x or above.'
 );
 
 const types = [
