@@ -64,6 +64,8 @@ export const init = () => {
   throw new Error(utils.legacyErrorMessage);
 };
 
+export const validate = ip.validate;
+
 export * from './reader/response';
 
 export default {
