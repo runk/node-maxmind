@@ -36,12 +36,17 @@ import maxmind, { CityResponse } from 'maxmind';
 
 const lookup = await maxmind.open<CityResponse>('/path/to/GeoLite2-City.mmdb');
 console.log(lookup.get('66.6.44.4')); // inferred type maxmind.CityResponse
+```
 
-// Use Reader class directly
+### Sync API
+
+You can use `Reader` class directly, if you would want to instantiate it in non-async fashion. Use cases would include receiving a buffer database over network, or just reading it synchronously from disk.
+
+```typescript
 import { Reader } from 'maxmind';
-const buffer = await downloadFromCloudToStream();
+const buffer = fs.readFileSync('./db.mmdb');
 const lookup = new Reader<CityResponse>(buffer);
-let city = lookup.get('8.8.8.8'); // inferred type maxmind.CityResponse
+const city = lookup.get('8.8.8.8');
 ```
 
 Supported response types:
