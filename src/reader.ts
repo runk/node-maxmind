@@ -1,9 +1,9 @@
+import { OpenOpts } from '.';
 import Decoder from './decoder';
 import ipUtil from './ip';
 import { Metadata, parseMetadata } from './metadata';
 import { Response } from './reader/response';
 import walker, { Walker } from './reader/walker';
-import { OpenOpts } from '.';
 
 const DATA_SECTION_SEPARATOR_SIZE = 16;
 
