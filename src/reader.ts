@@ -3,6 +3,7 @@ import ipUtil from './ip';
 import { Metadata, parseMetadata } from './metadata';
 import { Response } from './reader/response';
 import walker, { Walker } from './reader/walker';
+import { OpenOpts } from '.';
 
 const DATA_SECTION_SEPARATOR_SIZE = 16;
 
@@ -12,7 +13,7 @@ export default class Reader<T extends Response> {
   private db: Buffer;
   private walker: Walker;
 
-  constructor(db: Buffer, opts?: object) {
+  constructor(db: Buffer, opts?: OpenOpts) {
     opts = opts || {};
 
     this.db = db;
