@@ -1,3 +1,4 @@
+import { OpenOpts } from '.';
 import Decoder from './decoder';
 import ipUtil from './ip';
 import { Metadata, parseMetadata } from './metadata';
@@ -12,7 +13,7 @@ export default class Reader<T extends Response> {
   private db: Buffer;
   private walker: Walker;
 
-  constructor(db: Buffer, opts?: object) {
+  constructor(db: Buffer, opts?: OpenOpts) {
     opts = opts || {};
 
     this.db = db;
