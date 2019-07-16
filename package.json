@@ -61,6 +61,7 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "lint:types": "tsc --noEmit",
     "test": "jest",
+    "prepublish": "npm run build",
     "semantic-release": "semantic-release"
   }
 }
