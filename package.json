@@ -36,7 +36,7 @@
     "ts-jest": "24.0.2",
     "tslint": "5.18.0",
     "typescript": "3.4.5",
-    "semantic-release": "15.13.18"
+    "semantic-release": "15.13.19"
   },
   "repository": {
     "type": "git",
