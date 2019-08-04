@@ -32,7 +32,7 @@
     "@types/sinon": "7.0.13",
     "ip-address": "5.9.4",
     "jest": "24.8.0",
-    "sinon": "7.3.2",
+    "sinon": "7.4.0",
     "ts-jest": "24.0.2",
     "tslint": "5.18.0",
     "typescript": "3.4.5",
