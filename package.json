@@ -30,7 +30,7 @@
     "@types/jest": "24.0.17",
     "@types/node": "10.14.13",
     "@types/sinon": "7.0.13",
-    "ip-address": "5.9.4",
+    "ip-address": "6.1.0",
     "jest": "24.8.0",
     "sinon": "7.4.1",
     "ts-jest": "24.0.2",
