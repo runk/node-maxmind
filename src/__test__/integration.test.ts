@@ -170,7 +170,7 @@ describe('maxmind', () => {
 
     files.forEach((file) => {
       it('should test everything: ' + file, async () => {
-        const geoIp = await maxmind.open(
+        const geoIp = await maxmind.open<Response>(
           path.join(dataDir, '/' + file + '.mmdb')
         );
         const data = actual(file + '.json');
