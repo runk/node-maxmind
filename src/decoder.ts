@@ -192,7 +192,7 @@ export default class Decoder {
   public decodePointer(ctrlByte: number, offset: number): Cursor {
     // Pointers use the last five bits in the control byte to calculate the pointer value.
 
-    // To calculate the pointer value, we start by subdiving the five bits into two
+    // To calculate the pointer value, we start by subdividing the five bits into two
     // groups. The first two bits indicate the size, and the next three bits are part
     // of the value, so we end up with a control byte breaking down like this:
     // 001SSVVV.
