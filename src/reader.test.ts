@@ -99,8 +99,7 @@ describe('reader', () => {
           read(dataDir, 'MaxMind-DB-no-ipv4-search-tree.mmdb')
         );
         assert.equal(reader.findAddressInTree('::1:ffff:ffff'), 80);
-        // TODO: perhaps null should be returned here, note that pointer is larger than file itself
-        assert.equal(reader.findAddressInTree('1.1.1.1'), 4811873);
+        assert.equal(reader.findAddressInTree('1.1.1.1'), 80);
       });
 
       it('should behave fine when search tree is broken', () => {
