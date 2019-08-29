@@ -74,7 +74,7 @@ export const isLegacyFormat = (db: Buffer): boolean => {
   for (let i = 0; i < structureInfoMaxSize; i++) {
     const delim = db.slice(db.length - 3 - i, db.length - i);
 
-    // Look for [0xff, 0xff, 0xff] metadata delimeter
+    // Look for [0xff, 0xff, 0xff] metadata delimiter
     if (delim[0] === 255 && delim[1] === 255 && delim[2] === 255) {
       return true;
     }

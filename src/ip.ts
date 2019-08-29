@@ -61,7 +61,7 @@ const bitAt = (rawAddress: Buffer | number[], idx: number): number => {
   // 8 bits per octet in the buffer (>>3 is slightly faster than Math.floor(idx/8))
   const bufIdx = idx >> 3;
 
-  // Offset within the octet (basicallg equivalent to 8  - (idx % 8))
+  // Offset within the octet (basically equivalent to 8  - (idx % 8))
   const bitIdx = 7 ^ (idx & 7);
 
   // Shift the offset rightwards by bitIdx bits and & it to grab the bit
