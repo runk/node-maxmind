@@ -9,24 +9,24 @@ assert(
   'Apparently you are using old version of node. Please upgrade to node 10.4.x or above.'
 );
 
-const types = [
-  'extended', //  0
-  'pointer', //  1
-  'utf8_string', //  2
-  'double', //  3
-  'bytes', //  4
-  'uint16', //  5
-  'uint32', //  6
-  'map', //  7
-  'int32', //  8
-  'uint64', //  9
-  'uint128', // 10
-  'array', // 11
-  'container', // 12
-  'end_marker', // 13
-  'boolean', // 14
-  'float', // 15
-];
+enum DataType {
+  Extended =  0,
+  Pointer =  1,
+  Utf8String =  2,
+  Double =  3,
+  Bytes =  4,
+  Uint16 =  5,
+  Uint32 =  6,
+  Map =  7,
+  Int32 =  8,
+  Uint64 =  9,
+  Uint128 = 10,
+  Array = 11,
+  Container = 12,
+  EndMarker = 13,
+  Boolean = 14,
+  Float = 15,
+}
 
 const pointerValueOffset = [0, 2048, 526336, 0];
 
@@ -60,14 +60,14 @@ export default class Decoder {
   public decode(offset: number): any {
     let tmp: any;
     const ctrlByte = this.db[offset++];
-    let type = types[ctrlByte >> 5];
+    let type = ctrlByte >> 5;
 
-    if (type === 'pointer') {
+    if (type === DataType.Pointer) {
       tmp = this.decodePointer(ctrlByte, offset);
       return cursor(this.decodeFast(tmp.value).value, tmp.offset);
     }
 
-    if (type === 'extended') {
+    if (type === DataType.Extended) {
       tmp = this.db[offset] + 7;
       if (tmp < 8) {
         throw new Error(
@@ -75,7 +75,7 @@ export default class Decoder {
         );
       }
 
-      type = types[tmp];
+      type = tmp;
       offset++;
     }
 
@@ -94,7 +94,7 @@ export default class Decoder {
     return result;
   }
 
-  public decodeByType(type: string, offset: number, size: number): Cursor {
+  public decodeByType(type: DataType, offset: number, size: number): Cursor {
     const newOffset = offset + size;
 
     // ipv4 types occurrence stats:
@@ -107,29 +107,29 @@ export default class Decoder {
     // 1 x uint64
     // 14 x boolean
     switch (type) {
-      case 'utf8_string':
+      case DataType.Utf8String:
         return cursor(this.decodeString(offset, size), newOffset);
-      case 'map':
+      case DataType.Map:
         return this.decodeMap(size, offset);
-      case 'uint32':
+      case DataType.Uint32:
         return cursor(this.decodeUint(offset, size), newOffset);
-      case 'double':
+      case DataType.Double:
         return cursor(this.decodeDouble(offset), newOffset);
-      case 'array':
+      case DataType.Array:
         return this.decodeArray(size, offset);
-      case 'boolean':
+      case DataType.Boolean:
         return cursor(this.decodeBoolean(size), offset);
-      case 'float':
+      case DataType.Float:
         return cursor(this.decodeFloat(offset), newOffset);
-      case 'bytes':
+      case DataType.Bytes:
         return cursor(this.decodeBytes(offset, size), newOffset);
-      case 'uint16':
+      case DataType.Uint16:
         return cursor(this.decodeUint(offset, size), newOffset);
-      case 'int32':
+      case DataType.Int32:
         return cursor(this.decodeInt32(offset, size), newOffset);
-      case 'uint64':
+      case DataType.Uint64:
         return cursor(this.decodeUint(offset, size), newOffset);
-      case 'uint128':
+      case DataType.Uint128:
         return cursor(this.decodeUint(offset, size), newOffset);
     }
 

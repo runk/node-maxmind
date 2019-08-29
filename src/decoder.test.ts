@@ -8,7 +8,7 @@ describe('lib/decoder', () => {
     const decoder = new Decoder(Buffer.from([0x00, 0x00]));
     it('should fail for unknown type', () => {
       assert.throws(() => {
-        decoder.decodeByType('kraken', 0, 1);
+        decoder.decodeByType(20, 0, 1);
       }, /Unknown type/);
     });
   });
