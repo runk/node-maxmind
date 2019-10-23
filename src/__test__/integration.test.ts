@@ -136,6 +136,16 @@ describe('maxmind', () => {
     });
   });
 
+  describe('no IPv4 search tree', () => {
+    it('IPv4 lookup should return correct data', async () => {
+      const geoIp = await maxmind.open(
+        path.join(dataDir, 'MaxMind-DB-no-ipv4-search-tree.mmdb')
+      );
+      assert.equal(geoIp.get('1.1.1.1'), '::0/64');
+      assert.equal(geoIp.get('::1.1.1.1'), '::0/64');
+    });
+  });
+
   describe('section: binary search tree', () => {
     const files = [
       'GeoIP2-Anonymous-IP-Test',
