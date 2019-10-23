@@ -22,7 +22,7 @@ describe('lib/decoder', () => {
         1
       );
 
-      assert.equal(decoder.decodeUint(1, 32), 0);
+      assert.strictEqual(decoder.decodeUint(1, 32), 0);
     });
   });
 
@@ -39,28 +39,28 @@ describe('lib/decoder', () => {
     const decoder = new Decoder(Buffer.from([0x01, 0x02, 0x03, 0x04]));
 
     it('should return correct value (size <29)', () => {
-      assert.deepEqual(decoder.sizeFromCtrlByte(60, 0), {
+      assert.deepStrictEqual(decoder.sizeFromCtrlByte(60, 0), {
         value: 28,
         offset: 0,
       });
     });
 
     it('should return correct value (size = 29)', () => {
-      assert.deepEqual(decoder.sizeFromCtrlByte(61, 0), {
+      assert.deepStrictEqual(decoder.sizeFromCtrlByte(61, 0), {
         value: 30,
         offset: 1,
       });
     });
 
     it('should return correct value (size = 30)', () => {
-      assert.deepEqual(decoder.sizeFromCtrlByte(62, 0), {
+      assert.deepStrictEqual(decoder.sizeFromCtrlByte(62, 0), {
         value: 543,
         offset: 2,
       });
     });
 
     it('should return correct value (size = 31)', () => {
-      assert.deepEqual(decoder.sizeFromCtrlByte(63, 0), {
+      assert.deepStrictEqual(decoder.sizeFromCtrlByte(63, 0), {
         value: 131872,
         offset: 3,
       });
@@ -71,28 +71,28 @@ describe('lib/decoder', () => {
     const decoder = new Decoder(Buffer.from([0x01, 0x02, 0x03, 0x04]));
 
     it('should return correct value (pointer size = 0)', () => {
-      assert.deepEqual(decoder.decodePointer(39, 0), {
+      assert.deepStrictEqual(decoder.decodePointer(39, 0), {
         value: 1793,
         offset: 1,
       });
     });
 
     it('should return correct value (pointer size = 1)', () => {
-      assert.deepEqual(decoder.decodePointer(45, 0), {
+      assert.deepStrictEqual(decoder.decodePointer(45, 0), {
         value: 329986,
         offset: 2,
       });
     });
 
     it('should return correct value (pointer size = 2)', () => {
-      assert.deepEqual(decoder.decodePointer(48, 0), {
+      assert.deepStrictEqual(decoder.decodePointer(48, 0), {
         value: 592387,
         offset: 3,
       });
     });
 
     it('should return correct value (pointer size = 3)', () => {
-      assert.deepEqual(decoder.decodePointer(56, 0), {
+      assert.deepStrictEqual(decoder.decodePointer(56, 0), {
         value: 16909060,
         offset: 4,
       });

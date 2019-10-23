@@ -28,9 +28,9 @@ describe('index', () => {
 
   describe('validate()', () => {
     it('should work fine for both IPv4 and IPv6', () => {
-      assert.equal(maxmind.validate('64.4.4.4'), true);
-      assert.equal(maxmind.validate('2001:4860:0:1001::3004:ef68'), true);
-      assert.equal(maxmind.validate('whhaaaazza'), false);
+      assert.strictEqual(maxmind.validate('64.4.4.4'), true);
+      assert.strictEqual(maxmind.validate('2001:4860:0:1001::3004:ef68'), true);
+      assert.strictEqual(maxmind.validate('whhaaaazza'), false);
     });
   });
 
@@ -84,7 +84,7 @@ describe('index', () => {
       await maxmind
         .open('/foo/bar')
         .then(nah)
-        .catch((err) => assert.equal(err.code, 'ENOENT'));
+        .catch((err) => assert.strictEqual(err.code, 'ENOENT'));
     });
 
     it('should throw an error when callback provided', async () => {
@@ -105,7 +105,7 @@ describe('index', () => {
         .open(badPath)
         .then(nah)
         .catch((err) =>
-          assert.equal(
+          assert.strictEqual(
             err.message,
             'Looks like you are passing in a file in gzip format, please use mmdb database instead.'
           )
@@ -118,7 +118,7 @@ describe('index', () => {
     //     // Indeed couter is kinda gross.
     //     switch (counter++) {
     //       case 0:
-    //         assert.equal(err, null);
+    //         assert.strictEqual(err, null);
     //         assert(reader instanceof Reader);
     //         assert(fs.readFile.calledOnce);
     //         fs.readFile.restore();
@@ -129,7 +129,7 @@ describe('index', () => {
     //         break;
 
     //       case 1:
-    //         assert.equal(err.message, 'Crazy shit');
+    //         assert.strictEqual(err.message, 'Crazy shit');
     //         done();
     //         break;
 

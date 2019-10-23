@@ -11,33 +11,33 @@ describe('reader', () => {
   describe('findAddressInTree()', () => {
     it('should work for most basic case', () => {
       const reader = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
-      assert.equal(reader.findAddressInTree('1.1.1.1'), null);
+      assert.strictEqual(reader.findAddressInTree('1.1.1.1'), null);
     });
 
     it('should return correct value: city database', () => {
       const reader = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
-      assert.equal(reader.findAddressInTree('1.1.1.1'), null);
-      assert.equal(reader.findAddressInTree('175.16.199.1'), 3383);
-      assert.equal(reader.findAddressInTree('175.16.199.88'), 3383);
-      assert.equal(reader.findAddressInTree('175.16.199.255'), 3383);
-      assert.equal(reader.findAddressInTree('::175.16.199.255'), 3383);
-      assert.equal(reader.findAddressInTree('::ffff:175.16.199.255'), 3383);
-      assert.equal(reader.findAddressInTree('2a02:cf40:ffff::'), 5114);
-      assert.equal(reader.findAddressInTree('2a02:cf47:0000::'), 5114);
-      assert.equal(
+      assert.strictEqual(reader.findAddressInTree('1.1.1.1'), null);
+      assert.strictEqual(reader.findAddressInTree('175.16.199.1'), 3383);
+      assert.strictEqual(reader.findAddressInTree('175.16.199.88'), 3383);
+      assert.strictEqual(reader.findAddressInTree('175.16.199.255'), 3383);
+      assert.strictEqual(reader.findAddressInTree('::175.16.199.255'), 3383);
+      assert.strictEqual(reader.findAddressInTree('::ffff:175.16.199.255'), 3383);
+      assert.strictEqual(reader.findAddressInTree('2a02:cf40:ffff::'), 5114);
+      assert.strictEqual(reader.findAddressInTree('2a02:cf47:0000::'), 5114);
+      assert.strictEqual(
         reader.findAddressInTree('2a02:cf47:0000:fff0:ffff::'),
         5114
       );
-      assert.equal(reader.findAddressInTree('2a02:cf48:0000::'), null);
+      assert.strictEqual(reader.findAddressInTree('2a02:cf48:0000::'), null);
     });
 
     it('should return correct value: string entries', () => {
       const reader = new Reader(
         read(dataDir, 'MaxMind-DB-string-value-entries.mmdb')
       );
-      assert.equal(reader.findAddressInTree('1.1.1.1'), 225);
-      assert.equal(reader.findAddressInTree('1.1.1.2'), 214);
-      assert.equal(reader.findAddressInTree('175.2.1.1'), null);
+      assert.strictEqual(reader.findAddressInTree('1.1.1.1'), 225);
+      assert.strictEqual(reader.findAddressInTree('1.1.1.2'), 214);
+      assert.strictEqual(reader.findAddressInTree('175.2.1.1'), null);
     });
 
     describe('various record sizes and ip versions', () => {
@@ -87,7 +87,7 @@ describe('reader', () => {
           const reader = new Reader(read(dataDir, '' + item));
           const list = scenarios[item];
           for (const ip in list) {
-            assert.equal(reader.findAddressInTree(ip), list[ip], 'IP: ' + ip);
+            assert.strictEqual(reader.findAddressInTree(ip), list[ip], 'IP: ' + ip);
           }
         });
       }
@@ -98,8 +98,8 @@ describe('reader', () => {
         const reader = new Reader(
           read(dataDir, 'MaxMind-DB-no-ipv4-search-tree.mmdb')
         );
-        assert.equal(reader.findAddressInTree('::1:ffff:ffff'), 80);
-        assert.equal(reader.findAddressInTree('1.1.1.1'), 80);
+        assert.strictEqual(reader.findAddressInTree('::1:ffff:ffff'), 80);
+        assert.strictEqual(reader.findAddressInTree('1.1.1.1'), 80);
       });
 
       it('should behave fine when search tree is broken', () => {
@@ -107,8 +107,8 @@ describe('reader', () => {
         const reader = new Reader(
           read(dataDir, 'MaxMind-DB-test-broken-search-tree-24.mmdb')
         );
-        assert.equal(reader.findAddressInTree('1.1.1.1'), 229);
-        assert.equal(reader.findAddressInTree('1.1.1.2'), 217);
+        assert.strictEqual(reader.findAddressInTree('1.1.1.1'), 229);
+        assert.strictEqual(reader.findAddressInTree('1.1.1.2'), 217);
       });
     });
 
