@@ -155,8 +155,8 @@ describe('maxmind', () => {
       'GeoIP2-Domain-Test',
       'GeoIP2-Enterprise-Test',
       'GeoIP2-ISP-Test',
-      'GeoIP2-Precision-City-Test',
-      'GeoIP2-Precision-ISP-Test',
+      'GeoIP2-Precision-Enterprise-Test',
+      'GeoLite2-ASN-Test',
     ];
 
     const tester = (geoIp: Reader<Response>, data: any) => {
