@@ -46,7 +46,7 @@ export default class Reader<T extends Response> {
     return pointer ? this.resolveDataPointer(pointer) : null;
   }
 
-  public findAddressInTree(ipAddress: string): number | null {
+  private findAddressInTree(ipAddress: string): number | null {
     const rawAddress = ipUtil.parse(ipAddress);
     const nodeCount = this.metadata.nodeCount;
 
@@ -86,7 +86,7 @@ export default class Reader<T extends Response> {
     return null;
   }
 
-  public resolveDataPointer(pointer: number): any {
+  private resolveDataPointer(pointer: number): any {
     // In order to determine where in the file this offset really points to, we also
     // need to know where the data section starts. This can be calculated by
     // determining the size of the search tree in bytes and then adding an additional
