@@ -42,11 +42,17 @@ export default class Reader<T extends Response> {
   }
 
   public get(ipAddress: string): T | null {
-    const pointer = this.findAddressInTree(ipAddress);
-    return pointer ? this.resolveDataPointer(pointer) : null;
+    const [data] = this.getWithPrefixLength(ipAddress);
+    return data;
   }
 
-  private findAddressInTree(ipAddress: string): number | null {
+  public getWithPrefixLength(ipAddress: string): [T | null, number] {
+    const [pointer, prefixLength] = this.findAddressInTree(ipAddress);
+    const data = pointer ? this.resolveDataPointer(pointer) : null;
+    return [data, prefixLength];
+  }
+
+  private findAddressInTree(ipAddress: string): [number | null, number] {
     const rawAddress = ipUtil.parse(ipAddress);
     const nodeCount = this.metadata.nodeCount;
 
@@ -69,21 +75,23 @@ export default class Reader<T extends Response> {
       nodeNumber = this.ipv4StartNodeNumber;
     }
 
+    let depth = ipStartBit;
+
     // Record value can point to one of three things:
     // 1. Another node in the tree (most common case)
     // 2. Data section address with relevant information (less common case)
     // 3. Point to the value of `nodeCount`, which means IP address is unknown
-    for (let i = ipStartBit; i < this.metadata.treeDepth && nodeNumber < nodeCount; i++) {
-      bit = ipUtil.bitAt(rawAddress, i - ipStartBit);
+    for (; depth < this.metadata.treeDepth && nodeNumber < nodeCount; depth++) {
+      bit = ipUtil.bitAt(rawAddress, depth - ipStartBit);
       offset = nodeNumber * this.metadata.nodeByteSize;
 
       nodeNumber = bit ? this.walker.right(offset) : this.walker.left(offset);
     }
 
     if (nodeNumber > nodeCount) {
-      return nodeNumber;
+      return [nodeNumber, depth];
     }
-    return null;
+    return [null, depth];
   }
 
   private resolveDataPointer(pointer: number): any {

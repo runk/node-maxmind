@@ -6,71 +6,94 @@ import Reader from './reader';
 describe('reader', () => {
   const dataDir = path.join(__dirname, '../test/data/test-data');
   const read = (dir: string, filepath: string): Buffer =>
-    fs.readFileSync(path.join(dir, filepath));
+    fs.readFileSync(path.join(dir, filepath))
 
   describe('findAddressInTree()', () => {
     it('should work for most basic case', () => {
       const reader: any = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
-      assert.strictEqual(reader.findAddressInTree('1.1.1.1'), null);
+      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [null, 104]);
     });
+
+    type treeRecord = [number | null, number];
 
     it('should return correct value: city database', () => {
       const reader: any = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
-      assert.strictEqual(reader.findAddressInTree('1.1.1.1'), null);
-      assert.strictEqual(reader.findAddressInTree('175.16.199.1'), 3383);
-      assert.strictEqual(reader.findAddressInTree('175.16.199.88'), 3383);
-      assert.strictEqual(reader.findAddressInTree('175.16.199.255'), 3383);
-      assert.strictEqual(reader.findAddressInTree('::175.16.199.255'), 3383);
-      assert.strictEqual(
+      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [null, 104]);
+      assert.deepStrictEqual(reader.findAddressInTree('175.16.199.1'), [
+        3383,
+        120,
+      ]);
+      assert.deepStrictEqual(reader.findAddressInTree('175.16.199.88'), [
+        3383,
+        120,
+      ]);
+      assert.deepStrictEqual(reader.findAddressInTree('175.16.199.255'), [
+        3383,
+        120,
+      ]);
+      assert.deepStrictEqual(reader.findAddressInTree('::175.16.199.255'), [
+        3383,
+        120,
+      ]);
+      assert.deepStrictEqual(
         reader.findAddressInTree('::ffff:175.16.199.255'),
-        3383
+        [3383, 120]
       );
-      assert.strictEqual(reader.findAddressInTree('2a02:cf40:ffff::'), 5114);
-      assert.strictEqual(reader.findAddressInTree('2a02:cf47:0000::'), 5114);
-      assert.strictEqual(
+      assert.deepStrictEqual(reader.findAddressInTree('2a02:cf40:ffff::'), [
+        5114,
+        29,
+      ]);
+      assert.deepStrictEqual(reader.findAddressInTree('2a02:cf47:0000::'), [
+        5114,
+        29,
+      ]);
+      assert.deepStrictEqual(
         reader.findAddressInTree('2a02:cf47:0000:fff0:ffff::'),
-        5114
+        [5114, 29]
       );
-      assert.strictEqual(reader.findAddressInTree('2a02:cf48:0000::'), null);
+      assert.deepStrictEqual(reader.findAddressInTree('2a02:cf48:0000::'), [
+        null,
+        29,
+      ]);
     });
 
     it('should return correct value: string entries', () => {
       const reader: any = new Reader(
         read(dataDir, 'MaxMind-DB-string-value-entries.mmdb')
       );
-      assert.strictEqual(reader.findAddressInTree('1.1.1.1'), 225);
-      assert.strictEqual(reader.findAddressInTree('1.1.1.2'), 214);
-      assert.strictEqual(reader.findAddressInTree('175.2.1.1'), null);
+      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [225, 32]);
+      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.2'), [214, 31]);
+      assert.deepStrictEqual(reader.findAddressInTree('175.2.1.1'), [null, 7]);
     });
 
     describe('various record sizes and ip versions', () => {
-      const ips = {
+      const ips: Record<string, Record<string, treeRecord>> = {
         v4: {
-          '1.1.1.1': 229,
-          '1.1.1.2': 217,
-          '1.1.1.32': 241,
-          '1.1.1.33': null,
+          '1.1.1.1': [229, 32],
+          '1.1.1.2': [217, 31],
+          '1.1.1.32': [241, 32],
+          '1.1.1.33': [null, 32],
         },
         v6: {
-          '::1:ffff:fffa': null,
-          '::1:ffff:ffff': 432,
-          '::2:0000:0000': 450,
-          '::2:0000:0060': null,
+          '::1:ffff:fffa': [null, 126],
+          '::1:ffff:ffff': [432, 128],
+          '::2:0000:0000': [450, 122],
+          '::2:0000:0060': [null, 123],
         },
         mix: {
-          '1.1.1.1': 518,
-          '1.1.1.2': 504,
-          '1.1.1.32': 532,
-          '1.1.1.33': null,
-          '::1:ffff:fffa': null,
-          '::1:ffff:ffff': 547,
-          '::2:0000:0000': 565,
-          '::2:0000:0060': null,
+          '1.1.1.1': [518, 128],
+          '1.1.1.2': [504, 127],
+          '1.1.1.32': [532, 128],
+          '1.1.1.33': [null, 128],
+          '::1:ffff:fffa': [null, 126],
+          '::1:ffff:ffff': [547, 128],
+          '::2:0000:0000': [565, 122],
+          '::2:0000:0060': [null, 123],
         },
       };
 
       interface Scenarios {
-        [key: string]: Record<string, number | null>;
+        [key: string]: Record<string, treeRecord>;
       }
 
       const scenarios: Scenarios = {
@@ -90,7 +113,7 @@ describe('reader', () => {
           const reader: any = new Reader(read(dataDir, '' + item));
           const list = scenarios[item];
           for (const ip in list) {
-            assert.strictEqual(
+            assert.deepStrictEqual(
               reader.findAddressInTree(ip),
               list[ip],
               'IP: ' + ip
@@ -105,8 +128,11 @@ describe('reader', () => {
         const reader: any = new Reader(
           read(dataDir, 'MaxMind-DB-no-ipv4-search-tree.mmdb')
         );
-        assert.strictEqual(reader.findAddressInTree('::1:ffff:ffff'), 80);
-        assert.strictEqual(reader.findAddressInTree('1.1.1.1'), 80);
+        assert.deepStrictEqual(reader.findAddressInTree('::1:ffff:ffff'), [
+          80,
+          64,
+        ]);
+        assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [80, 64]);
       });
 
       it('should behave fine when search tree is broken', () => {
@@ -114,8 +140,8 @@ describe('reader', () => {
         const reader: any = new Reader(
           read(dataDir, 'MaxMind-DB-test-broken-search-tree-24.mmdb')
         );
-        assert.strictEqual(reader.findAddressInTree('1.1.1.1'), 229);
-        assert.strictEqual(reader.findAddressInTree('1.1.1.2'), 217);
+        assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [229, 32]);
+        assert.deepStrictEqual(reader.findAddressInTree('1.1.1.2'), [217, 31]);
       });
     });
 
