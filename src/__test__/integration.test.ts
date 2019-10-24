@@ -38,32 +38,32 @@ describe('maxmind', () => {
         path.join(dataDir, 'GeoIP2-City-Test.mmdb')
       );
       const data = actual('GeoIP2-City-Test.json');
-      assert.deepEqual(geoIp.get('1.1.1.1'), null);
+      assert.deepStrictEqual(geoIp.get('1.1.1.1'), null);
 
-      assert.deepEqual(geoIp.get('175.16.198.255'), null);
-      assert.deepEqual(
+      assert.deepStrictEqual(geoIp.get('175.16.198.255'), null);
+      assert.deepStrictEqual(
         geoIp.get('175.16.199.1'),
         data.get('::175.16.199.0/120')
       );
-      assert.deepEqual(
+      assert.deepStrictEqual(
         geoIp.get('175.16.199.255'),
         data.get('::175.16.199.0/120')
       );
-      assert.deepEqual(
+      assert.deepStrictEqual(
         geoIp.get('::175.16.199.255'),
         data.get('::175.16.199.0/120')
       );
-      assert.deepEqual(geoIp.get('175.16.200.1'), null);
+      assert.deepStrictEqual(geoIp.get('175.16.200.1'), null);
 
-      assert.deepEqual(
+      assert.deepStrictEqual(
         geoIp.get('2a02:cf40:ffff::'),
         data.get('2a02:cf40::/29')
       );
-      assert.deepEqual(
+      assert.deepStrictEqual(
         geoIp.get('2a02:cf47:0000::'),
         data.get('2a02:cf40::/29')
       );
-      assert.deepEqual(geoIp.get('2a02:cf48:0000::'), null);
+      assert.deepStrictEqual(geoIp.get('2a02:cf48:0000::'), null);
     });
 
     it('should handle corrupt database', async () => {
@@ -89,7 +89,7 @@ describe('maxmind', () => {
       const geoIp = await maxmind.open(
         path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb')
       );
-      assert.deepEqual(geoIp.get('::1.1.1.1'), {
+      assert.deepStrictEqual(geoIp.get('::1.1.1.1'), {
         array: [1, 2, 3],
         boolean: true,
         bytes: Buffer.from([0, 0, 0, 42]),
@@ -110,7 +110,7 @@ describe('maxmind', () => {
       const geoIp = await maxmind.open(
         path.join(dataDir, 'MaxMind-DB-test-decoder.mmdb')
       );
-      assert.deepEqual(geoIp.get('::0.0.0.0'), {
+      assert.deepStrictEqual(geoIp.get('::0.0.0.0'), {
         array: [],
         boolean: false,
         bytes: Buffer.from([]),
@@ -118,10 +118,10 @@ describe('maxmind', () => {
         float: 0,
         int32: 0,
         map: {},
-        uint128: '0',
+        uint128: 0,
         uint16: 0,
         uint32: 0,
-        uint64: '0',
+        uint64: 0,
         utf8_string: '',
       });
     });
@@ -130,9 +130,9 @@ describe('maxmind', () => {
       const geoIp = await maxmind.open(
         path.join(dataDir, 'MaxMind-DB-string-value-entries.mmdb')
       );
-      assert.equal(geoIp.get('1.1.1.1'), '1.1.1.1/32');
-      assert.equal(geoIp.get('1.1.1.2'), '1.1.1.2/31');
-      assert.equal(geoIp.get('175.2.1.1'), null);
+      assert.strictEqual(geoIp.get('1.1.1.1'), '1.1.1.1/32');
+      assert.strictEqual(geoIp.get('1.1.1.2'), '1.1.1.2/31');
+      assert.strictEqual(geoIp.get('175.2.1.1'), null);
     });
   });
 
@@ -141,8 +141,8 @@ describe('maxmind', () => {
       const geoIp = await maxmind.open(
         path.join(dataDir, 'MaxMind-DB-no-ipv4-search-tree.mmdb')
       );
-      assert.equal(geoIp.get('1.1.1.1'), '::0/64');
-      assert.equal(geoIp.get('::1.1.1.1'), '::0/64');
+      assert.strictEqual(geoIp.get('1.1.1.1'), '::0/64');
+      assert.strictEqual(geoIp.get('::1.1.1.1'), '::0/64');
     });
   });
 
@@ -155,8 +155,8 @@ describe('maxmind', () => {
       'GeoIP2-Domain-Test',
       'GeoIP2-Enterprise-Test',
       'GeoIP2-ISP-Test',
-      'GeoIP2-Precision-City-Test',
-      'GeoIP2-Precision-ISP-Test',
+      'GeoIP2-Precision-Enterprise-Test',
+      'GeoLite2-ASN-Test',
     ];
 
     const tester = (geoIp: Reader<Response>, data: any) => {
@@ -165,12 +165,12 @@ describe('maxmind', () => {
         // TODO: check random address from the subnet?
         // see http://ip-address.js.org/#address4/biginteger
         // see https://github.com/andyperlitch/jsbn
-        assert.deepEqual(
+        assert.deepStrictEqual(
           geoIp.get(ip.startAddress().address),
           data.hash[subnet],
           subnet
         );
-        assert.deepEqual(
+        assert.deepStrictEqual(
           geoIp.get(ip.endAddress().address),
           data.hash[subnet],
           subnet
