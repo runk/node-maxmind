@@ -11,25 +11,25 @@ describe('reader', () => {
   describe('findAddressInTree()', () => {
     it('should work for most basic case', () => {
       const reader: any = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
-      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [null, 104]);
+      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [null, 8]);
     });
 
     type treeRecord = [number | null, number];
 
     it('should return correct value: city database', () => {
       const reader: any = new Reader(read(dataDir, 'GeoIP2-City-Test.mmdb'));
-      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [null, 104]);
+      assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [null, 8]);
       assert.deepStrictEqual(reader.findAddressInTree('175.16.199.1'), [
         3383,
-        120,
+        24,
       ]);
       assert.deepStrictEqual(reader.findAddressInTree('175.16.199.88'), [
         3383,
-        120,
+        24,
       ]);
       assert.deepStrictEqual(reader.findAddressInTree('175.16.199.255'), [
         3383,
-        120,
+        24,
       ]);
       assert.deepStrictEqual(reader.findAddressInTree('::175.16.199.255'), [
         3383,
@@ -81,10 +81,10 @@ describe('reader', () => {
           '::2:0000:0060': [null, 123],
         },
         mix: {
-          '1.1.1.1': [518, 128],
-          '1.1.1.2': [504, 127],
-          '1.1.1.32': [532, 128],
-          '1.1.1.33': [null, 128],
+          '1.1.1.1': [518, 32],
+          '1.1.1.2': [504, 31],
+          '1.1.1.32': [532, 32],
+          '1.1.1.33': [null, 32],
           '::1:ffff:fffa': [null, 126],
           '::1:ffff:ffff': [547, 128],
           '::2:0000:0000': [565, 122],
@@ -132,7 +132,7 @@ describe('reader', () => {
           80,
           64,
         ]);
-        assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [80, 64]);
+        assert.deepStrictEqual(reader.findAddressInTree('1.1.1.1'), [80, 0]);
       });
 
       it('should behave fine when search tree is broken', () => {

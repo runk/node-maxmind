@@ -11,7 +11,6 @@ export default class Reader<T extends Response> {
   public metadata: Metadata;
   private decoder: Decoder;
   private db: Buffer;
-  private ipv4StartBit: number;
   private ipv4StartNodeNumber: number;
   private walker: Walker;
 
@@ -26,7 +25,7 @@ export default class Reader<T extends Response> {
       opts
     );
     this.walker = walker(this.db, this.metadata.recordSize);
-    [this.ipv4StartBit, this.ipv4StartNodeNumber] = this.ipv4Start();
+    this.ipv4StartNodeNumber = this.ipv4Start();
   }
 
   public load(db: Buffer, opts: object) {
@@ -38,7 +37,7 @@ export default class Reader<T extends Response> {
       opts
     );
     this.walker = walker(this.db, this.metadata.recordSize);
-    [this.ipv4StartBit, this.ipv4StartNodeNumber] = this.ipv4Start();
+    this.ipv4StartNodeNumber = this.ipv4Start();
   }
 
   public get(ipAddress: string): T | null {
@@ -55,6 +54,7 @@ export default class Reader<T extends Response> {
   private findAddressInTree(ipAddress: string): [number | null, number] {
     const rawAddress = ipUtil.parse(ipAddress);
     const nodeCount = this.metadata.nodeCount;
+    const bitLength = rawAddress.length * 8;
 
     // Binary search tree consists of certain (`nodeCount`) number of nodes. Tree
     // depth depends on the ip version, it's 32 for IPv4 and 128 for IPv6. Each
@@ -65,24 +65,21 @@ export default class Reader<T extends Response> {
     let bit;
     let nodeNumber = 0;
     let offset;
+    let depth = 0;
 
-    let ipStartBit = 0;
     // When storing IPv4 addresses in an IPv6 tree, they are stored as-is, so they
     // occupy the first 32-bits of the address space (from 0 to 2**32 - 1).
     // Which means they're padded with zeros.
     if (rawAddress.length === 4) {
-      ipStartBit = this.ipv4StartBit;
       nodeNumber = this.ipv4StartNodeNumber;
     }
-
-    let depth = ipStartBit;
 
     // Record value can point to one of three things:
     // 1. Another node in the tree (most common case)
     // 2. Data section address with relevant information (less common case)
     // 3. Point to the value of `nodeCount`, which means IP address is unknown
-    for (; depth < this.metadata.treeDepth && nodeNumber < nodeCount; depth++) {
-      bit = ipUtil.bitAt(rawAddress, depth - ipStartBit);
+    for (; depth < bitLength && nodeNumber < nodeCount; depth++) {
+      bit = ipUtil.bitAt(rawAddress, depth);
       offset = nodeNumber * this.metadata.nodeByteSize;
 
       nodeNumber = bit ? this.walker.right(offset) : this.walker.left(offset);
@@ -107,9 +104,9 @@ export default class Reader<T extends Response> {
     return this.decoder.decodeFast(resolved).value;
   }
 
-  private ipv4Start(): [number, number] {
+  private ipv4Start(): number {
     if (this.metadata.ipVersion === 4) {
-      return [0, 0];
+      return 0;
     }
 
     const nodeCount = this.metadata.nodeCount;
@@ -121,7 +118,6 @@ export default class Reader<T extends Response> {
       const offset = pointer * this.metadata.nodeByteSize;
       pointer = this.walker.left(offset);
     }
-    return [i, pointer];
+    return pointer;
   }
-
 }

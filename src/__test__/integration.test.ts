@@ -213,7 +213,7 @@ describe('maxmind', () => {
       {
         ip: '1.1.1.1',
         dbFile: 'MaxMind-DB-test-ipv6-32.mmdb',
-        expectedPrefixLength: 104,
+        expectedPrefixLength: 8,
         expectedRecord: null,
       },
       {
@@ -243,7 +243,7 @@ describe('maxmind', () => {
       {
         ip: '1.1.1.3',
         dbFile: 'MaxMind-DB-test-decoder.mmdb',
-        expectedPrefixLength: 120,
+        expectedPrefixLength: 24,
         expectedRecord: decoderRecord,
       },
       {
@@ -261,7 +261,7 @@ describe('maxmind', () => {
       {
         ip: '200.0.2.1',
         dbFile: 'MaxMind-DB-no-ipv4-search-tree.mmdb',
-        expectedPrefixLength: 64,
+        expectedPrefixLength: 0,
         expectedRecord: '::0/64',
       },
       {
