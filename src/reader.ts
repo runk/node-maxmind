@@ -38,6 +38,7 @@ export default class Reader<T extends Response> {
       opts
     );
     this.walker = walker(this.db, this.metadata.recordSize);
+    [this.ipv4StartBit, this.ipv4StartNodeNumber] = this.ipv4Start();
   }
 
   public get(ipAddress: string): T | null {
