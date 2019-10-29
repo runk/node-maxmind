@@ -20,7 +20,8 @@
   "contributors": [
     "Thomas Birke @quafzi <quafzi@netextreme.de>",
     "Afzaal Ameer @afzaalace",
-    "Andrew N Golovkov @AndorCS"
+    "Andrew N Golovkov @AndorCS",
+    "Gregory Oschwald @oschwald"
   ],
   "dependencies": {
     "tiny-lru": "6.0.1"
