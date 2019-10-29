@@ -94,7 +94,7 @@ export default class Decoder {
     return result;
   }
 
-  public decodeByType(type: DataType, offset: number, size: number): Cursor {
+  private decodeByType(type: DataType, offset: number, size: number): Cursor {
     const newOffset = offset + size;
 
     // ipv4 types occurrence stats:
@@ -136,7 +136,7 @@ export default class Decoder {
     throw new Error('Unknown type ' + type + ' at offset ' + offset);
   }
 
-  public sizeFromCtrlByte(ctrlByte: number, offset: number): Cursor {
+  private sizeFromCtrlByte(ctrlByte: number, offset: number): Cursor {
     // The first three bits of the control byte tell you what type the field is. If
     // these bits are all 0, then this is an "extended" type, which means that the
     // *next* byte contains the actual type. Otherwise, the first three bits will
@@ -185,11 +185,11 @@ export default class Decoder {
     );
   }
 
-  public decodeBytes(offset: number, size: number): Buffer {
+  private decodeBytes(offset: number, size: number): Buffer {
     return this.db.slice(offset, offset + size);
   }
 
-  public decodePointer(ctrlByte: number, offset: number): Cursor {
+  private decodePointer(ctrlByte: number, offset: number): Cursor {
     // Pointers use the last five bits in the control byte to calculate the pointer value.
 
     // To calculate the pointer value, we start by subdividing the five bits into two
@@ -239,7 +239,7 @@ export default class Decoder {
     return cursor(pointer + packed, offset);
   }
 
-  public decodeArray(size: number, offset: number): Cursor {
+  private decodeArray(size: number, offset: number): Cursor {
     let tmp;
     const array = [];
 
@@ -252,19 +252,19 @@ export default class Decoder {
     return cursor(array, offset);
   }
 
-  public decodeBoolean(size: number) {
+  private decodeBoolean(size: number) {
     return size !== 0;
   }
 
-  public decodeDouble(offset: number) {
+  private decodeDouble(offset: number) {
     return this.db.readDoubleBE(offset, true);
   }
 
-  public decodeFloat(offset: number) {
+  private decodeFloat(offset: number) {
     return this.db.readFloatBE(offset, true);
   }
 
-  public decodeMap(size: number, offset: number) {
+  private decodeMap(size: number, offset: number) {
     let tmp;
     let key;
 
@@ -281,14 +281,14 @@ export default class Decoder {
     return cursor(map, offset);
   }
 
-  public decodeInt32(offset: number, size: number) {
+  private decodeInt32(offset: number, size: number) {
     if (size === 0) {
       return 0;
     }
     return this.db.readInt32BE(offset, true);
   }
 
-  public decodeUint(offset: number, size: number) {
+  private decodeUint(offset: number, size: number) {
     switch (size) {
       case 0:
         return 0;
@@ -317,7 +317,7 @@ export default class Decoder {
     return 0;
   }
 
-  public decodeString(offset: number, size: number) {
+  private decodeString(offset: number, size: number) {
     // @ts-ignore
     return this.db.utf8Slice(offset, offset + size);
 
@@ -325,7 +325,7 @@ export default class Decoder {
     // return this.db.toString('utf8', offset, offset + size);
   }
 
-  public decodeBigUint(offset: number, size: number) {
+  private decodeBigUint(offset: number, size: number) {
     const buffer = Buffer.alloc(size);
     this.db.copy(buffer, 0, offset, offset + size);
 

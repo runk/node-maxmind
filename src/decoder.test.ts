@@ -5,9 +5,10 @@ import Decoder from './decoder';
 
 describe('lib/decoder', () => {
   describe('decodeByType()', () => {
-    const decoder = new Decoder(Buffer.from([0x00, 0x00]));
+    const decoder: any = new Decoder(Buffer.from([0x00, 0x00]));
     it('should fail for unknown type', () => {
       assert.throws(() => {
+        // @ts-ignore
         decoder.decodeByType(20, 0, 1);
       }, /Unknown type/);
     });
@@ -15,7 +16,7 @@ describe('lib/decoder', () => {
 
   describe('decodeUint()', () => {
     it('should return zero for unsupported int size', () => {
-      const decoder = new Decoder(
+      const decoder: any = new Decoder(
         fs.readFileSync(
           path.join(__dirname, '../test/data/test-data/GeoIP2-City-Test.mmdb')
         ),
@@ -36,7 +37,7 @@ describe('lib/decoder', () => {
   });
 
   describe('sizeFromCtrlByte()', () => {
-    const decoder = new Decoder(Buffer.from([0x01, 0x02, 0x03, 0x04]));
+    const decoder: any = new Decoder(Buffer.from([0x01, 0x02, 0x03, 0x04]));
 
     it('should return correct value (size <29)', () => {
       assert.deepStrictEqual(decoder.sizeFromCtrlByte(60, 0), {
@@ -68,7 +69,7 @@ describe('lib/decoder', () => {
   });
 
   describe('decodePointer()', () => {
-    const decoder = new Decoder(Buffer.from([0x01, 0x02, 0x03, 0x04]));
+    const decoder: any = new Decoder(Buffer.from([0x01, 0x02, 0x03, 0x04]));
 
     it('should return correct value (pointer size = 0)', () => {
       assert.deepStrictEqual(decoder.decodePointer(39, 0), {
