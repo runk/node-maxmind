@@ -36,7 +36,7 @@
     "sinon": "7.5.0",
     "ts-jest": "24.0.2",
     "tslint": "5.19.0",
-    "typescript": "3.7.2",
+    "typescript": "3.7.3",
     "semantic-release": "15.13.30"
   },
   "repository": {
