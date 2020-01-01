@@ -188,4 +188,111 @@ describe('maxmind', () => {
       });
     });
   });
+
+  describe('getWithPrefixLength', () => {
+    const decoderRecord = {
+      array: [1, 2, 3],
+      boolean: true,
+      bytes: Buffer.from([0, 0, 0, 42]),
+      double: 42.123456,
+      float: 1.100000023841858,
+      int32: -268435456,
+      map: {
+        mapX: {
+          arrayX: [7, 8, 9],
+          utf8_stringX: 'hello',
+        },
+      },
+      uint128: '1329227995784915872903807060280344576',
+      uint16: 0x64,
+      uint32: 268435456,
+      uint64: '1152921504606846976',
+      utf8_string: 'unicode! ☯ - ♫',
+    };
+    const tests = [
+      {
+        ip: '1.1.1.1',
+        dbFile: 'MaxMind-DB-test-ipv6-32.mmdb',
+        expectedPrefixLength: 8,
+        expectedRecord: null,
+      },
+      {
+        ip: '::1:ffff:ffff',
+        dbFile: 'MaxMind-DB-test-ipv6-24.mmdb',
+        expectedPrefixLength: 128,
+        expectedRecord: { ip: '::1:ffff:ffff' },
+      },
+      {
+        ip: '::2:0:1',
+        dbFile: 'MaxMind-DB-test-ipv6-24.mmdb',
+        expectedPrefixLength: 122,
+        expectedRecord: { ip: '::2:0:0' },
+      },
+      {
+        ip: '1.1.1.1',
+        dbFile: 'MaxMind-DB-test-ipv4-24.mmdb',
+        expectedPrefixLength: 32,
+        expectedRecord: { ip: '1.1.1.1' },
+      },
+      {
+        ip: '1.1.1.3',
+        dbFile: 'MaxMind-DB-test-ipv4-24.mmdb',
+        expectedPrefixLength: 31,
+        expectedRecord: { ip: '1.1.1.2' },
+      },
+      {
+        ip: '1.1.1.3',
+        dbFile: 'MaxMind-DB-test-decoder.mmdb',
+        expectedPrefixLength: 24,
+        expectedRecord: decoderRecord,
+      },
+      {
+        ip: '::ffff:1.1.1.128',
+        dbFile: 'MaxMind-DB-test-decoder.mmdb',
+        expectedPrefixLength: 120,
+        expectedRecord: decoderRecord,
+      },
+      {
+        ip: '::1.1.1.128',
+        dbFile: 'MaxMind-DB-test-decoder.mmdb',
+        expectedPrefixLength: 120,
+        expectedRecord: decoderRecord,
+      },
+      {
+        ip: '200.0.2.1',
+        dbFile: 'MaxMind-DB-no-ipv4-search-tree.mmdb',
+        expectedPrefixLength: 0,
+        expectedRecord: '::0/64',
+      },
+      {
+        ip: '::200.0.2.1',
+        dbFile: 'MaxMind-DB-no-ipv4-search-tree.mmdb',
+        expectedPrefixLength: 64,
+        expectedRecord: '::0/64',
+      },
+      {
+        ip: '0:0:0:0:ffff:ffff:ffff:ffff',
+        dbFile: 'MaxMind-DB-no-ipv4-search-tree.mmdb',
+        expectedPrefixLength: 64,
+        expectedRecord: '::0/64',
+      },
+      {
+        ip: 'ef00::',
+        dbFile: 'MaxMind-DB-no-ipv4-search-tree.mmdb',
+        expectedPrefixLength: 1,
+        expectedRecord: null,
+      },
+    ];
+
+    for (const test of tests) {
+      it(`should test ${test.ip} in ${test.dbFile}`, async () => {
+        const geoIp = await maxmind.open(path.join(dataDir, test.dbFile));
+
+        assert.deepStrictEqual(geoIp.getWithPrefixLength(test.ip), [
+          test.expectedRecord,
+          test.expectedPrefixLength,
+        ]);
+      });
+    }
+  });
 });

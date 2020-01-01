@@ -22,10 +22,14 @@ const maxmind = require('maxmind');
 
 maxmind.open('/path/to/GeoLite2-City.mmdb').then((lookup) => {
   console.log(lookup.get('66.6.44.4'));
+
+  console.log(lookup.getWithPrefixLength('66.6.44.4'));
 });
 
 maxmind.open('/path/to/GeoOrg.mmdb').then((lookup) => {
   console.log(lookup.get('66.6.44.4'));
+
+  console.log(lookup.getWithPrefixLength('66.6.44.4'));
 });
 ```
 
@@ -36,6 +40,8 @@ import maxmind, { CityResponse } from 'maxmind';
 
 const lookup = await maxmind.open<CityResponse>('/path/to/GeoLite2-City.mmdb');
 console.log(lookup.get('66.6.44.4')); // inferred type maxmind.CityResponse
+
+console.log(lookup.getWithPrefixLength('66.6.44.4')); // tuple with inferred type [maxmind.CityResponse|null, number]
 ```
 
 ### Sync API
@@ -47,6 +53,8 @@ import { Reader } from 'maxmind';
 const buffer = fs.readFileSync('./db.mmdb');
 const lookup = new Reader<CityResponse>(buffer);
 const city = lookup.get('8.8.8.8');
+
+const [city2, prefixLength] = lookup.getWithPrefixLength('66.6.44.4');
 ```
 
 Supported response types:
