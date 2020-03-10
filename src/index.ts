@@ -45,6 +45,9 @@ export const open = async <T>(
     };
 
     fs.watch(filepath, watcherOptions, async () => {
+      if (!fs.existsSync(filepath)) {
+        return;
+      }
       const updateDatabase = await fs.readFile(filepath);
       reader.load(updateDatabase, opts);
       if (opts.watchForUpdatesHook) {
