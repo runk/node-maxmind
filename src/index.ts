@@ -45,6 +45,8 @@ export const open = async <T>(
     };
 
     fs.watch(filepath, watcherOptions, async () => {
+      // When database file is being replaced,
+      // it could be removed for a fraction of a second.
       if (!fs.existsSync(filepath)) {
         return;
       }
