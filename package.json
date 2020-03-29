@@ -32,7 +32,7 @@
     "@types/node": "10.17.5",
     "@types/sinon": "7.5.2",
     "ip-address": "6.2.0",
-    "jest": "25.2.3",
+    "jest": "25.2.4",
     "sinon": "9.0.1",
     "ts-jest": "25.2.1",
     "tslint": "6.1.0",
