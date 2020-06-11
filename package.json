@@ -24,7 +24,7 @@
     "Gregory Oschwald @oschwald"
   ],
   "dependencies": {
-    "tiny-lru": "7.0.4"
+    "tiny-lru": "7.0.6"
   },
   "devDependencies": {
     "@types/ip-address": "5.8.2",
