@@ -61,6 +61,7 @@ interface SubdivisionsRecord {
 interface TraitsRecord {
   readonly autonomous_system_number?: number;
   readonly autonomous_system_organization?: string;
+  readonly connection_type?: string;
   readonly domain?: string;
   ip_address?: string;
   readonly is_anonymous?: boolean;
