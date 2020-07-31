@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@types/ip-address": "5.8.2",
-    "@types/jest": "26.0.7",
+    "@types/jest": "26.0.8",
     "@types/node": "10.17.5",
     "@types/sinon": "9.0.4",
     "ip-address": "6.3.0",
