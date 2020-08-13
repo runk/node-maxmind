@@ -34,7 +34,7 @@
     "ip-address": "6.3.0",
     "jest": "26.2.2",
     "sinon": "9.0.2",
-    "ts-jest": "26.1.4",
+    "ts-jest": "26.2.0",
     "tslint": "6.1.3",
     "typescript": "3.9.7",
     "semantic-release": "17.1.1"
