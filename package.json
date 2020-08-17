@@ -33,7 +33,7 @@
     "@types/sinon": "9.0.4",
     "ip-address": "6.3.0",
     "jest": "26.2.2",
-    "sinon": "9.0.2",
+    "sinon": "9.0.3",
     "ts-jest": "26.2.0",
     "tslint": "6.1.3",
     "typescript": "3.9.7",
