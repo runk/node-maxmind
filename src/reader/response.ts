@@ -114,6 +114,7 @@ export interface AnonymousIPResponse {
   readonly is_anonymous_vpn?: boolean;
   readonly is_hosting_provider?: boolean;
   readonly is_public_proxy?: boolean;
+  readonly is_residential_proxy?: boolean;
   readonly is_tor_exit_node?: boolean;
 }
 
