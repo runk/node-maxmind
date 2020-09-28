@@ -14,7 +14,9 @@
     "ip base",
     "geocode",
     "timezone",
-    "asn"
+    "asn",
+    "geo lookup",
+    "ip lookup"
   ],
   "author": "Dmitry Shirokov <deadrunk@gmail.com>",
   "contributors": [
