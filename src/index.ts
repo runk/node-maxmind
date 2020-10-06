@@ -74,7 +74,7 @@ export const init = () => {
 
 export const validate = ip.validate;
 
-export * from 'mmdb-lib/lib/reader/response';
+export * from 'mmdb-lib';
 
 export default {
   init,
