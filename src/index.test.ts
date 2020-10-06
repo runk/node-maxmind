@@ -2,8 +2,7 @@ import assert from 'assert';
 import path from 'path';
 import sinon, { SinonSpy } from 'sinon';
 import fs from './fs';
-import maxmind from './index';
-import { CityResponse } from './reader/response';
+import maxmind, { CityResponse } from './index';
 
 const nah = () => Promise.reject(new Error('Should not happen'));
 

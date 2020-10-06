@@ -26,6 +26,7 @@
     "Gregory Oschwald @oschwald"
   ],
   "dependencies": {
+    "mmdb-lib": "1.1.0",
     "tiny-lru": "7.0.6"
   },
   "devDependencies": {

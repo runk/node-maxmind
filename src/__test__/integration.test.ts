@@ -1,9 +1,7 @@
 import assert from 'assert';
 import ipaddr from 'ip-address';
 import path from 'path';
-import maxmind from '../index';
-import Reader from '../reader';
-import { Response } from '../reader/response';
+import maxmind, { Reader, Response } from '../index';
 
 const dataDir = path.join(__dirname, '../../test/data/test-data');
 const srcDir = path.join(__dirname, '../../test/data/source-data');
