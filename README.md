@@ -108,7 +108,7 @@ In case you want to use legacy GeoIP binary databases you should use [maxmind@0.
 
 ## References
 
-- Loosely based on https://github.com/PaddeK/node-maxmind-db
+- [MMDB library](https://github.com/runk/mmdb-lib)
 - MaxMind DB file format specification http://maxmind.github.io/MaxMind-DB/
 - MaxMind test/sample DB files https://github.com/maxmind/MaxMind-DB
 - GeoLite2 Free Downloadable Databases http://dev.maxmind.com/geoip/geoip2/geolite2/
