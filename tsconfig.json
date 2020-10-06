@@ -14,7 +14,14 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "esnext"
+    "lib": ["ES2019"],
+    "target": "ES2019"
   },
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "__mocks__"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "__mocks__",
+    "lib"
+  ]
 }

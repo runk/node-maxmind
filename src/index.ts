@@ -1,8 +1,9 @@
 import assert from 'assert';
+import lru from 'tiny-lru';
+import Reader from 'mmdb-lib'
 import fs from './fs';
 import ip from './ip';
 import isGzip from './is-gzip';
-import Reader from './reader';
 import utils from './utils';
 
 type Callback = () => void;
@@ -31,7 +32,8 @@ export const open = async <T>(
     );
   }
 
-  const reader = new Reader<T>(database, opts);
+  const cache = lru((opts && opts.cache && opts.cache.max) || 6000);
+  let reader = new Reader<T>(database, { cache });
 
   if (opts && !!opts.watchForUpdates) {
     if (
@@ -51,7 +53,8 @@ export const open = async <T>(
         return;
       }
       const updateDatabase = await fs.readFile(filepath);
-      reader.load(updateDatabase, opts);
+      cache.clear();
+      reader = new Reader<T>(updateDatabase, { cache });
       if (opts.watchForUpdatesHook) {
         opts.watchForUpdatesHook();
       }
@@ -71,7 +74,7 @@ export const init = () => {
 
 export const validate = ip.validate;
 
-export * from './reader/response';
+export * from 'mmdb-lib';
 
 export default {
   init,
@@ -80,4 +83,4 @@ export default {
   validate: ip.validate,
 };
 
-export { default as Reader } from './reader';
+export { Reader };
