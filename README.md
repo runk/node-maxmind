@@ -90,6 +90,10 @@ _maxmind.open(filepath, [options])_
   - `watchForUpdatesNonPersistent`: `<boolean>` Controlls wether the watcher should be persistent or not. If it is persistent, a node process will be blocked in watching state if the watcher is the only thing still running in the program. _Default_: `false`.
   - `watchForUpdatesHook`: `<Function>` Hook function that is fired on database update. _Default_: `null`.
 
+## Does it work in browser?
+
+Current module is designed to work in node.js environment. Check out [mmdb-lib](https://github.com/runk/mmdb-lib) that's used under the bonnet - it's environment agnostic and does work in browser.
+
 ## IP addresses validation
 
 Module supports validation for both IPv4 and IPv6:
