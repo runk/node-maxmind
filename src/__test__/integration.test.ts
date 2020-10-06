@@ -1,5 +1,5 @@
 import assert from 'assert';
-import ipaddr from 'ip-address';
+import { Address6 } from 'ip-address';
 import path from 'path';
 import maxmind, { Reader, Response } from '../index';
 
@@ -66,10 +66,10 @@ describe('maxmind', () => {
 
     it('should handle corrupt database', async () => {
       await maxmind
-        .open('./data/README.md')
+        .open(path.join(__dirname, '../../test/data/README.md'))
         .then(() => Promise.reject(new Error('Should not happen')))
         .catch((err) => {
-          assert(err.message, 'asda');
+          assert.deepStrictEqual(err.message, 'Unknown type 84 at offset 1');
         });
     });
 
@@ -159,7 +159,7 @@ describe('maxmind', () => {
 
     const tester = (geoIp: Reader<Response>, data: any) => {
       for (const subnet in data.hash) {
-        const ip = new ipaddr.Address6(subnet);
+        const ip = new Address6(subnet);
         // TODO: check random address from the subnet?
         // see http://ip-address.js.org/#address4/biginteger
         // see https://github.com/andyperlitch/jsbn
