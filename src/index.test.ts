@@ -15,11 +15,10 @@ describe('index', () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox();
     // @ts-ignore
-    sandbox.stub(fs, 'watch').callsFake((paramA, paramB, cb) => {
+    sandbox.stub(fs, 'watchFile').callsFake((paramA, paramB, cb) => {
       watchHandler = cb;
     });
     sandbox.spy(fs, 'readFile');
-    sandbox.spy(fs, 'readFileSync');
   });
   afterEach(() => {
     sandbox.restore();
@@ -51,7 +50,7 @@ describe('index', () => {
       const options = { cache: { max: 1000 }, watchForUpdates: true };
       const lookup = await maxmind.open(dbPath, options);
       assert(lookup.get('2001:230::'));
-      assert((fs.watch as SinonSpy).calledOnce);
+      assert((fs.watchFile as SinonSpy).calledOnce);
       assert((fs.readFile as SinonSpy).calledOnce);
     });
 
@@ -59,7 +58,7 @@ describe('index', () => {
       const options = { watchForUpdates: true };
       const lookup = await maxmind.open(dbPath, options);
       assert(lookup.get('2001:230::'));
-      assert((fs.watch as SinonSpy).calledOnce);
+      assert((fs.watchFile as SinonSpy).calledOnce);
       assert((fs.readFile as SinonSpy).calledOnce);
       watchHandler();
       assert((fs.readFile as SinonSpy).calledTwice);
