@@ -60,7 +60,7 @@ describe('index', () => {
       assert(lookup.get('2001:230::'));
       assert((fs.watchFile as SinonSpy).calledOnce);
       assert((fs.readFile as SinonSpy).calledOnce);
-      watchHandler();
+      await watchHandler();
       assert((fs.readFile as SinonSpy).calledTwice);
     });
 
