@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/ip-address": "6.0.0",
     "@types/jest": "26.0.20",
-    "@types/node": "10.17.53",
+    "@types/node": "10.17.54",
     "@types/sinon": "9.0.10",
     "ip-address": "7.1.0",
     "jest": "26.6.3",
