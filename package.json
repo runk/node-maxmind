@@ -57,7 +57,7 @@
   "typings": "lib/index.d.ts",
   "engines": {
     "node": ">=10",
-    "npm": ">=6"
+    "npm": "7.10.0"
   },
   "license": "MIT",
   "scripts": {
