@@ -33,7 +33,7 @@ export const open = async <T>(
   }
 
   const cache = lru((opts && opts.cache && opts.cache.max) || 6000);
-  let reader = new Reader<T>(database, { cache });
+  const reader = new Reader<T>(database, { cache });
 
   if (opts && !!opts.watchForUpdates) {
     if (
@@ -63,9 +63,9 @@ export const open = async <T>(
       if (!(await waitExists())) {
         return;
       }
-      const updateDatabase = await fs.readFile(filepath);
+      const updatedDatabase = await fs.readFile(filepath);
       cache.clear();
-      reader = new Reader<T>(updateDatabase, { cache });
+      reader.load(updatedDatabase);
       if (opts.watchForUpdatesHook) {
         opts.watchForUpdatesHook();
       }
