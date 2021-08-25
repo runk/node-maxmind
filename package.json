@@ -36,7 +36,7 @@
     "@types/sinon": "10.0.2",
     "ip-address": "8.1.0",
     "jest": "27.0.6",
-    "semantic-release": "17.4.6",
+    "semantic-release": "17.4.7",
     "sinon": "11.1.2",
     "ts-jest": "27.0.5",
     "tslint": "6.1.3",
