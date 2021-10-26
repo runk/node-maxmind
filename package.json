@@ -35,7 +35,7 @@
     "@types/node": "16.11.6",
     "@types/sinon": "10.0.4",
     "ip-address": "8.1.0",
-    "jest": "27.2.5",
+    "jest": "27.3.1",
     "semantic-release": "18.0.0",
     "sinon": "11.1.2",
     "ts-jest": "27.0.7",
