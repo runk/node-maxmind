@@ -31,11 +31,11 @@
   },
   "devDependencies": {
     "@types/ip-address": "6.0.0",
-    "@types/jest": "27.0.2",
+    "@types/jest": "27.0.3",
     "@types/node": "16.11.11",
     "@types/sinon": "10.0.6",
     "ip-address": "8.1.0",
-    "jest": "27.3.1",
+    "jest": "27.4.3",
     "semantic-release": "18.0.1",
     "sinon": "12.0.1",
     "ts-jest": "27.0.7",
