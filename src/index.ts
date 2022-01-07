@@ -1,6 +1,6 @@
 import assert from 'assert';
 import lru from 'tiny-lru';
-import Reader from 'mmdb-lib'
+import { Reader } from 'mmdb-lib'
 import fs from './fs';
 import ip from './ip';
 import isGzip from './is-gzip';
