@@ -33,7 +33,7 @@
     "@types/ip-address": "6.0.0",
     "@types/jest": "27.4.0",
     "@types/node": "16.11.21",
-    "@types/sinon": "10.0.6",
+    "@types/sinon": "10.0.8",
     "ip-address": "8.1.0",
     "jest": "27.4.7",
     "semantic-release": "18.0.1",
