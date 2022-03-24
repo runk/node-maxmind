@@ -3,6 +3,7 @@ import ip6addr from 'ip6addr';
 import cidrTools from 'cidr-tools';
 import path from 'path';
 import maxmind, { Reader, Response } from '../index';
+import { Address6 } from 'ip-address';
 
 const dataDir = path.join(__dirname, '../../test/data/test-data');
 const srcDir = path.join(__dirname, '../../test/data/source-data');
@@ -158,20 +159,39 @@ describe('maxmind', () => {
       'GeoLite2-ASN-Test',
     ];
 
+    const getRange = (input: string): { first: string, last: string } => {
+      try {
+        const addr = new Address6(input)
+        return {
+          first: addr.startAddress().address,
+          last: addr.endAddress().address
+        }
+      } catch (e: unknown) {
+        const err = e as Error;
+        if (err.message == "Incorrect number of groups found") {
+          const addr = ip6addr.createCIDR(input)
+          return {
+            first: addr.first().toString(),
+            last: addr.last().toString()
+          }
+        }
+        throw err;
+      }
+    }
+
     const tester = (geoIp: Reader<Response>, data: any) => {
       for (const subnet in data.hash) {
         // Normalisation is a workaround for issues of `ip6addr` 
         // which is unable to parse addresses like '::2.20.32.110/127'.
         try {
-          const normalised = cidrTools.normalize(subnet).toString();
-          const cidr = ip6addr.createCIDR(normalised);
+          const range = getRange(subnet);
           assert.deepStrictEqual(
-            geoIp.get(cidr.first().toString()),
+            geoIp.get(range.first),
             data.hash[subnet],
             subnet
           );
           assert.deepStrictEqual(
-            geoIp.get(cidr.last().toString()),
+            geoIp.get(range.last),
             data.hash[subnet],
             subnet
           );

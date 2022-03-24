@@ -18,10 +18,11 @@
     "target": "ES2019"
   },
   "exclude": [
-    "node_modules",
+    "__mocks__",
     "**/*.spec.ts",
     "**/*.test.ts",
-    "__mocks__",
-    "lib"
+    "lib",
+    "node_modules",
+    "testing.ts"
   ]
 }
