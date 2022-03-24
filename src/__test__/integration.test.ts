@@ -1,7 +1,8 @@
 import assert from 'assert';
-import { Address6 } from 'ip-address';
+import ip6addr from 'ip6addr';
 import path from 'path';
 import maxmind, { Reader, Response } from '../index';
+import { Address6 } from 'ip-address';
 
 const dataDir = path.join(__dirname, '../../test/data/test-data');
 const srcDir = path.join(__dirname, '../../test/data/source-data');
@@ -157,19 +158,38 @@ describe('maxmind', () => {
       'GeoLite2-ASN-Test',
     ];
 
+    // Neither `ip-address` nor `ip6addr` cover all possible subnet notations,
+    // hence using this dirty workaround.
+    const getRange = (input: string): { first: string; last: string } => {
+      try {
+        const addr = new Address6(input);
+        return {
+          first: addr.startAddress().address,
+          last: addr.endAddress().address,
+        };
+      } catch (e: unknown) {
+        const err = e as Error;
+        if (err.message == 'Incorrect number of groups found') {
+          const addr = ip6addr.createCIDR(input);
+          return {
+            first: addr.first().toString(),
+            last: addr.last().toString(),
+          };
+        }
+        throw err;
+      }
+    };
+
     const tester = (geoIp: Reader<Response>, data: any) => {
       for (const subnet in data.hash) {
-        const ip = new Address6(subnet);
-        // TODO: check random address from the subnet?
-        // see http://ip-address.js.org/#address4/biginteger
-        // see https://github.com/andyperlitch/jsbn
+        const range = getRange(subnet);
         assert.deepStrictEqual(
-          geoIp.get(ip.startAddress().address),
+          geoIp.get(range.first),
           data.hash[subnet],
           subnet
         );
         assert.deepStrictEqual(
-          geoIp.get(ip.endAddress().address),
+          geoIp.get(range.last),
           data.hash[subnet],
           subnet
         );

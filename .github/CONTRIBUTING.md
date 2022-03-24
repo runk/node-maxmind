@@ -1,4 +1,3 @@
-
 ## Contributing
 
 Make sure you run `npm i` command in the project's dir before you begin, it'll install all dev dependencies. You'll also need to init git submodules:
@@ -17,4 +16,3 @@ which you can find useful:
 - `npm test --coverage` runs code coverage task and generates a report
 
 One pull request per one feature, nothing unusual.
-

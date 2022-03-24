@@ -17,7 +17,7 @@
       }
     ],
     "object-literal-sort-keys": false,
-		"radix": false,
-		"forin": false
+    "radix": false,
+    "forin": false
   }
 }

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import lru from 'tiny-lru';
-import { Reader } from 'mmdb-lib'
+import { Reader } from 'mmdb-lib';
 import fs from './fs';
 import ip from './ip';
 import isGzip from './is-gzip';
@@ -55,11 +55,11 @@ export const open = async <T>(
             return true;
           }
 
-          await new Promise(a => setTimeout(a, 500));
+          await new Promise((a) => setTimeout(a, 500));
         }
 
         return false;
-      }
+      };
       if (!(await waitExists())) {
         return;
       }
