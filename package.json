@@ -30,12 +30,12 @@
     "tiny-lru": "8.0.2"
   },
   "devDependencies": {
-    "@types/ip6addr": "^0.2.3",
+    "@types/ip6addr": "0.2.3",
     "@types/jest": "27.4.1",
     "@types/node": "16.11.26",
     "@types/sinon": "10.0.11",
     "cidr-tools": "4.3.0",
-    "ip6addr": "^0.2.5",
+    "ip6addr": "0.2.5",
     "jest": "27.5.1",
     "semantic-release": "19.0.2",
     "sinon": "13.0.1",
