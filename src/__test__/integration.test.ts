@@ -1,5 +1,6 @@
 import assert from 'assert';
-import { Address6 } from 'ip-address';
+import ip6addr from 'ip6addr';
+import cidrTools from 'cidr-tools';
 import path from 'path';
 import maxmind, { Reader, Response } from '../index';
 
@@ -159,20 +160,24 @@ describe('maxmind', () => {
 
     const tester = (geoIp: Reader<Response>, data: any) => {
       for (const subnet in data.hash) {
-        const ip = new Address6(subnet);
-        // TODO: check random address from the subnet?
-        // see http://ip-address.js.org/#address4/biginteger
-        // see https://github.com/andyperlitch/jsbn
-        assert.deepStrictEqual(
-          geoIp.get(ip.startAddress().address),
-          data.hash[subnet],
-          subnet
-        );
-        assert.deepStrictEqual(
-          geoIp.get(ip.endAddress().address),
-          data.hash[subnet],
-          subnet
-        );
+        try {
+          const ip = ip6addr.createCIDR(cidrTools.normalize(subnet).toString());
+          // TODO: check random address from the subnet?
+          // see http://ip-address.js.org/#address4/biginteger
+          // see https://github.com/andyperlitch/jsbn
+          assert.deepStrictEqual(
+            geoIp.get(ip.first().toString()),
+            data.hash[subnet],
+            subnet
+          );
+          assert.deepStrictEqual(
+            geoIp.get(ip.last().toString()),
+            data.hash[subnet],
+            subnet
+          );
+        } catch (err) {
+          console.log(err, { subnet })
+        }
       }
     };
 
