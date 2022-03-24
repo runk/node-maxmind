@@ -159,6 +159,8 @@ describe('maxmind', () => {
       'GeoLite2-ASN-Test',
     ];
 
+    // Neither `ip-address` nor `ip6addr` cover all possible subnet notations,
+    // hence using this dirty workaround.
     const getRange = (input: string): { first: string, last: string } => {
       try {
         const addr = new Address6(input)
@@ -181,24 +183,9 @@ describe('maxmind', () => {
 
     const tester = (geoIp: Reader<Response>, data: any) => {
       for (const subnet in data.hash) {
-        // Normalisation is a workaround for issues of `ip6addr` 
-        // which is unable to parse addresses like '::2.20.32.110/127'.
-        try {
-          const range = getRange(subnet);
-          assert.deepStrictEqual(
-            geoIp.get(range.first),
-            data.hash[subnet],
-            subnet
-          );
-          assert.deepStrictEqual(
-            geoIp.get(range.last),
-            data.hash[subnet],
-            subnet
-          );
-        } catch (err) {
-          console.log(err, { subnet })
-          throw err;
-        }
+        const range = getRange(subnet);
+        assert.deepStrictEqual(geoIp.get(range.first), data.hash[subnet], subnet);
+        assert.deepStrictEqual(geoIp.get(range.last), data.hash[subnet], subnet);
       }
     };
 
