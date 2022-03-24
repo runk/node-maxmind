@@ -1,6 +1,5 @@
 import assert from 'assert';
 import ip6addr from 'ip6addr';
-import cidrTools from 'cidr-tools';
 import path from 'path';
 import maxmind, { Reader, Response } from '../index';
 import { Address6 } from 'ip-address';

@@ -35,7 +35,6 @@
     "@types/netmask": "1.0.30",
     "@types/node": "16.11.26",
     "@types/sinon": "10.0.11",
-    "cidr-tools": "4.3.0",
     "ip-address": "8.1.0",
     "ip6addr": "0.2.5",
     "jest": "27.5.1",
