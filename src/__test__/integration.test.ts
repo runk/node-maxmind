@@ -160,24 +160,20 @@ describe('maxmind', () => {
 
     const tester = (geoIp: Reader<Response>, data: any) => {
       for (const subnet in data.hash) {
-        try {
-          const ip = ip6addr.createCIDR(cidrTools.normalize(subnet).toString());
-          // TODO: check random address from the subnet?
-          // see http://ip-address.js.org/#address4/biginteger
-          // see https://github.com/andyperlitch/jsbn
-          assert.deepStrictEqual(
-            geoIp.get(ip.first().toString()),
-            data.hash[subnet],
-            subnet
-          );
-          assert.deepStrictEqual(
-            geoIp.get(ip.last().toString()),
-            data.hash[subnet],
-            subnet
-          );
-        } catch (err) {
-          console.log(err, { subnet })
-        }
+        // Normalisation is a workaround for issues of `ip6addr` 
+        // which is unable to parse addresses like '::2.20.32.110/127'.
+        const normalised = cidrTools.normalize(subnet).toString();
+        const cidr = ip6addr.createCIDR(normalised);
+        assert.deepStrictEqual(
+          geoIp.get(cidr.first().toString()),
+          data.hash[subnet],
+          subnet
+        );
+        assert.deepStrictEqual(
+          geoIp.get(cidr.last().toString()),
+          data.hash[subnet],
+          subnet
+        );
       }
     };
 
