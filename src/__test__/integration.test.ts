@@ -162,18 +162,23 @@ describe('maxmind', () => {
       for (const subnet in data.hash) {
         // Normalisation is a workaround for issues of `ip6addr` 
         // which is unable to parse addresses like '::2.20.32.110/127'.
-        const normalised = cidrTools.normalize(subnet).toString();
-        const cidr = ip6addr.createCIDR(normalised);
-        assert.deepStrictEqual(
-          geoIp.get(cidr.first().toString()),
-          data.hash[subnet],
-          subnet
-        );
-        assert.deepStrictEqual(
-          geoIp.get(cidr.last().toString()),
-          data.hash[subnet],
-          subnet
-        );
+        try {
+          const normalised = cidrTools.normalize(subnet).toString();
+          const cidr = ip6addr.createCIDR(normalised);
+          assert.deepStrictEqual(
+            geoIp.get(cidr.first().toString()),
+            data.hash[subnet],
+            subnet
+          );
+          assert.deepStrictEqual(
+            geoIp.get(cidr.last().toString()),
+            data.hash[subnet],
+            subnet
+          );
+        } catch (err) {
+          console.log(err, { subnet })
+          throw err;
+        }
       }
     };
 
