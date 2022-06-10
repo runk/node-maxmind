@@ -39,7 +39,7 @@
     "ip6addr": "0.2.5",
     "jest": "28.1.1",
     "prettier": "2.6.2",
-    "semantic-release": "19.0.2",
+    "semantic-release": "19.0.3",
     "sinon": "13.0.2",
     "ts-jest": "28.0.4",
     "tslint": "6.1.3",
