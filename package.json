@@ -38,7 +38,7 @@
     "ip-address": "8.1.0",
     "ip6addr": "0.2.5",
     "jest": "28.1.1",
-    "prettier": "2.6.2",
+    "prettier": "2.7.1",
     "semantic-release": "19.0.3",
     "sinon": "14.0.0",
     "ts-jest": "28.0.5",
