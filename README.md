@@ -15,26 +15,6 @@ npm i maxmind
 
 ## Usage
 
-### JavaScript
-
-```javascript
-const maxmind = require('maxmind');
-
-maxmind.open('/path/to/GeoLite2-City.mmdb').then((lookup) => {
-  console.log(lookup.get('66.6.44.4'));
-
-  console.log(lookup.getWithPrefixLength('66.6.44.4'));
-});
-
-maxmind.open('/path/to/GeoOrg.mmdb').then((lookup) => {
-  console.log(lookup.get('66.6.44.4'));
-
-  console.log(lookup.getWithPrefixLength('66.6.44.4'));
-});
-```
-
-### TypeScript
-
 ```typescript
 import maxmind, { CityResponse } from 'maxmind';
 
@@ -46,7 +26,7 @@ console.log(lookup.getWithPrefixLength('66.6.44.4')); // tuple with inferred typ
 
 ### Sync API
 
-You can use `Reader` class directly, if you would want to instantiate it in non-async fashion. Use cases would include receiving a buffer database over network, or just reading it synchronously from disk.
+You can use `Reader` class directly in case if you would want to instantiate it in non-async fashion. Use cases would include receiving a buffer database over network, or just reading it synchronously from disk.
 
 ```typescript
 import { Reader } from 'maxmind';
@@ -69,7 +49,7 @@ Supported response types:
 - IspResponse
 ```
 
-## V6 Support
+## IPv6 Support
 
 Module is fully compatible with IPv6. There are no differences in API between IPv4 and IPv6.
 
