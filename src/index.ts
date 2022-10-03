@@ -1,6 +1,6 @@
 import assert from 'assert';
 import lru from 'tiny-lru';
-import { Reader } from 'mmdb-lib';
+import { Reader, Response } from 'mmdb-lib';
 import fs from './fs';
 import ip from './ip';
 import isGzip from './is-gzip';
@@ -17,7 +17,7 @@ export interface OpenOpts {
   watchForUpdatesHook?: Callback;
 }
 
-export const open = async <T>(
+export const open = async <T extends Response>(
   filepath: string,
   opts?: OpenOpts,
   cb?: Callback
