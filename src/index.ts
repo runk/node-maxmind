@@ -1,6 +1,6 @@
 import assert from 'assert';
-import lru from 'tiny-lru';
 import { Reader, Response } from 'mmdb-lib';
+import { lru } from 'tiny-lru';
 import fs from './fs';
 import ip from './ip';
 import isGzip from './is-gzip';
@@ -32,7 +32,7 @@ export const open = async <T extends Response>(
     );
   }
 
-  const cache = lru((opts && opts.cache && opts.cache.max) || 6000);
+  const cache = lru(opts?.cache?.max || 60000);
   const reader = new Reader<T>(database, { cache });
 
   if (opts && !!opts.watchForUpdates) {
