@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "mmdb-lib": "2.0.2",
-    "tiny-lru": "9.0.3"
+    "tiny-lru": "10.3.0"
   },
   "devDependencies": {
     "@types/ip6addr": "0.2.3",
