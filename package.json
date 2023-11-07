@@ -30,7 +30,7 @@
     "tiny-lru": "11.2.5"
   },
   "devDependencies": {
-    "@types/ip6addr": "0.2.5",
+    "@types/ip6addr": "0.2.6",
     "@types/jest": "29.5.7",
     "@types/netmask": "2.0.4",
     "@types/node": "20.8.10",
