@@ -34,7 +34,7 @@
     "@types/jest": "29.5.7",
     "@types/netmask": "2.0.5",
     "@types/node": "20.8.10",
-    "@types/sinon": "17.0.0",
+    "@types/sinon": "17.0.1",
     "ip-address": "9.0.5",
     "ip6addr": "0.2.5",
     "jest": "29.7.0",
