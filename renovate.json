@@ -1,5 +1,6 @@
 {
   "extends": ["config:base", ":disableDependencyDashboard"],
+  "schedule": "on the first day of the month",
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin", "digest"],
