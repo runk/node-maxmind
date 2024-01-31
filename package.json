@@ -33,7 +33,7 @@
     "@types/ip6addr": "0.2.6",
     "@types/jest": "29.5.11",
     "@types/netmask": "2.0.5",
-    "@types/node": "20.11.10",
+    "@types/node": "20.11.13",
     "@types/sinon": "17.0.3",
     "ip-address": "9.0.5",
     "ip6addr": "0.2.5",
