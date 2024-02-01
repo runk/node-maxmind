@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/ip6addr": "0.2.6",
-    "@types/jest": "29.5.11",
+    "@types/jest": "29.5.12",
     "@types/netmask": "2.0.5",
     "@types/node": "20.11.15",
     "@types/sinon": "17.0.3",
