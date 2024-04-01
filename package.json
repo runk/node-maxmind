@@ -42,7 +42,7 @@
     "semantic-release": "23.0.6",
     "sinon": "17.0.1",
     "ts-jest": "29.1.2",
-    "typescript": "5.3.3"
+    "typescript": "5.4.3"
   },
   "repository": {
     "type": "git",
