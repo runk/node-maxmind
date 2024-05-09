@@ -32,7 +32,7 @@ export const open = async <T extends Response>(
     );
   }
 
-  const cache = lru(opts?.cache?.max || 60000);
+  const cache = lru(opts?.cache?.max || 10_000);
   const reader = new Reader<T>(database, { cache });
 
   if (opts && !!opts.watchForUpdates) {

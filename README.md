@@ -65,9 +65,9 @@ _maxmind.open(filepath, [options])_
 - `filepath`: `<string>` Path to the binary mmdb database file.
 - `options`: `<Object>`
   - `cache`: `<Object>` Cache options. Under the bonnet module uses [tiny-lru](https://github.com/avoidwork/tiny-lru) cache.
-    - `max`: `<number>` Max cache items to keep in memory. _Default_: `6000`.
+    - `max`: `<number>` Max cache items to keep in memory. _Default_: `10_000`.
   - `watchForUpdates`: `<boolean>` Supports reloading the reader when changes occur to the database that is loaded. _Default_: `false`.
-  - `watchForUpdatesNonPersistent`: `<boolean>` Controlls wether the watcher should be persistent or not. If it is persistent, a node process will be blocked in watching state if the watcher is the only thing still running in the program. _Default_: `false`.
+  - `watchForUpdatesNonPersistent`: `<boolean>` Controls whether the watcher should be persistent or not. If it is persistent, a node process will be blocked in watching state if the watcher is the only thing still running in the program. _Default_: `false`.
   - `watchForUpdatesHook`: `<Function>` Hook function that is fired on database update. _Default_: `null`.
 
 ## Does it work in browser?
