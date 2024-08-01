@@ -46,21 +46,9 @@ export const open = async <T extends Response>(
       persistent: opts.watchForUpdatesNonPersistent !== true,
     };
 
-    fs.watchFile(filepath, watcherOptions, async () => {
-      // When database file is being replaced,
-      // it could be removed for a fraction of a second.
-      const waitExists = async () => {
-        for (let i = 0; i < 3; i++) {
-          if (fs.existsSync(filepath)) {
-            return true;
-          }
-
-          await new Promise((a) => setTimeout(a, 500));
-        }
-
-        return false;
-      };
-      if (!(await waitExists())) {
+    fs.watchFile(filepath, watcherOptions, async (curr, prev) => {
+      // Make sure file was modified, not just accessed
+      if (!curr || prev && prev.mtimeMs === curr.mtimeMs) {
         return;
       }
       const updatedDatabase = await fs.readFile(filepath);
