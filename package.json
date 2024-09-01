@@ -41,7 +41,7 @@
     "prettier": "3.3.3",
     "semantic-release": "24.0.0",
     "sinon": "18.0.0",
-    "ts-jest": "29.2.4",
+    "ts-jest": "29.2.5",
     "typescript": "5.5.4"
   },
   "repository": {
