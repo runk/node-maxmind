@@ -17,7 +17,7 @@ export interface OpenOpts {
   watchForUpdatesHook?: Callback;
 }
 
-const readLargeFile = async (filepath: string): Promise<Buffer> => {
+const readFile = async (filepath: string): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
     const stream = fs.createReadStream(filepath, {
@@ -46,7 +46,7 @@ export const open = async <T extends Response>(
 ): Promise<Reader<T>> => {
   assert(!cb, utils.legacyErrorMessage);
 
-  const database = await readLargeFile(filepath);
+  const database = await readFile(filepath);
 
   if (isGzip(database)) {
     throw new Error(
@@ -85,7 +85,7 @@ export const open = async <T extends Response>(
       if (!(await waitExists())) {
         return;
       }
-      const updatedDatabase = await readLargeFile(filepath);
+      const updatedDatabase = await readFile(filepath);
       cache.clear();
       reader.load(updatedDatabase);
       if (opts.watchForUpdatesHook) {
