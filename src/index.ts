@@ -24,7 +24,7 @@ const readLargeFile = async (filepath: string): Promise<Buffer> => {
       highWaterMark: 64 * 1024 * 1024, // 64 MB chunks
     });
 
-    stream.on('data', (chunk) => {
+    stream.on('data', (chunk: Buffer) => {
       chunks.push(chunk);
     });
 
@@ -37,6 +37,7 @@ const readLargeFile = async (filepath: string): Promise<Buffer> => {
     });
   });
 };
+
 
 export const open = async <T extends Response>(
   filepath: string,
