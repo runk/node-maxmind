@@ -1,6 +1,6 @@
 {
-  "name": "maxmind",
-  "version": "0.0.0-development",
+  "name": "node-maxmind-largefiles",
+  "version": "0.0.2",
   "homepage": "https://github.com/runk/node-maxmind",
   "description": "IP lookup using Maxmind databases",
   "keywords": [
@@ -23,8 +23,7 @@
     "Thomas Birke @quafzi <quafzi@netextreme.de>",
     "Afzaal Ameer @afzaalace",
     "Andrew N Golovkov @AndorCS",
-    "Gregory Oschwald @oschwald",
-    "Mariano Facundo Scigliano @MarianoFacundoArch"
+    "Gregory Oschwald @oschwald"
   ],
   "dependencies": {
     "mmdb-lib": "2.1.1",
@@ -44,14 +43,6 @@
     "sinon": "19.0.2",
     "ts-jest": "29.2.5",
     "typescript": "5.6.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/runk/node-maxmind.git"
-  },
-  "bugs": {
-    "mail": "deadrunk@gmail.com",
-    "url": "http://github.com/runk/node-maxmind/issues"
   },
   "files": [
     "lib"
