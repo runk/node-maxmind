@@ -17,6 +17,28 @@ export interface OpenOpts {
   watchForUpdatesHook?: Callback;
 }
 
+const readFile = async (filepath: string): Promise<Buffer> => {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const stream = fs.createReadStream(filepath, {
+      highWaterMark: 64 * 1024 * 1024, // 64 MB chunks
+    });
+
+    stream.on('data', (chunk: Buffer) => {
+      chunks.push(chunk);
+    });
+
+    stream.on('end', () => {
+      resolve(Buffer.concat(chunks));
+    });
+
+    stream.on('error', (err) => {
+      reject(err);
+    });
+  });
+};
+
+
 export const open = async <T extends Response>(
   filepath: string,
   opts?: OpenOpts,
@@ -24,7 +46,7 @@ export const open = async <T extends Response>(
 ): Promise<Reader<T>> => {
   assert(!cb, utils.legacyErrorMessage);
 
-  const database = await fs.readFile(filepath);
+  const database = await readFile(filepath);
 
   if (isGzip(database)) {
     throw new Error(
@@ -63,7 +85,7 @@ export const open = async <T extends Response>(
       if (!(await waitExists())) {
         return;
       }
-      const updatedDatabase = await fs.readFile(filepath);
+      const updatedDatabase = await readFile(filepath);
       cache.clear();
       reader.load(updatedDatabase);
       if (opts.watchForUpdatesHook) {

@@ -23,7 +23,8 @@
     "Thomas Birke @quafzi <quafzi@netextreme.de>",
     "Afzaal Ameer @afzaalace",
     "Andrew N Golovkov @AndorCS",
-    "Gregory Oschwald @oschwald"
+    "Gregory Oschwald @oschwald",
+    "Mariano Facundo Scigliano @MarianoFacundoArch"
   ],
   "dependencies": {
     "mmdb-lib": "2.1.1",
