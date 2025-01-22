@@ -47,7 +47,7 @@ describe('index', () => {
       assert(lookup.get('2001:230::'));
     });
 
-    it.only('should successfully handle database, with opts', async () => {
+    it('should successfully handle database, with opts', async () => {
       const options = { cache: { max: 1000 }, watchForUpdates: true };
       const lookup = await maxmind.open(dbPath, options);
       assert(lookup.get('2001:230::'));
