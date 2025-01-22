@@ -5,5 +5,6 @@ export default {
   existsSync: fs.existsSync,
   readFile: util.promisify(fs.readFile),
   watchFile: fs.watchFile,
-  createReadStream: fs.createReadStream, 
+  createReadStream: fs.createReadStream,
+  stat: util.promisify(fs.stat),
 };

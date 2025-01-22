@@ -19,6 +19,7 @@ describe('index', () => {
       watchHandler = cb;
     });
     sandbox.spy(fs, 'createReadStream');
+    sandbox.spy(fs, 'readFile');
   });
   afterEach(() => {
     sandbox.restore();
@@ -51,7 +52,7 @@ describe('index', () => {
       const lookup = await maxmind.open(dbPath, options);
       assert(lookup.get('2001:230::'));
       assert((fs.watchFile as SinonSpy).calledOnce);
-      assert((fs.createReadStream as SinonSpy).calledOnce);
+      assert((fs.readFile as SinonSpy).calledOnce);
     });
 
     it('should work with auto updates', async () => {
@@ -59,9 +60,9 @@ describe('index', () => {
       const lookup = await maxmind.open(dbPath, options);
       assert(lookup.get('2001:230::'));
       assert((fs.watchFile as SinonSpy).calledOnce);
-      assert((fs.createReadStream as SinonSpy).calledOnce);
+      assert((fs.readFile as SinonSpy).calledOnce);
       await watchHandler();
-      assert((fs.createReadStream as SinonSpy).calledTwice);
+      assert((fs.readFile as SinonSpy).calledTwice);
     });
 
     it('should work with auto updates and call specified hook', async () => {

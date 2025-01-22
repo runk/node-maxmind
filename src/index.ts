@@ -6,6 +6,9 @@ import ip from './ip';
 import isGzip from './is-gzip';
 import utils from './utils';
 
+const LARGE_FILE_THRESHOLD = 512 * 1024 * 1024;
+const STREAM_WATERMARK = 8 * 1024 * 1024;
+
 type Callback = () => void;
 
 export interface OpenOpts {
@@ -17,27 +20,48 @@ export interface OpenOpts {
   watchForUpdatesHook?: Callback;
 }
 
-const readFile = async (filepath: string): Promise<Buffer> => {
-  return new Promise((resolve, reject) => {
-    const chunks: Buffer[] = [];
+/**
+ * Read large file in chunks.
+ *
+ * Reason it's not used for all file sizes is that it's slower than fs.readFile and uses
+ * a bit more memory due to the buffer operations.
+ *
+ * Node seems to have a limit of 2GB for fs.readFileSync, so we need to use streams for
+ * larger files.
+ *
+ * @param filepath
+ * @param size
+ * @returns
+ */
+const readLargeFile = async (filepath: string, size: number): Promise<Buffer> =>
+  new Promise((resolve, reject) => {
+    let buffer = Buffer.allocUnsafe(size);
+    let offset = 0;
     const stream = fs.createReadStream(filepath, {
-      highWaterMark: 64 * 1024 * 1024, // 64 MB chunks
+      highWaterMark: STREAM_WATERMARK,
     });
 
     stream.on('data', (chunk: Buffer) => {
-      chunks.push(chunk);
+      chunk.copy(buffer, offset);
+      offset += chunk.length;
     });
 
     stream.on('end', () => {
-      resolve(Buffer.concat(chunks));
+      stream.close();
+      resolve(buffer);
     });
 
     stream.on('error', (err) => {
       reject(err);
     });
   });
-};
 
+const readFile = async (filepath: string): Promise<Buffer> => {
+  const fstat = await fs.stat(filepath);
+  return fstat.size < LARGE_FILE_THRESHOLD
+    ? fs.readFile(filepath)
+    : readLargeFile(filepath, fstat.size);
+};
 
 export const open = async <T extends Response>(
   filepath: string,
