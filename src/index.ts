@@ -1,4 +1,4 @@
-import assert, { rejects } from 'assert';
+import assert from 'assert';
 import { Reader, Response } from 'mmdb-lib';
 import { lru } from 'tiny-lru';
 import fs from './fs';
