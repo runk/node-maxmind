@@ -114,7 +114,7 @@ describe('index', () => {
     // it('should check for an error when cannot read database on update', async () => {
     //   var counter = 0;
     //   var cb = function(err, reader) {
-    //     // Indeed couter is kinda gross.
+    //     // Indeed counter is kinda gross.
     //     switch (counter++) {
     //       case 0:
     //         assert.strictEqual(err, null);

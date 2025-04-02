@@ -41,9 +41,15 @@ const readLargeFile = async (filepath: string, size: number): Promise<Buffer> =>
       highWaterMark: STREAM_WATERMARK,
     });
 
-    stream.on('data', (chunk: Buffer) => {
-      chunk.copy(buffer, offset);
-      offset += chunk.length;
+    stream.on('data', (chunk: string | Buffer) => {
+      if (Buffer.isBuffer(chunk)) {
+        chunk.copy(buffer, offset);
+        offset += chunk.length;
+      } else {
+        const bufferChunk = Buffer.from(chunk);
+        bufferChunk.copy(buffer, offset);
+        offset += bufferChunk.length;
+      }
     });
 
     stream.on('end', () => {
