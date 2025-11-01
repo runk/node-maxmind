@@ -40,7 +40,7 @@
     "ip6addr": "0.2.5",
     "jest": "30.2.0",
     "prettier": "3.6.2",
-    "semantic-release": "24.2.9",
+    "semantic-release": "25.0.1",
     "sinon": "21.0.0",
     "ts-jest": "29.4.5",
     "typescript": "5.9.3"
