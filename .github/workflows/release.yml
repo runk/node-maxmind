@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - master
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   release:
     name: Release
@@ -21,7 +26,4 @@ jobs:
       - name: Build module
         run: npm run build
       - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
