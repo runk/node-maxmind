@@ -68,6 +68,6 @@
     "test": "jest"
   },
   "publishConfig": {
-    "provenance": false
+    "provenance": true
   }
 }
