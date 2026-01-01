@@ -45,10 +45,7 @@
     "ts-jest": "29.4.6",
     "typescript": "5.9.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/runk/node-maxmind.git"
-  },
+  "repository": "https://github.com/runk/node-maxmind",
   "bugs": {
     "mail": "deadrunk@gmail.com",
     "url": "http://github.com/runk/node-maxmind/issues"
