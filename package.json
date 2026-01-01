@@ -69,5 +69,8 @@
     "prepublish": "npm run build",
     "semantic-release": "semantic-release",
     "test": "jest"
+  },
+  "publishConfig": {
+    "provenance": false
   }
 }
