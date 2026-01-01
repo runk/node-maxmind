@@ -5,8 +5,8 @@ on:
       - master
 
 permissions:
-  id-token: write # Required for OIDC
-  contents: read
+  id-token: write # Required for OIDC / npm trusted publishing
+  contents: write # To create releases
 
 jobs:
   release:
