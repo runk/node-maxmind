@@ -31,7 +31,7 @@
     "tiny-lru": "13.0.0"
   },
   "devDependencies": {
-    "@swc/core": "1.15.3",
+    "@swc/core": "1.15.21",
     "@swc/jest": "0.2.39",
     "@types/ip6addr": "0.2.6",
     "@types/jest": "30.0.0",
