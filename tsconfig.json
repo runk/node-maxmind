@@ -14,6 +14,7 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
+    "types": ["node"],
     "lib": ["ES2020"],
     "target": "ES2020"
   },
