@@ -41,7 +41,7 @@
     "ip-address": "10.2.0",
     "ip6addr": "0.2.5",
     "jest": "30.4.2",
-    "prettier": "3.8.3",
+    "prettier": "3.9.4",
     "semantic-release": "25.0.5",
     "sinon": "21.0.3",
     "typescript": "6.0.3"
