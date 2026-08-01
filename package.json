@@ -27,7 +27,7 @@
     "Mariano Facundo Scigliano @MarianoFacundoArch"
   ],
   "dependencies": {
-    "mmdb-lib": "3.0.2",
+    "mmdb-lib": "3.0.3",
     "tiny-lru": "13.0.0"
   },
   "devDependencies": {
