@@ -40,7 +40,7 @@
     "@types/sinon": "22.0.0",
     "ip-address": "10.7.0",
     "ip6addr": "0.2.5",
-    "jest": "30.4.2",
+    "jest": "30.5.1",
     "prettier": "3.9.6",
     "semantic-release": "25.0.9",
     "sinon": "22.1.0",
