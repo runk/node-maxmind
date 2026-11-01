@@ -38,7 +38,7 @@
     "@types/netmask": "2.0.6",
     "@types/node": "24.19.2",
     "@types/sinon": "22.0.2",
-    "ip-address": "10.7.1",
+    "ip-address": "10.7.5",
     "ip6addr": "0.2.5",
     "jest": "30.5.2",
     "prettier": "3.9.9",
