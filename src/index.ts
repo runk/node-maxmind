@@ -18,6 +18,11 @@ export interface OpenOpts {
   watchForUpdates?: boolean;
   watchForUpdatesNonPersistent?: boolean;
   watchForUpdatesHook?: Callback;
+  /**
+   * Called when reloading a watched database fails (for example a truncated or
+   * corrupted file). The previously loaded database keeps serving lookups.
+   */
+  watchForUpdatesErrorHook?: (error: Error) => void;
 }
 
 /**
@@ -94,6 +99,12 @@ export const open = async <T extends Response>(
     ) {
       throw new Error('opts.watchForUpdatesHook should be a function');
     }
+    if (
+      opts.watchForUpdatesErrorHook &&
+      typeof opts.watchForUpdatesErrorHook !== 'function'
+    ) {
+      throw new Error('opts.watchForUpdatesErrorHook should be a function');
+    }
     const watcherOptions = {
       persistent: opts.watchForUpdatesNonPersistent !== true,
     };
@@ -115,9 +126,26 @@ export const open = async <T extends Response>(
       if (!(await waitExists())) {
         return;
       }
-      const updatedDatabase = await readFile(filepath);
-      cache.clear();
-      reader.load(updatedDatabase);
+      try {
+        const updatedDatabase = await readFile(filepath);
+        if (isGzip(updatedDatabase)) {
+          throw new Error(
+            'Looks like you are passing in a file in gzip format, please use mmdb database instead.'
+          );
+        }
+        // Parse into a throwaway reader first: Reader#load replaces the buffer
+        // before parsing, so a bad file would otherwise corrupt the live reader.
+        new Reader<T>(updatedDatabase);
+        cache.clear();
+        reader.load(updatedDatabase);
+      } catch (error) {
+        // Keep serving the previous database instead of crashing the process
+        // with an unhandled rejection.
+        if (opts.watchForUpdatesErrorHook) {
+          opts.watchForUpdatesErrorHook(error as Error);
+        }
+        return;
+      }
       if (opts.watchForUpdatesHook) {
         opts.watchForUpdatesHook();
       }
