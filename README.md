@@ -69,6 +69,7 @@ _maxmind.open(filepath, [options])_
   - `watchForUpdates`: `<boolean>` Supports reloading the reader when changes occur to the database that is loaded. _Default_: `false`.
   - `watchForUpdatesNonPersistent`: `<boolean>` Controls whether the watcher should be persistent or not. If it is persistent, a node process will be blocked in watching state if the watcher is the only thing still running in the program. _Default_: `false`.
   - `watchForUpdatesHook`: `<Function>` Hook function that is fired on database update. _Default_: `null`.
+  - `watchForUpdatesErrorHook`: `<Function>` Called with the error when reloading an updated database fails (for example a truncated or corrupted file). The previously loaded database keeps serving lookups. _Default_: `null`.
 
 ## Does it work in browser?
 

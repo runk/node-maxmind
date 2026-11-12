@@ -79,6 +79,82 @@ describe('index', () => {
       assert(hook.calledOnce);
     });
 
+    it('should keep the current database when reading an update fails', async () => {
+      const hook = sinon.spy();
+      const errorHook = sinon.spy();
+      const lookup = await maxmind.open(dbPath, {
+        watchForUpdates: true,
+        watchForUpdatesHook: hook,
+        watchForUpdatesErrorHook: errorHook,
+      });
+      (fs.readFile as SinonSpy).restore();
+      sandbox.stub(fs, 'readFile').rejects(new Error('read failed'));
+      await watchHandler();
+      assert(errorHook.calledOnce);
+      assert.strictEqual(errorHook.firstCall.args[0].message, 'read failed');
+      assert(hook.notCalled);
+      assert(lookup.get('2001:230::'));
+    });
+
+    it('should keep the current database when the updated file is invalid', async () => {
+      const errorHook = sinon.spy();
+      const lookup = await maxmind.open(dbPath, {
+        watchForUpdates: true,
+        watchForUpdatesErrorHook: errorHook,
+      });
+      const broken = await fs.readFile(
+        path.join(__dirname, '../test/databases/broken.dat')
+      );
+      (fs.readFile as SinonSpy).restore();
+      sandbox.stub(fs, 'readFile').resolves(broken);
+      await watchHandler();
+      assert(errorHook.calledOnce);
+      assert(
+        /Cannot parse binary database/.test(errorHook.firstCall.args[0].message)
+      );
+      assert(lookup.get('2001:230::'));
+    });
+
+    it('should reject a gzip file on update and keep the current database', async () => {
+      const errorHook = sinon.spy();
+      const lookup = await maxmind.open(dbPath, {
+        watchForUpdates: true,
+        watchForUpdatesErrorHook: errorHook,
+      });
+      const gzipped = await fs.readFile(
+        path.join(__dirname, '../test/databases/GeoIP2-City-Test.mmdb.gz')
+      );
+      (fs.readFile as SinonSpy).restore();
+      sandbox.stub(fs, 'readFile').resolves(gzipped);
+      await watchHandler();
+      assert(/gzip format/.test(errorHook.firstCall.args[0].message));
+      assert(lookup.get('2001:230::'));
+    });
+
+    it('should not throw on a failed update when no error hook is set', async () => {
+      const lookup = await maxmind.open(dbPath, { watchForUpdates: true });
+      (fs.readFile as SinonSpy).restore();
+      sandbox.stub(fs, 'readFile').rejects(new Error('read failed'));
+      await watchHandler();
+      assert(lookup.get('2001:230::'));
+    });
+
+    it('should validate watchForUpdatesErrorHook', async () => {
+      await maxmind
+        // @ts-expect-error testing invalid input
+        .open(dbPath, {
+          watchForUpdates: true,
+          watchForUpdatesErrorHook: 'nope',
+        })
+        .then(nah)
+        .catch((err) =>
+          assert.strictEqual(
+            err.message,
+            'opts.watchForUpdatesErrorHook should be a function'
+          )
+        );
+    });
+
     it('should successfully handle errors while opening a db', async () => {
       await maxmind
         .open('/foo/bar')
