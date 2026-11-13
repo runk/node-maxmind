@@ -23,6 +23,11 @@ export interface OpenOpts {
    * corrupted file). The previously loaded database keeps serving lookups.
    */
   watchForUpdatesErrorHook?: (error: Error) => void;
+  /**
+   * Stops watching the database file for updates when aborted. The reader keeps
+   * serving the database it has loaded.
+   */
+  signal?: AbortSignal;
 }
 
 /**
@@ -92,7 +97,7 @@ export const open = async <T extends Response>(
   const cache = lru(opts?.cache?.max || 10_000);
   const reader = new Reader<T>(database, { cache });
 
-  if (opts && !!opts.watchForUpdates) {
+  if (opts && !!opts.watchForUpdates && !opts.signal?.aborted) {
     if (
       opts.watchForUpdatesHook &&
       typeof opts.watchForUpdatesHook !== 'function'
@@ -109,7 +114,10 @@ export const open = async <T extends Response>(
       persistent: opts.watchForUpdatesNonPersistent !== true,
     };
 
-    fs.watchFile(filepath, watcherOptions, async () => {
+    const onChange = async () => {
+      if (opts.signal?.aborted) {
+        return;
+      }
       // When database file is being replaced,
       // it could be removed for a fraction of a second.
       const waitExists = async () => {
@@ -136,6 +144,9 @@ export const open = async <T extends Response>(
         // Parse into a throwaway reader first: Reader#load replaces the buffer
         // before parsing, so a bad file would otherwise corrupt the live reader.
         new Reader<T>(updatedDatabase);
+        if (opts.signal?.aborted) {
+          return;
+        }
         cache.clear();
         reader.load(updatedDatabase);
       } catch (error) {
@@ -149,7 +160,14 @@ export const open = async <T extends Response>(
       if (opts.watchForUpdatesHook) {
         opts.watchForUpdatesHook();
       }
-    });
+    };
+
+    fs.watchFile(filepath, watcherOptions, onChange);
+    opts.signal?.addEventListener(
+      'abort',
+      () => fs.unwatchFile(filepath, onChange),
+      { once: true }
+    );
   }
 
   return reader;

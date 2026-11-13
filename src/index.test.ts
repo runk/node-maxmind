@@ -139,6 +139,36 @@ describe('index', () => {
       assert(lookup.get('2001:230::'));
     });
 
+    it('should stop watching when the signal is aborted', async () => {
+      const unwatch = sandbox.stub(fs, 'unwatchFile');
+      const hook = sinon.spy();
+      const controller = new AbortController();
+      const lookup = await maxmind.open(dbPath, {
+        watchForUpdates: true,
+        watchForUpdatesHook: hook,
+        signal: controller.signal,
+      });
+      assert(unwatch.notCalled);
+
+      controller.abort();
+      assert(unwatch.calledOnceWithExactly(dbPath, watchHandler));
+
+      // A change that was already queued when the signal fired is ignored.
+      await watchHandler();
+      assert((fs.readFile as SinonSpy).calledOnce);
+      assert(hook.notCalled);
+      assert(lookup.get('2001:230::'));
+    });
+
+    it('should not watch when the signal is already aborted', async () => {
+      const lookup = await maxmind.open(dbPath, {
+        watchForUpdates: true,
+        signal: AbortSignal.abort(),
+      });
+      assert((fs.watchFile as SinonSpy).notCalled);
+      assert(lookup.get('2001:230::'));
+    });
+
     it('should validate watchForUpdatesErrorHook', async () => {
       await maxmind
         // @ts-expect-error testing invalid input
